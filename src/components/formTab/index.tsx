@@ -38,7 +38,7 @@ const FormTab = () => {
   ];
 
   return (
-    <div className="p-4 bg-white w-full rounded-lg flex justify-between items-center">
+    <div className="p-4 bg-white w-full rounded-lg hidden justify-between items-center md:flex">
       {tabs.map((item, index) => (
         <>
           <div
@@ -61,7 +61,9 @@ const FormTab = () => {
               >
                 {item.title}
               </h2>
-              <p className="text-sm text-[#57606A]">{item.description}</p>
+              <p className="hidden lg:block text-sm text-[#57606A]">
+                {item.description}
+              </p>
             </div>
           </div>
           {index !== tabs.length - 1 ? (

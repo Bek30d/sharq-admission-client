@@ -63,8 +63,8 @@ const PersonalInfo = () => {
   return (
     <SEO>
       <FormLayout>
-        <div className="my-5 p-10 bg-white rounded-2xl">
-          <h2 className="text-[32px] font-semibold text-[#18324D] mb-8">
+        <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
+          <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Shaxsiy ma’lumotlar
           </h2>
           <label htmlFor="imageUpload">
@@ -88,8 +88,8 @@ const PersonalInfo = () => {
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <Form {...form}>
-              <div className="flex justify-between items-center gap-6 mb-6">
-                <div className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6 ">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="lastname"
                     className="text-[#424A53] font-medium text-sm"
@@ -106,7 +106,7 @@ const PersonalInfo = () => {
                     {form.formState.errors.lastname?.message}
                   </span>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="name"
                     className="text-[#424A53] font-medium text-sm"
@@ -124,8 +124,8 @@ const PersonalInfo = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex justify-between items-center gap-6 mb-6">
-                <div className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="fathername"
                     className="text-[#424A53] font-medium text-sm"
@@ -142,7 +142,7 @@ const PersonalInfo = () => {
                     {form.formState.errors.fathername?.message}
                   </span>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="birthdate"
                     className="text-[#424A53] font-medium text-sm"
@@ -159,8 +159,8 @@ const PersonalInfo = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex justify-between items-center gap-6 mb-6">
-                <div className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="idnumber"
                     className="text-[#424A53] font-medium text-sm"
@@ -177,7 +177,7 @@ const PersonalInfo = () => {
                     {form.formState.errors.idnumber?.message}
                   </span>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="jshshir"
                     className="text-[#424A53] font-medium text-sm"
@@ -195,7 +195,7 @@ const PersonalInfo = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex justify-between gap-6 mb-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-6 mb-12">
                 <div className="flex-1">
                   <div className="mb-6">
                     <label
@@ -349,12 +349,12 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <h2 className="text-[32px] font-semibold text-[#18324D] mb-8">
+              <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
                 Bog`lanish uchun ma`lumotlar
               </h2>
 
-              <div className="flex justify-between items-center gap-6 mb-12">
-                <div className="flex-1">
+              <div className="flex flex-col sm:flex-row  justify-between items-center gap-6 mb-12">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="phone"
                     className="text-[#424A53] font-medium text-sm"
@@ -371,7 +371,7 @@ const PersonalInfo = () => {
                     {form.formState.errors.phone?.message}
                   </span>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <label
                     htmlFor="additionaphone"
                     className="text-[#424A53] font-medium text-sm"
