@@ -14,8 +14,8 @@ const Navbar = () => {
   const { isOpenBurger } = useIndexStore()
   const path = usePathname()
 
-  return <div className="h-12">
-    <div className="md:block hidden">
+  return <div className="h-12 bg-[#18324D] xl:-mx-20 lg:-mx-6 md:-mx-10 sm:-mx-2 -mx-4 xl:px-20 lg:px-6 md:px-10 sm:px-2 px-4">
+    <div className={`md:block hidden ${isOpenBurger ? '' : ''}`}>
       <div className="flex items-center justify-end gap-12 pt-3">
         <a href="tel:+998712345678" className="text-white font-medium text-sm">+998 77 500-50-60</a>
         <div className="flex gap-4">

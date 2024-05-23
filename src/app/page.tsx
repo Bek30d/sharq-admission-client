@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 "use client";
+=======
+'use client'
+>>>>>>> Stashed changes
 import Image from "next/image";
 import Logo from "../../public/assets/logo.svg";
 import FaceInage from "../../public/assets/main_image.jpg";
@@ -6,7 +10,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
+<<<<<<< Updated upstream
   const router = useRouter();
+=======
+  const { push } = useRouter();
+>>>>>>> Stashed changes
   return (
     <main className="min-h-[calc(100vh-48px)] relative flex lg:items-center justify-center">
       <div className="w-screen h-[calc(100%+48px)] absolute -top-12 -z-10 bg-gradient-to-b from-[#18324D] to-[#3874B3]" />
@@ -24,10 +32,14 @@ export default function Home() {
             yaxshilay oladigan kadrlarni tayyorlashdir.
           </p>
           <div className="h-4 md:hidden" />
+<<<<<<< Updated upstream
           <Button
             onClick={() => router.push("/personal-info")}
             className="w-fit py-4 xl:px-12 md:px-8 !bg-white hover:!bg-[#18324D] duration-300 shadow-lg text-[#191919] hover:text-white"
           >
+=======
+          <Button onClick={() => push('/auth')} className="w-fit py-4 xl:px-12 md:px-8 !bg-white hover:!bg-[#18324D] duration-300 shadow-lg text-[#191919] hover:text-white">
+>>>>>>> Stashed changes
             Ariza qoldirish
           </Button>
         </div>

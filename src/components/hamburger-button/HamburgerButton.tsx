@@ -8,8 +8,6 @@ const HamburgerButton = () => {
         setIsOpenBurger(!isOpen);
     };
 
-    console.log('isOpen', isOpen);
-
     useEffect(() => {
         document.body.style.overflow = isOpen ? "hidden" : "auto";
     }, [isOpen]);
