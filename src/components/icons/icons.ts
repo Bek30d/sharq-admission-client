@@ -34,7 +34,12 @@ export default {
   <path d="M14.3666 6.38049C14.4445 5.87707 13.9659 5.47972 13.5183 5.67625L4.60301 9.59053C4.28202 9.73146 4.3055 10.2177 4.63842 10.3237L6.47697 10.9092C6.82786 11.0209 7.20783 10.9631 7.51424 10.7514L11.6594 7.88767C11.7844 7.80131 11.9206 7.97904 11.8138 8.08914L8.83007 11.1654C8.54063 11.4638 8.59808 11.9695 8.94623 12.1878L12.2868 14.2827C12.6615 14.5176 13.1436 14.2816 13.2136 13.8288L14.3666 6.38049Z" fill="#193450"/>`,
   upload: `<path d="M12 3.00101V17.001" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M21 17C21 19.209 19.209 21 17 21H7C4.791 21 3 19.209 3 17" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M17 8.00101L11.999 3.00001L6.99902 8.00101" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+  <path d="M17 8.00101L11.999 3.00001L6.99902 8.00101" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  payment_time: `<path d="M8.26562 15.0215L12.2263 12.6068V7.56818" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23.833 18.4167V15.1667C23.833 14.2683 22.013 13.5417 19.7705 13.5417C17.528 13.5417 15.7092 14.2694 15.708 15.1667V21.6667C15.7092 22.5639 17.5268 23.2917 19.7705 23.2917C22.0142 23.2917 23.8318 22.5639 23.833 21.6667V15.1667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.71 15.1667C15.71 16.0639 17.5288 16.7917 19.7725 16.7917C22.0161 16.7917 23.8338 16.0639 23.8338 15.1667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.708 18.4167C15.708 19.3139 17.5268 20.0417 19.7705 20.0417C22.0142 20.0417 23.833 19.3139 23.833 18.4167" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21.4174 9.75C20.282 4.77652 15.5038 1.51981 10.4595 2.28138C5.41523 3.04294 1.81145 7.56514 2.19495 12.6521C2.57844 17.7391 6.81946 21.67 11.9209 21.6667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
 }
 
 

@@ -151,19 +151,22 @@ const EducationInfo = () => {
   const [isHonorsDegree, setIsHonorsDegree] = useState(false);
   const [certificat, setCertificate] = useState<string>("");
   const [certificateFile, setCertificateFile] = useState<any>(null);
-  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
+  const [educationInfo, setEducationInfo] = useLocalStorage(
+    "educationInfo",
+    {}
+  );
   const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    // defaultValues: {
-    //   ...personalInfo,
-    // },
+    defaultValues: {
+      ...educationInfo,
+    },
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    // setPersonalInfo(data);
-    // router.push("/education-info");
+    setEducationInfo(data);
+    router.push("/choose-direction");
     console.log(data);
   };
 
@@ -177,11 +180,9 @@ const EducationInfo = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     if (event.target.files && event.target.files.length > 0) {
-      setDegreeFile(event.target.files[0]);
+      setCertificateFile(event.target.files[0]);
     }
   }
-
-  console.log(form.formState.errors);
 
   return (
     <SEO>
@@ -396,7 +397,7 @@ const EducationInfo = () => {
                   <label htmlFor="degreeFile">
                     <div className="h-max border !border-[#0969DA] !bg-transparent flex gap-1.5 items-center py-3 px-5 rounded-lg cursor-pointer">
                       <BaseIcon name="upload" color="#0969DA" />
-                      <span className="text-[#0969DA] text-lg font-medium">
+                      <span className="text-[#0969DA] text-lg font-medium hidden sm:block">
                         Yuklash
                       </span>
                     </div>
@@ -539,7 +540,7 @@ const EducationInfo = () => {
                         <label htmlFor="certificateFile">
                           <div className="h-max border !border-[#0969DA] !bg-transparent flex gap-1.5 items-center py-3 px-5 rounded-lg cursor-pointer">
                             <BaseIcon name="upload" color="#0969DA" />
-                            <span className="text-[#0969DA] text-lg font-medium">
+                            <span className="text-[#0969DA] text-lg font-medium hidden sm:block">
                               Yuklash
                             </span>
                           </div>
