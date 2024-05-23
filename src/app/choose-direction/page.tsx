@@ -20,6 +20,17 @@ import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const schema = z.object({
   degree: z.string().min(3, "degree is required"),
@@ -96,6 +107,7 @@ const ChooseDirection = () => {
     "directionInfo",
     {}
   );
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const form = useForm<FormData>({
@@ -107,7 +119,7 @@ const ChooseDirection = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     setDirectionInfo(data);
-    router.push("/");
+    setIsOpen(true);
   };
 
   return (
@@ -321,9 +333,38 @@ const ChooseDirection = () => {
                 <BaseIcon name="arrowRight" />
               </div>
 
-              <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
-                Jo’natish
-              </Button>
+              <AlertDialog open={isOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="submit"
+                    className="!bg-[#18324D] w-full !py-[14px] h-auto"
+                  >
+                    Jo’natish
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-center">
+                      Arizangiz qabul qilindi!
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                      Sizning arizangiz qabul qilindi. Bir kunda siz bilan
+                      bog'lanamiz.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="!justify-center">
+                    <AlertDialogAction
+                      className="!bg-[#18324D]"
+                      onClick={() => {
+                        setIsOpen(false);
+                        router.push("/");
+                      }}
+                    >
+                      Asosiy sahifa
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </Form>
           </form>
         </div>
