@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useLocalStorage } from "usehooks-ts";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   lastname: z.string().min(3, "lastname is required"),
@@ -47,6 +49,8 @@ type FormData = z.infer<typeof schema>;
 
 const PersonalInfo = () => {
   const [image, setImage] = useState<any>("");
+  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
+  const router = useRouter();
 
   function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
@@ -56,9 +60,15 @@ const PersonalInfo = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      ...personalInfo,
+    },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    setPersonalInfo(data);
+    router.push("/education-info");
+  };
 
   return (
     <SEO>
@@ -152,7 +162,9 @@ const PersonalInfo = () => {
                   <Controller
                     control={form.control}
                     name="birthdate"
-                    render={({ field }) => <DatePicker {...field} />}
+                    render={({ field }) => (
+                      <DatePicker {...field} className="border-none" />
+                    )}
                   />
                   <span className="text-red-400 text-xs">
                     {form.formState.errors.birthdate?.message}

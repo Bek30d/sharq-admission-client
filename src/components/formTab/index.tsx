@@ -41,11 +41,7 @@ const FormTab = () => {
     <div className="p-4 bg-white w-full rounded-lg hidden justify-between items-center md:flex">
       {tabs.map((item, index) => (
         <>
-          <div
-            onClick={() => router.push(item.path)}
-            key={item.title}
-            className="flex gap-2 items-center cursor-pointer"
-          >
+          <div key={item.title} className="flex gap-2 items-center">
             <div className="bg-[#F5F8FF] rounded-full flex justify-center items-center w-14 h-14">
               <BaseIcon
                 name={item.icon}
