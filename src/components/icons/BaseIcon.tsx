@@ -1,4 +1,3 @@
-import { useLocalStorage } from "usehooks-ts";
 import icons from "./icons";
 import React from "react";
 
