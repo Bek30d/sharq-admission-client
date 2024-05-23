@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useLocalStorage } from "usehooks-ts";
+import { useRouter } from "next/navigation";
+import bigLogo from "../../../public/assets/big_logo.svg";
 
 const schema = z.object({
   lastname: z.string().min(3, "lastname is required"),
@@ -47,6 +50,8 @@ type FormData = z.infer<typeof schema>;
 
 const PersonalInfo = () => {
   const [image, setImage] = useState<any>("");
+  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
+  const router = useRouter();
 
   function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
@@ -56,14 +61,20 @@ const PersonalInfo = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      ...personalInfo,
+    },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    setPersonalInfo(data);
+    router.push("/education-info");
+  };
 
   return (
     <SEO>
       <FormLayout>
-        <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
+        <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl relative">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Shaxsiy ma’lumotlar
           </h2>
@@ -152,7 +163,9 @@ const PersonalInfo = () => {
                   <Controller
                     control={form.control}
                     name="birthdate"
-                    render={({ field }) => <DatePicker {...field} />}
+                    render={({ field }) => (
+                      <DatePicker {...field} className="border-none" />
+                    )}
                   />
                   <span className="text-red-400 text-xs">
                     {form.formState.errors.birthdate?.message}
@@ -395,6 +408,14 @@ const PersonalInfo = () => {
               </Button>
             </Form>
           </form>
+
+          <Image
+            src={bigLogo}
+            alt="big logo"
+            className="hidden md:block absolute top-10 right-20"
+            width={500}
+            height={184}
+          />
         </div>
       </FormLayout>
     </SEO>

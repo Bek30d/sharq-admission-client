@@ -26,7 +26,7 @@ export function DatePicker(props: any) {
         <Button
           variant={"outline"}
           className={cn(
-            "flex justify-start text-left font-normal w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 !text-[#424A53] hover:!text-[#424A53]",
+            `${props.className} flex justify-start text-left font-normal w-full h-auto bg-[#F6F8FA] outline-none !py-4 !px-3 !text-[#424A53] hover:!text-[#424A53] `,
             !date && "text-muted-foreground"
           )}
         >
