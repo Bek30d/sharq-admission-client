@@ -8,7 +8,7 @@ export default function Home() {
     <main className="min-h-[calc(100vh-48px)] relative flex lg:items-center justify-center">
       <div className="w-screen h-[calc(100%+48px)] absolute -top-12 -z-10 bg-gradient-to-b from-[#18324D] to-[#3874B3]" />
       <div className="flex lg:flex-row flex-col xl:gap-24 md:gap-10 md:justify-between xl flex-wrap justify-center">
-        <div className="flex-1 my-4 flex flex-col xl:space-y-8 lg:space-y-6 md:space-y-6 space-y-6 md:justify-center justify-start md:items-start items-center lg:justify-start">
+        <div className="flex-1 my-6 flex flex-col xl:space-y-8 lg:space-y-6 md:space-y-6 space-y-6 md:justify-center justify-start md:items-start items-center lg:justify-start">
           <Image src={Logo} alt="logo" />
           <div className="h-4 md:hidden" />
           <p className="text-white md:font-medium font-semibold xl:text-6xl lg:text-5xl md:text-6xl text-3xl md:text-start text-center xl:leading-tight lg:leading-tight md:leading-tight leading-normal tracking-[-1.28px]">
