@@ -12,7 +12,7 @@ export type LinkType = {
   icon: keyof typeof icons;
 };
 
-const links: LinkType[] = [
+export const links: LinkType[] = [
   {
     path: "/profile",
     name: "Mening sahifam",

@@ -55,7 +55,16 @@ export default {
   <path d="M21 17C21 19.209 19.209 21 17 21H7C4.791 21 3 19.209 3 17" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M17 12L11.999 17.001L6.99902 12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
   pencil: `<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 15.619L15.619 5.29299C16.009 4.90299 16.642 4.90299 17.032 5.29299L18.708 6.96899C19.098 7.35899 19.098 7.99199 18.708 8.38199L8.381 18.707C8.194 18.895 7.94 19 7.675 19H5V16.325C5 16.06 5.105 15.806 5.293 15.619Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13.75 7.15991L16.84 10.2499" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+  <path d="M13.75 7.15991L16.84 10.2499" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  close: `<g clip-path="url(#clip0_142_2727)">
+  <path d="M18 6L6 18" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M6 6L18 18" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <defs>
+  <clipPath id="clip0_142_2727">
+  <rect width="24" height="24" fill="stroke"/>
+  </clipPath>
+  </defs>`
 }
 
 
