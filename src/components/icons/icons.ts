@@ -64,7 +64,25 @@ export default {
   <clipPath id="clip0_142_2727">
   <rect width="24" height="24" fill="stroke"/>
   </clipPath>
-  </defs>`
+  </defs>`,
+  reports: `<path d="M16 19.316V19.5C16 20.3284 15.3284 21 14.5 21H3.5C2.67157 21 2 20.3284 2 19.5V4.5C2 3.67157 2.67157 3 3.5 3H14.5C15.3284 3 16 3.67157 16 4.5V14" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 9H17.2918C17.7575 9 18.2169 9.10843 18.6334 9.31671L19.2874 9.64371C19.7544 9.87719 20.1523 10.2285 20.4419 10.6629L22 13" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 14L16.0019 13.997L13.6229 11.4763C13.3413 11.1778 12.9508 11.0061 12.5405 11.0002C12.1302 10.9942 11.735 11.1546 11.4448 11.4448V11.4448C10.9335 11.9561 10.8536 12.757 11.254 13.3592L14.2411 17.8526C14.7341 18.5943 15.4605 19.1502 16.3052 19.4322L21 21" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M17.5 14H16" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 13.5H7" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 16.5H9" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 6L9 9L7 8L5 10" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  search: `<path d="M15.7138 6.8382C18.1647 9.28913 18.1647 13.2629 15.7138 15.7138C13.2629 18.1647 9.28913 18.1647 6.8382 15.7138C4.38727 13.2629 4.38727 9.28913 6.8382 6.8382C9.28913 4.38727 13.2629 4.38727 15.7138 6.8382" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 19L15.71 15.71" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  filter: `<path d="M16 3H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 3H12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 10H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 10H4" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 17H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 17H12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.4142 1.58579C16.1953 2.36684 16.1953 3.63317 15.4142 4.41422C14.6332 5.19527 13.3668 5.19527 12.5858 4.41422C11.8047 3.63317 11.8047 2.36684 12.5858 1.58579C13.3668 0.804738 14.6332 0.804738 15.4142 1.58579" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.41422 8.58579C8.19527 9.36684 8.19527 10.6332 7.41422 11.4142C6.63317 12.1953 5.36684 12.1953 4.58579 11.4142C3.80474 10.6332 3.80474 9.36684 4.58579 8.58579C5.36684 7.80474 6.63317 7.80474 7.41422 8.58579" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.4142 15.5858C16.1953 16.3668 16.1953 17.6332 15.4142 18.4142C14.6332 19.1953 13.3668 19.1953 12.5858 18.4142C11.8047 17.6332 11.8047 16.3668 12.5858 15.5858C13.3668 14.8047 14.6332 14.8047 15.4142 15.5858" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
 }
 
 
