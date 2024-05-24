@@ -50,7 +50,12 @@ export default {
   student_doc: `<path fill-rule="evenodd" clip-rule="evenodd" d="M14.414 4.414L11.586 1.586C11.211 1.211 10.702 1 10.172 1H3C1.895 1 1 1.895 1 3V17C1 18.105 1.895 19 3 19H13C14.105 19 15 18.105 15 17V5.828C15 5.298 14.789 4.789 14.414 4.414V4.414Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M15 6H11C10.448 6 10 5.552 10 5V1" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M11.1952 15.9999C11.0402 15.6099 10.7992 15.2589 10.4912 14.9739V14.9739C9.96918 14.4909 9.28518 14.2219 8.57418 14.2219H7.42618C6.71518 14.2219 6.03018 14.4909 5.50918 14.9739V14.9739C5.20018 15.2589 4.96018 15.6099 4.80518 15.9999" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M9.14905 9.06897C9.78365 9.70357 9.78365 10.7325 9.14905 11.3671C8.51445 12.0017 7.48555 12.0017 6.85095 11.3671C6.21635 10.7325 6.21635 9.70357 6.85095 9.06897C7.48555 8.43437 8.51445 8.43437 9.14905 9.06897" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+  <path d="M9.14905 9.06897C9.78365 9.70357 9.78365 10.7325 9.14905 11.3671C8.51445 12.0017 7.48555 12.0017 6.85095 11.3671C6.21635 10.7325 6.21635 9.70357 6.85095 9.06897C7.48555 8.43437 8.51445 8.43437 9.14905 9.06897" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  download: `<path d="M12 17V3" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21 17C21 19.209 19.209 21 17 21H7C4.791 21 3 19.209 3 17" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M17 12L11.999 17.001L6.99902 12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  pencil: `<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 15.619L15.619 5.29299C16.009 4.90299 16.642 4.90299 17.032 5.29299L18.708 6.96899C19.098 7.35899 19.098 7.99199 18.708 8.38199L8.381 18.707C8.194 18.895 7.94 19 7.675 19H5V16.325C5 16.06 5.105 15.806 5.293 15.619Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13.75 7.15991L16.84 10.2499" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
 }
 
 

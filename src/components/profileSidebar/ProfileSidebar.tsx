@@ -43,7 +43,7 @@ const links: LinkType[] = [
 const ProfileSidebar = () => {
   const pathname = usePathname();
   return (
-    <div className="p-4 bg-white rounded-lg">
+    <div className="p-4 bg-white rounded-lg h-fit hidden sm:block">
       {links.map((item, index) => (
         <Link key={index} href={item.path}>
           <div
