@@ -1,5 +1,4 @@
 import ProfileSidebar from "@/components/profileSidebar/ProfileSidebar";
-import { usePathname } from "next/navigation";
 import React from "react";
 
 const ProfileLayout = ({
