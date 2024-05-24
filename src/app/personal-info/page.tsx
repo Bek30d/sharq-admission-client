@@ -78,16 +78,16 @@ const PersonalInfo = () => {
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Shaxsiy ma’lumotlar
           </h2>
-          <label htmlFor="imageUpload">
-            <div className="bg-[#F6F8FA] mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
+          <div className="bg-[#F6F8FA] mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
+            <label htmlFor="imageUpload">
               <Image
                 src={image ? URL.createObjectURL(image) : user}
                 alt={"some image"}
                 width={image ? 160 : 100}
                 height={image ? 160 : 100}
               />
-            </div>
-          </label>
+            </label>
+          </div>
 
           <input
             id="imageUpload"

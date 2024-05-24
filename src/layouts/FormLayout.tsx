@@ -3,7 +3,7 @@ import React from "react";
 
 const FormLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className="py-6">
       <FormTab />
       {children}
     </div>
