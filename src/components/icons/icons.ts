@@ -39,7 +39,28 @@ export default {
   <path d="M23.833 18.4167V15.1667C23.833 14.2683 22.013 13.5417 19.7705 13.5417C17.528 13.5417 15.7092 14.2694 15.708 15.1667V21.6667C15.7092 22.5639 17.5268 23.2917 19.7705 23.2917C22.0142 23.2917 23.8318 22.5639 23.833 21.6667V15.1667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M15.71 15.1667C15.71 16.0639 17.5288 16.7917 19.7725 16.7917C22.0161 16.7917 23.8338 16.0639 23.8338 15.1667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M15.708 18.4167C15.708 19.3139 17.5268 20.0417 19.7705 20.0417C22.0142 20.0417 23.833 19.3139 23.833 18.4167" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M21.4174 9.75C20.282 4.77652 15.5038 1.51981 10.4595 2.28138C5.41523 3.04294 1.81145 7.56514 2.19495 12.6521C2.57844 17.7391 6.81946 21.67 11.9209 21.6667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+  <path d="M21.4174 9.75C20.282 4.77652 15.5038 1.51981 10.4595 2.28138C5.41523 3.04294 1.81145 7.56514 2.19495 12.6521C2.57844 17.7391 6.81946 21.67 11.9209 21.6667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  right: `<g clip-path="url(#clip0_256_933)">
+<path d="M5 12L19 12" stroke="#424A53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 6L19 12" stroke="#424A53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 18L19 12" stroke="#424A53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_256_933">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>`,
+cancel: `<g clip-path="url(#clip0_256_1288)">
+<path d="M18.5 6L6.5 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.5 6L18.5 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_256_1288">
+<rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+</clipPath>
+</defs>`,
+share: `<path fill-rule="evenodd" clip-rule="evenodd" d="M5.82312 19.8781L20.2521 13.1791C21.2501 12.7161 21.2501 11.2821 20.2521 10.8191L5.82312 4.12205C4.78812 3.64205 3.69312 4.66005 4.08012 5.74305L6.31312 11.9971L4.08012 18.2581C3.69312 19.3401 4.78812 20.3581 5.82312 19.8781Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.31006 12H21.0001" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
 }
 
 
