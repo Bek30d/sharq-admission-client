@@ -51,7 +51,7 @@ const items: ItemType[] = [
 const Requests = () => {
   return (
     <SEO>
-      <ProfileLayout>
+      <ProfileLayout title="Arizalar">
         <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">
           <p className="px-5 text-[#57606A] font-medium">No</p>
           <p className="pl-5 pr-9 text-[#57606A] font-medium">Ariza raqami</p>
@@ -60,9 +60,6 @@ const Requests = () => {
           <p className="pl-5 pr-20 text-[#57606A] font-medium">Ariza statusi</p>
         </div>
 
-        <div className="py-6 px-5 rounded-2xl bg-white mb-5 block lg:hidden">
-          <p className="text-[#424A53] font-medium text-lg">Arizalarim</p>
-        </div>
         <div className="hidden lg:block">
           {items.map((item) => (
             <Item key={item.id} {...item} />

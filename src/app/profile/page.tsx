@@ -72,7 +72,7 @@ const Profile = () => {
 
   return (
     <SEO metaTitle="Profile">
-      <ProfileLayout>
+      <ProfileLayout title="Mening sahifam">
         <div className="px-5 p-6 md:p-10 bg-white rounded-2xl relative">
           <div className="bg-[#F6F8FA] mx-auto sm:mx-0 mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
             <label htmlFor="imageUpload">
