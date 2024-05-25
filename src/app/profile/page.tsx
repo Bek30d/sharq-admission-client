@@ -1,7 +1,5 @@
 "use client";
 
-import BaseIcon from "@/components/icons/BaseIcon";
-import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -24,6 +22,7 @@ import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
+import ProfileLayout from "@/layouts/ProfileLayout";
 
 const schema = z.object({
   lastname: z.string().min(3, "lastname is required"),
@@ -48,7 +47,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const PersonalInfo = () => {
+const Profile = () => {
   const [image, setImage] = useState<any>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
   const router = useRouter();
@@ -72,13 +71,10 @@ const PersonalInfo = () => {
   };
 
   return (
-    <SEO>
-      <FormLayout>
-        <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl relative">
-          <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-            Shaxsiy ma’lumotlar
-          </h2>
-          <div className="bg-[#F6F8FA] mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
+    <SEO metaTitle="Profile">
+      <ProfileLayout title="Mening sahifam">
+        <div className="px-5 p-6 md:p-10 bg-white rounded-2xl relative">
+          <div className="bg-[#F6F8FA] mx-auto sm:mx-0 mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
             <label htmlFor="imageUpload">
               <Image
                 src={image ? URL.createObjectURL(image) : user}
@@ -362,10 +358,6 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-                Bog`lanish uchun ma`lumotlar
-              </h2>
-
               <div className="flex flex-col sm:flex-row  justify-between items-center gap-6 mb-12">
                 <div className="flex-1 w-full">
                   <label
@@ -403,23 +395,17 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
-                Davom etish
-              </Button>
+              <div className="flex justify-end">
+                <Button className="!bg-[#0969DA] !py-[14px] h-auto w-full sm:w-fit">
+                  Ma’lumotlarni saqlash
+                </Button>
+              </div>
             </Form>
           </form>
-
-          <Image
-            src={bigLogo}
-            alt="big logo"
-            className="hidden md:block absolute top-10 right-20"
-            width={500}
-            height={184}
-          />
         </div>
-      </FormLayout>
+      </ProfileLayout>
     </SEO>
   );
 };
 
-export default PersonalInfo;
+export default Profile;

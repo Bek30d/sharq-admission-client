@@ -20,8 +20,8 @@ export default {
   <path fill-rule="evenodd" clip-rule="evenodd" d="M7.64361 6.38692L11.5575 8.3285C12.4664 8.77935 13.5337 8.77935 14.4426 8.3285L18.3565 6.38692C18.7252 6.20402 18.9584 5.828 18.9584 5.41643C18.9584 5.00486 18.7252 4.62884 18.3565 4.44594L14.4443 2.50524C13.5344 2.05384 12.4657 2.05384 11.5558 2.50524L7.64361 4.446C7.27494 4.6289 7.04175 5.00491 7.04175 5.41646C7.04175 5.82801 7.27494 6.20401 7.64361 6.38692Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M18.9584 5.41666V8.12499" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
   arrowRight: `<path d="M10.5 16L14.5 12L10.5 8" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
-  user: `<path d="M49.3904 13.8896C54.5765 19.0758 54.5765 27.4842 49.3904 32.6704C44.2042 37.8566 35.7958 37.8566 30.6096 32.6704C25.4234 27.4842 25.4234 19.0758 30.6096 13.8896C35.7958 8.70347 44.2042 8.70347 49.3904 13.8896" stroke="stroke" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M40 46.6933C55.18 46.6933 70 53.25 70 63.3333V66.6667C70 68.5067 68.5067 70 66.6667 70H13.3333C11.4933 70 10 68.5067 10 66.6667V63.3333C10 53.2467 24.82 46.6933 40 46.6933" stroke="stroke" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  user: `<path d="M14.4749 4.52513C15.8417 5.89197 15.8417 8.10804 14.4749 9.47488C13.108 10.8417 10.892 10.8417 9.52513 9.47488C8.15829 8.10804 8.15829 5.89197 9.52513 4.52513C10.892 3.15829 13.108 3.15829 14.4749 4.52513" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M4 18.5001V19.5001C4 20.0521 4.448 20.5001 5 20.5001H19C19.552 20.5001 20 20.0521 20 19.5001V18.5001C20 15.4741 16.048 13.5081 12 13.5081C7.952 13.5081 4 15.4741 4 18.5001Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
   facebook: `<circle cx="10" cy="10" r="8.75" fill="#AFB8C1"/>
   <path d="M13.2586 12.676L13.6472 10.2063H11.2158V8.60437C11.2158 7.92856 11.5548 7.26942 12.6438 7.26942H13.75V5.16687C13.75 5.16687 12.7466 5 11.7877 5C9.78427 5 8.47604 6.18309 8.47604 8.32403V10.2063H6.25V12.676H8.47604V18.6466C8.92294 18.715 9.38015 18.75 9.8459 18.75C10.3117 18.75 10.7689 18.715 11.2158 18.6466V12.676H13.2586Z" fill="#193450"/>`,
   instagram: `<rect x="1.25" y="1.25" width="17.5" height="17.5" rx="4" fill="#AFB8C1"/>
@@ -40,6 +40,49 @@ export default {
   <path d="M15.71 15.1667C15.71 16.0639 17.5288 16.7917 19.7725 16.7917C22.0161 16.7917 23.8338 16.0639 23.8338 15.1667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M15.708 18.4167C15.708 19.3139 17.5268 20.0417 19.7705 20.0417C22.0142 20.0417 23.833 19.3139 23.833 18.4167" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M21.4174 9.75C20.282 4.77652 15.5038 1.51981 10.4595 2.28138C5.41523 3.04294 1.81145 7.56514 2.19495 12.6521C2.57844 17.7391 6.81946 21.67 11.9209 21.6667" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  request: `
+  <path d="M15 9V5.828C15 5.298 14.789 4.789 14.414 4.414L11.586 1.586C11.211 1.211 10.702 1 10.172 1H3C1.895 1 1 1.895 1 3V17C1 18.105 1.895 19 3 19H7" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15 6H11C10.448 6 10 5.552 10 5V1" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M13.146 18.707L16.706 15.147C17.097 14.756 17.097 14.123 16.706 13.733L15.12 12.147C14.729 11.756 14.096 11.756 13.706 12.147L10.146 15.707C9.95803 15.895 9.85303 16.149 9.85303 16.414V19H12.439C12.704 19 12.958 18.895 13.146 18.707Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  bell: `
+  <path d="M14.0012 20.0034C13.5288 20.6332 12.7876 21.0038 12.0003 21.0038C11.2131 21.0038 10.4718 20.6332 9.99951 20.0034" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5.9976 12.482V8.99884C5.9976 5.68375 8.68501 2.99634 12.0001 2.99634V2.99634C13.5921 2.99634 15.1188 3.62874 16.2445 4.75443C17.3702 5.88012 18.0026 7.40688 18.0026 8.99884V12.482H17.9981L19.3746 13.8596C19.9847 14.4702 20.167 15.3881 19.8365 16.1855C19.5059 16.9828 18.7277 17.5025 17.8645 17.5024H6.13565C5.27252 17.5025 4.49426 16.9828 4.16373 16.1855C3.8332 15.3881 4.01546 14.4702 4.62555 13.8596L6.00213 12.482" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  student_doc: `<path fill-rule="evenodd" clip-rule="evenodd" d="M14.414 4.414L11.586 1.586C11.211 1.211 10.702 1 10.172 1H3C1.895 1 1 1.895 1 3V17C1 18.105 1.895 19 3 19H13C14.105 19 15 18.105 15 17V5.828C15 5.298 14.789 4.789 14.414 4.414V4.414Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15 6H11C10.448 6 10 5.552 10 5V1" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.1952 15.9999C11.0402 15.6099 10.7992 15.2589 10.4912 14.9739V14.9739C9.96918 14.4909 9.28518 14.2219 8.57418 14.2219H7.42618C6.71518 14.2219 6.03018 14.4909 5.50918 14.9739V14.9739C5.20018 15.2589 4.96018 15.6099 4.80518 15.9999" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9.14905 9.06897C9.78365 9.70357 9.78365 10.7325 9.14905 11.3671C8.51445 12.0017 7.48555 12.0017 6.85095 11.3671C6.21635 10.7325 6.21635 9.70357 6.85095 9.06897C7.48555 8.43437 8.51445 8.43437 9.14905 9.06897" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  download: `<path d="M12 17V3" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21 17C21 19.209 19.209 21 17 21H7C4.791 21 3 19.209 3 17" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M17 12L11.999 17.001L6.99902 12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  pencil: `<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 15.619L15.619 5.29299C16.009 4.90299 16.642 4.90299 17.032 5.29299L18.708 6.96899C19.098 7.35899 19.098 7.99199 18.708 8.38199L8.381 18.707C8.194 18.895 7.94 19 7.675 19H5V16.325C5 16.06 5.105 15.806 5.293 15.619Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13.75 7.15991L16.84 10.2499" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  close: `<g clip-path="url(#clip0_142_2727)">
+  <path d="M18 6L6 18" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M6 6L18 18" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <defs>
+  <clipPath id="clip0_142_2727">
+  <rect width="24" height="24" fill="stroke"/>
+  </clipPath>
+  </defs>`,
+  reports: `<path d="M16 19.316V19.5C16 20.3284 15.3284 21 14.5 21H3.5C2.67157 21 2 20.3284 2 19.5V4.5C2 3.67157 2.67157 3 3.5 3H14.5C15.3284 3 16 3.67157 16 4.5V14" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 9H17.2918C17.7575 9 18.2169 9.10843 18.6334 9.31671L19.2874 9.64371C19.7544 9.87719 20.1523 10.2285 20.4419 10.6629L22 13" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 14L16.0019 13.997L13.6229 11.4763C13.3413 11.1778 12.9508 11.0061 12.5405 11.0002C12.1302 10.9942 11.735 11.1546 11.4448 11.4448V11.4448C10.9335 11.9561 10.8536 12.757 11.254 13.3592L14.2411 17.8526C14.7341 18.5943 15.4605 19.1502 16.3052 19.4322L21 21" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M17.5 14H16" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 13.5H7" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 16.5H9" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 6L9 9L7 8L5 10" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  search: `<path d="M15.7138 6.8382C18.1647 9.28913 18.1647 13.2629 15.7138 15.7138C13.2629 18.1647 9.28913 18.1647 6.8382 15.7138C4.38727 13.2629 4.38727 9.28913 6.8382 6.8382C9.28913 4.38727 13.2629 4.38727 15.7138 6.8382" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 19L15.71 15.71" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  filter: `<path d="M16 3H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 3H12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 10H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 10H4" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 17H19" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 17H12" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.4142 1.58579C16.1953 2.36684 16.1953 3.63317 15.4142 4.41422C14.6332 5.19527 13.3668 5.19527 12.5858 4.41422C11.8047 3.63317 11.8047 2.36684 12.5858 1.58579C13.3668 0.804738 14.6332 0.804738 15.4142 1.58579" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.41422 8.58579C8.19527 9.36684 8.19527 10.6332 7.41422 11.4142C6.63317 12.1953 5.36684 12.1953 4.58579 11.4142C3.80474 10.6332 3.80474 9.36684 4.58579 8.58579C5.36684 7.80474 6.63317 7.80474 7.41422 8.58579" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.4142 15.5858C16.1953 16.3668 16.1953 17.6332 15.4142 18.4142C14.6332 19.1953 13.3668 19.1953 12.5858 18.4142C11.8047 17.6332 11.8047 16.3668 12.5858 15.5858C13.3668 14.8047 14.6332 14.8047 15.4142 15.5858" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
   right: `<g clip-path="url(#clip0_256_933)">
 <path d="M5 12L19 12" stroke="#424A53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M13 6L19 12" stroke="#424A53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
