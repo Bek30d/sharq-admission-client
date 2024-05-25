@@ -349,7 +349,7 @@ const ChooseDirection = () => {
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-center">
                       Sizning arizangiz qabul qilindi. Bir kunda siz bilan
-                      bog'lanamiz.
+                      bog‘lanamiz.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="!justify-center">

@@ -18,6 +18,7 @@ export function DatePicker(props: any) {
 
   React.useEffect(() => {
     props.onChange(date);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   return (

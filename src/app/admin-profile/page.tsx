@@ -120,7 +120,7 @@ const AdminProfile = () => {
             <SelectContent>
               <SelectGroup>
                 {educationDirections.map((item) => (
-                  <SelectItem className="!text-[#24292F]" value={item.value}>
+                  <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
                     {item.label}
                   </SelectItem>
                 ))}
@@ -137,7 +137,7 @@ const AdminProfile = () => {
             <SelectContent>
               <SelectGroup>
                 {applicationStatus.map((item) => (
-                  <SelectItem className="!text-[#24292F]" value={item.value}>
+                  <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
                     {item.label}
                   </SelectItem>
                 ))}

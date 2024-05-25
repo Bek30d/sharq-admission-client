@@ -43,7 +43,7 @@ const ApplicantInfo = () => {
                 <span className="font-semibold">JShSHIR:</span> 67354672364758
               </p>
               <p className="text-[#18324D]">
-                <span className="font-semibold">Tug'ilgan sanasi:</span>{" "}
+                <span className="font-semibold">Tugilgan sanasi:</span>{" "}
                 01.21.1996
               </p>
               <p className="text-[#18324D]">
