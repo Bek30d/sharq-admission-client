@@ -70,7 +70,6 @@ const Login = () => {
                             </label>
                             <Input
                                 id="password"
-                                type='password'
                                 className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
                                 placeholder="Tasdiqlash kodi"
                                 {...form.register("password")}
