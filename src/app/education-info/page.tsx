@@ -501,7 +501,6 @@ const EducationInfo = () => {
                             id="certificates"
                             placeholder="Sertifikat"
                             className=" placeholder:!text-[#6E7781]"
-                            onChange={(e) => setCertificate(e.target.value)}
                           />
                         </SelectTrigger>
                         <SelectContent>

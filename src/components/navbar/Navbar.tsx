@@ -18,7 +18,7 @@ const Navbar = () => {
   const path = usePathname();
 
   return (
-    <div className="w-full h-12 bg-[#18324D] ">
+    <div className="w-full h-12 bg-[#18324D]">
       <Container>
         <div className="md:flex pt-1.5 justify-between items-center hidden">
           <Link href="/">
@@ -92,9 +92,8 @@ const Navbar = () => {
         </div>
         <div className={`md:hidden flex flex-col opacity-100 w-full `}>
           <div
-            className={`${
-              path === "/" ? "justify-end" : "justify-between"
-            } flex items-center h-full`}
+            className={`${path === "/" ? "justify-end" : "justify-between"
+              } flex items-center h-full`}
           >
             <Link href={"/"}>
               <Image
@@ -107,9 +106,8 @@ const Navbar = () => {
           </div>
           {path.includes("/profile") ? (
             <div
-              className={`absolute top-0 left-0 z-10 h-screen w-full flex flex-col bg-white justify-center items-center gap-4 flex-1 duration-300 ${
-                !isOpenBurger ? "translate-x-[100vw]" : "translate-x-0"
-              }`}
+              className={`absolute top-0 left-0 z-10 h-screen w-full flex flex-col bg-white justify-center items-center gap-4 flex-1 duration-300 ${!isOpenBurger ? "translate-x-[100vw]" : "translate-x-0"
+                }`}
             >
               {links.map((item, index) => (
                 <Link
@@ -118,9 +116,8 @@ const Navbar = () => {
                   onClick={() => setIsOpenBurger(false)}
                 >
                   <div
-                    className={`flex gap-2 w-full items-center px-2 py-3 rounded-md ${
-                      path === item.path ? "bg-[#F6F8FA]" : ""
-                    }`}
+                    className={`flex gap-2 w-full items-center px-2 py-3 rounded-md ${path === item.path ? "bg-[#F6F8FA]" : ""
+                      }`}
                   >
                     <BaseIcon
                       name={item.icon}
@@ -129,9 +126,8 @@ const Navbar = () => {
                       color={path === item.path ? "#0055FB" : "#424A53"}
                     />
                     <p
-                      className={`${
-                        path === item.path ? "text-[#0055FB]" : "text-[#424A53]"
-                      } font-medium`}
+                      className={`${path === item.path ? "text-[#0055FB]" : "text-[#424A53]"
+                        } font-medium`}
                     >
                       {item.name}
                     </p>
@@ -145,9 +141,8 @@ const Navbar = () => {
             </div>
           ) : (
             <div
-              className={`absolute top-0 left-0 z-10 h-screen w-full flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 flex-1 duration-300 ${
-                !isOpenBurger ? "translate-x-[100vw]" : "translate-x-0"
-              }`}
+              className={`absolute top-0 left-0 z-10 h-screen w-full flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 flex-1 duration-300 ${!isOpenBurger ? "translate-x-[100vw]" : "translate-x-0"
+                }`}
             >
               <a
                 href="tel:+998712345678"
