@@ -26,7 +26,7 @@ const AdminDatePicker = ({ className }: { className?: string }) => {
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-between text-left font-normal py-3 !h-auto !border-[#D0D7DE] hover:!text-[#24292F]",
+              `w-[300px] justify-between text-left font-normal py-3 !h-auto !border-[#D0D7DE] hover:!text-[#24292F] ${className}`,
               !date && "text-muted-foreground"
             )}
           >

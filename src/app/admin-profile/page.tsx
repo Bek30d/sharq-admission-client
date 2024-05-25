@@ -1,3 +1,4 @@
+"use client";
 import AdminDatePicker from "@/components/adminFilterDatePicker/AdminDatePicker";
 import BaseIcon from "@/components/icons/BaseIcon";
 import { Button } from "@/components/ui/button";
@@ -11,8 +12,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AdminProfileLayout from "@/layouts/AdminProfileLayout";
-import React from "react";
+import React, { useState } from "react";
 import ApplicationItem from "./components/ApplicationItem";
+import FilterSidebar from "./components/FilterSidebar";
 
 export type ItemType = {
   id: number;
@@ -93,6 +95,7 @@ const applicationStatus = [
 ];
 
 const AdminProfile = () => {
+  const [isShowSideBar, setIsShowSideBar] = useState(false);
   return (
     <AdminProfileLayout>
       <div>
@@ -143,7 +146,10 @@ const AdminProfile = () => {
           </Select>
 
           <div className="flex gap-3 items-center">
-            <Button className="flex gap-2 items-cener border !border-[#338AF3] !bg-white py-2 !h-auto">
+            <Button
+              className="flex gap-2 items-cener border !border-[#338AF3] !bg-white py-2 !h-auto"
+              onClick={() => setIsShowSideBar(!isShowSideBar)}
+            >
               <BaseIcon name="filter" color="#0055FB" />
               <p className="text-[#0055FB]">Filter</p>
             </Button>
@@ -175,6 +181,11 @@ const AdminProfile = () => {
           <ApplicationItem key={item.id} {...item} />
         ))}
       </div>
+
+      <FilterSidebar
+        isShowSideBar={isShowSideBar}
+        setIsShowSideBar={setIsShowSideBar}
+      />
     </AdminProfileLayout>
   );
 };
