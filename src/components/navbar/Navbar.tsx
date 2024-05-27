@@ -87,7 +87,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className={`md:hidden flex flex-col opacity-100 w-full `}>
+      <div className={`md:hidden flex flex-col opacity-100 w-full pl-4`}>
         <div
           className={`${path === "/" ? "justify-end" : "justify-between"
             } flex items-center h-full`}
@@ -103,7 +103,7 @@ const Navbar = () => {
         </div>
         {path.includes("/profile") ? (
           <div
-            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 top-12 h-[calc(100vh-48px)] flex flex-col bg-white justify-center items-center gap-4 duration-300 ${!isOpenBurger ? "w-full" : "w-0"
+            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 top-12 h-[calc(100vh-48px)] flex flex-col bg-white justify-center items-center gap-4 duration-300 ${isOpenBurger ? "w-full" : "w-0"
               }`}
           >
             {links.map((item, index) => (
@@ -134,7 +134,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div
-            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 h-screen flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 duration-300 ${!isOpenBurger ? "w-full" : "w-0"
+            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 h-screen flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 duration-300 ${isOpenBurger ? "w-full" : "w-0"
               }`}
           >
             <a
