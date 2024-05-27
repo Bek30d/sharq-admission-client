@@ -9,7 +9,7 @@ const HamburgerButton = () => {
     };
 
     useEffect(() => {
-        document.body.style.overflowY = isOpen ? "hidden" : "auto";
+        document.body.style.overflow = isOpen ? "auto" : "hidden";
     }, [isOpen]);
 
     return (
@@ -19,15 +19,15 @@ const HamburgerButton = () => {
                 onClick={handleCLick}
             >
                 <div
-                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease transform duration-300 bg-white ${isOpen ? "translate-y-[6px] rotate-45" : ""
+                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease transform duration-300 bg-white ${!isOpen ? "translate-y-[6px] rotate-45" : ""
                         }`}
                 ></div>
                 <div
-                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease bg-white ${isOpen ? "opacity-0" : ""
+                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease bg-white ${!isOpen ? "opacity-0" : ""
                         }`}
                 />
                 <div
-                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease transform duration-300 bg-white ${isOpen ? "-translate-y-[6px] -rotate-45" : ""
+                    className={`h-[2px] w-4 my-[2px] rounded-full transition ease transform duration-300 bg-white ${!isOpen ? "-translate-y-[6px] -rotate-45" : ""
                         }`}
                 />
             </button>

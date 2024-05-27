@@ -103,7 +103,7 @@ const Navbar = () => {
         </div>
         {path.includes("/profile") ? (
           <div
-            className={`z-10 h-[calc(100vh-48px)] w-full flex flex-col bg-white justify-center items-center gap-4 duration-300 ${!isOpenBurger ? "translate-x-[100vw] " : "translate-x-0"
+            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 top-12 h-[calc(100vh-48px)] w-full flex flex-col bg-white justify-center items-center gap-4 duration-300 ${!isOpenBurger ? "w-full" : "w-0"
               }`}
           >
             {links.map((item, index) => (
@@ -134,7 +134,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div
-            className={`z-10 h-[calc(100vh-48px)] w-full flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 duration-300 ${!isOpenBurger ? "translate-x-[100vw]" : "translate-x-0"
+            className={`z-10 absolute overflow-hidden whitespace-nowrap right-0 h-screen w-full flex flex-col bg-gradient-to-b from-[#18324D] to-[#3874B3] justify-center items-center gap-16 duration-300 ${!isOpenBurger ? "w-full" : "w-0"
               }`}
           >
             <a
