@@ -9,7 +9,7 @@ const HamburgerButton = () => {
     };
 
     useEffect(() => {
-        document.body.style.overflow = isOpen ? "auto" : "hidden";
+        document.body.style.overflow = isOpen ? "hidden" : "auto";
     }, [isOpen]);
 
     return (
