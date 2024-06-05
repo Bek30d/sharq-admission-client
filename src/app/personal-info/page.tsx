@@ -24,13 +24,15 @@ import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
+import { personalInfoStore } from "@/store/personal-info.store";
+import { log } from "console";
 
 const schema = z.object({
-  lastname: z.string().min(3, "lastname is required"),
-  name: z.string().min(3, "name is required"),
-  fathername: z.string().min(3, "fathername is required"),
-  birthdate: z.date().min(new Date(1900, 0, 1), "birthdate is required"),
-  idnumber: z
+  last_name: z.string().min(3, "lastname is required"),
+  first_name: z.string().min(3, "name is required"),
+  fathers_name: z.string().min(3, "fathername is required"),
+  birthday: z.date().min(new Date(1900, 0, 1), "birthdate is required"),
+  passport_number: z
     .string()
     .regex(
       /^[A-Za-z]{2}\d{7}$/,
@@ -40,8 +42,8 @@ const schema = z.object({
     .string()
     .regex(/^\d{14}$/, "Invalid format. Expected format: 14 digits"),
   gender: z.string().min(3, "Gender is required"),
-  citizenship: z.string().min(3, "citizenship be at least 18"),
-  region: z.string().min(3, "region is required"),
+  country_id: z.string().min(3, "citizenship be at least 18"),
+  district_id: z.string().min(3, "region is required"),
   phone: z.string().min(3, "phone is required"),
   additionaphone: z.string().min(3, "additionaphone is required"),
 });
@@ -49,6 +51,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const PersonalInfo = () => {
+  const { isLoading, aboutMe } = personalInfoStore();
   const [image, setImage] = useState<any>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
   const router = useRouter();
@@ -66,11 +69,22 @@ const PersonalInfo = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setPersonalInfo(data);
-    router.push("/education-info");
-  };
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const formattedBirthday = new Date(data.birthday)
+      .toISOString()
+      .split("T")[0];
 
+    setPersonalInfo(data);
+
+    const res = await aboutMe({
+      ...data,
+      birthday: formattedBirthday,
+    });
+
+    if (res.success) {
+      router.push("/education-info");
+    }
+  };
   return (
     <SEO>
       <FormLayout>
@@ -111,10 +125,10 @@ const PersonalInfo = () => {
                     id="lastname"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Familiyangizni kiriting"
-                    {...form.register("lastname")}
+                    {...form.register("last_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.lastname?.message}
+                    {form.formState.errors.last_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -128,10 +142,10 @@ const PersonalInfo = () => {
                     id="name"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Ismingizni kiriting"
-                    {...form.register("name")}
+                    {...form.register("first_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.name?.message}
+                    {form.formState.errors.first_name?.message}
                   </span>
                 </div>
               </div>
@@ -147,10 +161,10 @@ const PersonalInfo = () => {
                     id="fathername"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Otangizni ismi"
-                    {...form.register("fathername")}
+                    {...form.register("fathers_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.fathername?.message}
+                    {form.formState.errors.fathers_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -162,13 +176,13 @@ const PersonalInfo = () => {
                   </label>
                   <Controller
                     control={form.control}
-                    name="birthdate"
+                    name="birthday"
                     render={({ field }) => (
                       <DatePicker {...field} className="border-none" />
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.birthdate?.message}
+                    {form.formState.errors.birthday?.message}
                   </span>
                 </div>
               </div>
@@ -184,10 +198,10 @@ const PersonalInfo = () => {
                     id="idnumber"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53] uppercase"
                     placeholder="Passport / ID seriya va raqami"
-                    {...form.register("idnumber")}
+                    {...form.register("passport_number")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.idnumber?.message}
+                    {form.formState.errors.passport_number?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -267,7 +281,7 @@ const PersonalInfo = () => {
                 /> */}
 
                   <Controller
-                    name="region"
+                    name="district_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
@@ -303,7 +317,7 @@ const PersonalInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.region?.message}
+                    {form.formState.errors.district_id?.message}
                   </span>
                 </div>
                 <div className="flex-1">
@@ -321,7 +335,7 @@ const PersonalInfo = () => {
                 /> */}
 
                   <Controller
-                    name="citizenship"
+                    name="country_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
@@ -357,7 +371,7 @@ const PersonalInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.citizenship?.message}
+                    {form.formState.errors.country_id?.message}
                   </span>
                 </div>
               </div>
@@ -403,7 +417,11 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+              <Button
+                className={`${
+                  !isLoading ? "!bg-[#18324D]" : "bg-red-400"
+                } w-full !py-[14px] h-auto`}
+              >
                 Davom etish
               </Button>
             </Form>

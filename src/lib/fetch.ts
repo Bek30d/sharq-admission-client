@@ -4,6 +4,7 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: 'https://sharqapi.onedata.uz/api',
   headers: {
     Accept: 'application/json',
+    'Authorization': 'Bearer 2|CdpqGsulXZkIjzXy1kMZs4xhKZobTMmqqPtQtfd3a85d8055',
     'X-USER-TYPE': 'driver',
   },
 });
@@ -11,7 +12,7 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(async config => {
   const token = localStorage.getItem('access_token');
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer 2|CdpqGsulXZkIjzXy1kMZs4xhKZobTMmqqPtQtfd3a85d8055`;
   }
   return config;
 });
