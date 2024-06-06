@@ -4,6 +4,7 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: 'https://sharqapi.onedata.uz/api',
   headers: {
     Accept: 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
     'X-USER-TYPE': 'driver',
   },
 });

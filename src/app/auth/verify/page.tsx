@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/store/auth.store'
 
 type FormData = z.infer<typeof schema>;
 
@@ -20,18 +21,19 @@ const schema = z.object({
 const Verify = () => {
     const [displayValue, setDisplayValue] = useState<string>('');
     const [customDisplayValue, setCustomDisplayValue] = useState<string>('');
+    const { postPassport } = useAuthStore();
 
     const router = useRouter();
 
     const formatDate = (value: string) => {
         const cleanedValue = value.replace(/\D+/g, ''); // Remove all non-digit characters
-        const day = cleanedValue.slice(0, 2);
-        const month = cleanedValue.slice(2, 4);
-        const year = cleanedValue.slice(4, 8);
+        const year = cleanedValue.slice(0, 4);
+        const month = cleanedValue.slice(4, 6);
+        const day = cleanedValue.slice(6);
 
-        let formattedValue = day;
+        let formattedValue = year;
         if (month) formattedValue += ` - ${month}`;
-        if (year) formattedValue += ` - ${year}`;
+        if (day) formattedValue += ` - ${day}`;
 
         return formattedValue;
     };
@@ -63,7 +65,12 @@ const Verify = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<FormData> = (data) => router.push('/personal-info');
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        const response = await postPassport(data.passport, data.birthDate)
+        response === 1 ?
+            router.push('/personal-info') :
+            alert('Xatolik yuz berdi')
+    };
 
     return (
         <Wrapper
