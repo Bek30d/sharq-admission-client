@@ -8,25 +8,31 @@ import { z } from 'zod'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { useIndexStore } from '@/store'
+import { useAuthStore } from '@/store/auth.store'
 
 type FormData = z.infer<typeof schema>;
+const phoneRegex = new RegExp(/^\+998\d{9}$/)
 
 const schema = z.object({
-    phone: z.string().min(3, "phone is required"),
+    phone: z.string().regex(phoneRegex, { message: 'Invalid phone number' }),
 })
 
 const Auth = () => {
     const router = useRouter();
-    const { setPhone } = useIndexStore()
+    const { postPhone } = useAuthStore()
 
     const form = useForm<FormData>({
         resolver: zodResolver(schema),
+        defaultValues: {
+            phone: '+998',
+        }
     });
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        setPhone(data.phone)
-        router.push('/auth/login')
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        const response = await postPhone(data.phone)
+        response === 1 ?
+            router.push('/auth/login') :
+            alert('Xatolik yuz berdi')
     };
 
     return (
