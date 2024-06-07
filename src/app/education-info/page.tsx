@@ -8,7 +8,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/datePicker/DatePicker.1";
 import {
   Select,
   SelectContent,
@@ -24,18 +23,20 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { eduStore } from "@/store/education.store";
+import { DatePicker } from "@/components/datePicker/DatePicker";
 
 const schema = z.object({
-  college: z.string().min(3, "college is required"),
-  year_of_entiring_college: z
+  education: z.string().min(3, "college is required"),
+  entered_year: z
     .date()
     .min(new Date(1900, 0, 1), "year_of_entiring_college is required"),
-  yead_of_graduation_collage: z
+  graduation_year: z
     .date()
     .min(new Date(1900, 0, 1), "yead_of_graduation_collage is required"),
-  region: z.string().min(3, "region is required"),
-  district: z.string().min(3, "district is required"),
-  collage_name: z.string().min(3, "collage_name is required"),
+  region_id: z.string().min(3, "region is required"),
+  district_id: z.string().min(3, "district is required"),
+  education_name: z.string().min(3, "collage_name is required"),
   degree_name: z.string().min(3, "diploma_name is required"),
 });
 
@@ -146,6 +147,7 @@ const certificates = [
 ];
 
 const EducationInfo = () => {
+  const { isLoading, updateEduInfo } = eduStore();
   const [hasLanguageDegree, setHasLanguageDegree] = useState(false);
   const [degreeFile, setDegreeFile] = useState<any>(null);
   const [isHonorsDegree, setIsHonorsDegree] = useState(false);
@@ -166,7 +168,8 @@ const EducationInfo = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     setEducationInfo(data);
-    router.push("/choose-direction");
+    updateEduInfo(data);
+    // router.push("/choose-direction");
     console.log(data);
   };
 
@@ -203,13 +206,13 @@ const EducationInfo = () => {
                 </label>
 
                 <Controller
-                  name="college"
+                  name="education"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="college"
+                          id="education"
                           placeholder="Kollej"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -231,7 +234,7 @@ const EducationInfo = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.college?.message}
+                  {form.formState.errors.education?.message}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
@@ -244,7 +247,7 @@ const EducationInfo = () => {
                   </label>
                   <Controller
                     control={form.control}
-                    name="year_of_entiring_college"
+                    name="entered_year"
                     render={({ field }) => (
                       <DatePicker
                         {...field}
@@ -253,19 +256,19 @@ const EducationInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.year_of_entiring_college?.message}
+                    {form.formState.errors.entered_year?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
                   <label
-                    htmlFor="yead_of_graduation_collage"
+                    htmlFor="graduation_year"
                     className="text-[#424A53] font-medium text-sm"
                   >
                     Bitirgan yili
                   </label>
                   <Controller
                     control={form.control}
-                    name="yead_of_graduation_collage"
+                    name="graduation_year"
                     render={({ field }) => (
                       <DatePicker
                         {...field}
@@ -274,7 +277,7 @@ const EducationInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.yead_of_graduation_collage?.message}
+                    {form.formState.errors.graduation_year?.message}
                   </span>
                 </div>
               </div>
@@ -288,13 +291,13 @@ const EducationInfo = () => {
                     Ta’lim dargohi joylashgan viloyat yoki shahar
                   </label>
                   <Controller
-                    name="region"
+                    name="region_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
-                            id="region"
+                            id="region_id"
                             placeholder="Viloyat"
                             className=" placeholder:!text-[#6E7781]"
                           />
@@ -316,7 +319,7 @@ const EducationInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.region?.message}
+                    {form.formState.errors.region_id?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -327,13 +330,13 @@ const EducationInfo = () => {
                     Tumanni tanlang
                   </label>
                   <Controller
-                    name="district"
+                    name="district_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
-                            id="district"
+                            id="district_id"
                             placeholder="Tumanni tanlang"
                             className=" placeholder:!text-[#6E7781]"
                           />
@@ -355,7 +358,7 @@ const EducationInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.district?.message}
+                    {form.formState.errors.district_id?.message}
                   </span>
                 </div>
               </div>
@@ -371,10 +374,10 @@ const EducationInfo = () => {
                   id="collage_name"
                   className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
                   placeholder="Ta’lim muassasasi nomi"
-                  {...form.register("collage_name")}
+                  {...form.register("education_name")}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.collage_name?.message}
+                  {form.formState.errors.education_name?.message}
                 </span>
               </div>
 
@@ -518,7 +521,7 @@ const EducationInfo = () => {
                         </SelectContent>
                       </Select>
                       <span className="text-red-400 text-xs">
-                        {form.formState.errors.region?.message}
+                        {form.formState.errors.region_id?.message}
                       </span>
                     </div>
                     <div className="flex-1 w-full">
