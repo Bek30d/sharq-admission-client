@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { useIndexStore } from '@/store'
+import { useAuthStore } from '@/store/auth.store'
 
 type FormData = z.infer<typeof schema>;
 
@@ -18,14 +18,19 @@ const schema = z.object({
 
 
 const Login = () => {
-    const { phone } = useIndexStore()
+    const { phone, login } = useAuthStore()
     const router = useRouter();
 
     const form = useForm<FormData>({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<FormData> = (data) => router.push('/auth/verify');
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        const response = await login(data.password)
+        response === 1 ?
+            router.push('/auth/verify') :
+            alert('Xatolik yuz berdi')
+    };
 
     return (
         <Wrapper

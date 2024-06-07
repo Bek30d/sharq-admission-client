@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 
-interface useSoreState {
+interface useStoreState {
     isOpenBurger: boolean,
     setIsOpenBurger: (isOpen: boolean) => void,
     phone: string,
     setPhone: (phone: string) => void
 }
 
-export const useIndexStore = create<useSoreState>((set) => ({
+export const useIndexStore = create<useStoreState>((set) => ({
   isOpenBurger: false,
   setIsOpenBurger: (isOpen: boolean) => set({ isOpenBurger: isOpen }),
   phone: '',
