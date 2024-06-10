@@ -30,16 +30,12 @@ const schema = z.object({
   education: z.string({
     required_error: "Bu maydonni to'ldiring",
   }),
-  entered_year: z
-    .date({
-      required_error: "Bu maydonni to'ldiring",
-    })
-    .min(new Date(1900, 0, 1), "year_of_entiring_college is required"),
-  graduation_year: z
-    .date({
-      required_error: "Bu maydonni to'ldiring",
-    })
-    .min(new Date(1900, 0, 1), "yead_of_graduation_collage is required"),
+  entered_year: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
+  graduation_year: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
   region_id: z.string({
     required_error: "Viloyatni tanlang",
   }),
@@ -170,6 +166,11 @@ const EducationInfo = () => {
     getRegions();
   }, []);
 
+  const years = [
+    2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
+    2022, 2023, 2024,
+  ];
+
   return (
     <SEO>
       <FormLayout>
@@ -228,7 +229,7 @@ const EducationInfo = () => {
                   >
                     Kirgan yili
                   </label>
-                  <Controller
+                  {/* <Controller
                     control={form.control}
                     name="entered_year"
                     render={({ field }) => (
@@ -236,6 +237,34 @@ const EducationInfo = () => {
                         {...field}
                         className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
                       />
+                    )}
+                  /> */}
+                  <Controller
+                    name="entered_year"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
+                          <SelectValue
+                            id="entered_year"
+                            placeholder="Yilni tanlang"
+                            className="!text-[#9ca3af]"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {years.reverse().map((item) => (
+                              <SelectItem
+                                key={item}
+                                value={`${item}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     )}
                   />
                   <span className="text-red-400 text-xs">
@@ -249,7 +278,7 @@ const EducationInfo = () => {
                   >
                     Bitirgan yili
                   </label>
-                  <Controller
+                  {/* <Controller
                     control={form.control}
                     name="graduation_year"
                     render={({ field }) => (
@@ -257,6 +286,35 @@ const EducationInfo = () => {
                         {...field}
                         className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
                       />
+                    )}
+                  /> */}
+
+                  <Controller
+                    name="graduation_year"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
+                          <SelectValue
+                            id="graduation_year"
+                            placeholder="Yilni tanlang"
+                            className="!text-[#9ca3af]"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {years.reverse().map((item) => (
+                              <SelectItem
+                                key={item}
+                                value={`${item}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     )}
                   />
                   <span className="text-red-400 text-xs">

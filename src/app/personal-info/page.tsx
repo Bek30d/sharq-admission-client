@@ -23,7 +23,6 @@ import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
 import { formatPassportField, unformatPassportField } from "@/lib/utils";
-import { DatePicker } from "@/components/datePicker/DatePicker";
 import { formStore } from "@/store/form.store";
 import BaseIcon from "@/components/icons/BaseIcon";
 
