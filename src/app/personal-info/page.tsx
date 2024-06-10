@@ -1,16 +1,14 @@
 "use client";
 
-import BaseIcon from "@/components/icons/BaseIcon";
 import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import user from "../../../public/assets/user-profile.png";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/datePicker/DatePicker.1";
 import {
   Select,
   SelectContent,
@@ -24,40 +22,64 @@ import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
+import { formatPassportField, unformatPassportField } from "@/lib/utils";
+import { formStore } from "@/store/form.store";
+import BaseIcon from "@/components/icons/BaseIcon";
 
 const schema = z.object({
-  lastname: z.string().min(3, "lastname is required"),
-  name: z.string().min(3, "name is required"),
-  fathername: z.string().min(3, "fathername is required"),
-  birthdate: z.date().min(new Date(1900, 0, 1), "birthdate is required"),
-  idnumber: z
+  last_name: z.string({
+    required_error: "Familiyangizni kiriting",
+  }),
+  first_name: z.string({
+    required_error: "Ismingizni kiriting",
+  }),
+  fathers_name: z.string({
+    required_error: "Otangizni ismini kiriting",
+  }),
+  birthday: z
     .string()
+    .regex(/^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, {
+      message: "Birthdate must be in the format YYYY-MM-DD and valid",
+    }),
+  passport_number: z
+    .string({
+      required_error: "Pasport raqamingiz",
+    })
     .regex(
       /^[A-Za-z]{2}\d{7}$/,
       "Invalid format. Expected format: 2 letters followed by 7 digits"
     ),
   jshshir: z
-    .string()
+    .string({
+      required_error: "JSHSHIR",
+    })
     .regex(/^\d{14}$/, "Invalid format. Expected format: 14 digits"),
-  gender: z.string().min(3, "Gender is required"),
-  citizenship: z.string().min(3, "citizenship be at least 18"),
-  region: z.string().min(3, "region is required"),
-  phone: z.string().min(3, "phone is required"),
-  additionaphone: z.string().min(3, "additionaphone is required"),
+  gender: z.string({
+    required_error: "Jinsingizni tanlang",
+  }),
+  country_id: z.string({
+    required_error: "Fuqaroligingiz tanlang",
+  }),
+  region_id: z.string({
+    required_error: "Tug'ilgan viloyatingizni tanlang",
+  }),
+  phone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
+  additionaphone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const PersonalInfo = () => {
+  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
   const [image, setImage] = useState<any>("");
-  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
+  const [imageId, setImageId] = useState<string>("");
+  const [personalInfo, setPersonalInfo] = useLocalStorage("userData", {});
+  const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
   const router = useRouter();
-
-  function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.files && event.target.files.length > 0) {
-      setImage(event.target.files[0]);
-    }
-  }
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -66,10 +88,75 @@ const PersonalInfo = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setPersonalInfo(data);
-    router.push("/education-info");
+  const [birthdate, setBirthdate] = useState("");
+
+  const handleBirthdateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let value = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    if (value.length > 8) value = value.slice(0, 8); // Limit to 8 digits
+
+    const formattedValue = value.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+    setBirthdate(formattedValue);
+
+    form.setValue("birthday", formattedValue);
   };
+
+  async function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files && event.target.files.length > 0) {
+      setImage(event.target.files[0]);
+      let formdata = new FormData();
+      formdata.append("file", event.target.files[0]);
+      const res = await fileUpload(formdata);
+
+      res.success ? setImageId(res.data.id) : null;
+    }
+  }
+
+  const countries = [
+    {
+      id: 1,
+      name: "Uzbekistan",
+    },
+    {
+      id: 2,
+      name: "Russia",
+    },
+    {
+      id: 3,
+      name: "United Kingdom",
+    },
+  ];
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (!isLoading) {
+      console.log(data);
+
+      const formattedBirthday = new Date(data.birthday)
+        .toISOString()
+        .split("T")[0];
+
+      setPersonalInfo(data);
+
+      const res = await aboutMe({
+        ...data,
+        birthday: formattedBirthday,
+        region_id: regions.find((region) => region.name === data.region_id).id,
+        image_id: imageId,
+        country_id: countries.find(
+          (country) => country.name === data.country_id
+        )?.id,
+      });
+
+      if (res.success) {
+        router.push("/education-info");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getRegions();
+  }, []);
 
   return (
     <SEO>
@@ -111,10 +198,10 @@ const PersonalInfo = () => {
                     id="lastname"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Familiyangizni kiriting"
-                    {...form.register("lastname")}
+                    {...form.register("last_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.lastname?.message}
+                    {form.formState.errors.last_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -128,10 +215,10 @@ const PersonalInfo = () => {
                     id="name"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Ismingizni kiriting"
-                    {...form.register("name")}
+                    {...form.register("first_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.name?.message}
+                    {form.formState.errors.first_name?.message}
                   </span>
                 </div>
               </div>
@@ -147,10 +234,10 @@ const PersonalInfo = () => {
                     id="fathername"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Otangizni ismi"
-                    {...form.register("fathername")}
+                    {...form.register("fathers_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.fathername?.message}
+                    {form.formState.errors.fathers_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -160,15 +247,29 @@ const PersonalInfo = () => {
                   >
                     Tug`ilgan sanangiz
                   </label>
-                  <Controller
+                  <div className="relative">
+                    <BaseIcon
+                      name="calendar"
+                      cn="absolute !right-4 top-1/2 tranform -translate-y-1/2"
+                      color="#424A53"
+                    />
+                    <Input
+                      id="birthday"
+                      className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
+                      placeholder="Tug`ilgan sanangiz"
+                      value={birthdate}
+                      onChange={handleBirthdateChange}
+                    />
+                  </div>
+                  {/* <Controller
                     control={form.control}
-                    name="birthdate"
+                    name="birthday"
                     render={({ field }) => (
                       <DatePicker {...field} className="border-none" />
                     )}
-                  />
+                  /> */}
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.birthdate?.message}
+                    {form.formState.errors.birthday?.message}
                   </span>
                 </div>
               </div>
@@ -184,10 +285,19 @@ const PersonalInfo = () => {
                     id="idnumber"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53] uppercase"
                     placeholder="Passport / ID seriya va raqami"
-                    {...form.register("idnumber")}
+                    value={customDisplayValue}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      const formattedValue = formatPassportField(inputValue);
+                      setCustomDisplayValue(formattedValue);
+                      form.setValue(
+                        "passport_number",
+                        unformatPassportField(inputValue)
+                      );
+                    }}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.idnumber?.message}
+                    {form.formState.errors.passport_number?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -259,51 +369,45 @@ const PersonalInfo = () => {
                   >
                     Tug’ilgan joy
                   </label>
-                  {/* <Input
-                  id="region"
-                  className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                  placeholder="Tug’ilgan joyingizni kiriting"
-                  {...register("region")}
-                /> */}
 
                   <Controller
-                    name="region"
+                    name="region_id"
                     control={form.control}
-                    render={({ field }) => (
-                      <Select {...field} onValueChange={field.onChange}>
-                        <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
-                          <SelectValue
-                            placeholder="Tug`ilgan joyingizni kiriting"
-                            className="!text-[#9ca3af]"
-                          />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem
-                              value="chilonzor"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Chilonzor
-                            </SelectItem>
-                            <SelectItem
-                              value="mirobod"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Mirobod
-                            </SelectItem>{" "}
-                            <SelectItem
-                              value="yunusobod"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Yunusobod
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
+                    render={({ field }) => {
+                      return (
+                        <Select
+                          {...field}
+                          value={field.value}
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                          }}
+                        >
+                          <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
+                            <SelectValue
+                              placeholder="Tug`ilgan joyingizni kiriting"
+                              className="!text-[#9ca3af]"
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {regions.map((region) => (
+                                <SelectItem
+                                  key={region.id}
+                                  value={region.name}
+                                  className="!text-[#424A53] cursor-pointer"
+                                >
+                                  {region.name}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      );
+                    }}
                   />
+
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.region?.message}
+                    {form.formState.errors.region_id?.message}
                   </span>
                 </div>
                 <div className="flex-1">
@@ -313,15 +417,9 @@ const PersonalInfo = () => {
                   >
                     Fuqarolik
                   </label>
-                  {/* <Input
-                  id="citizenship"
-                  className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                  placeholder="Fuqaroligingiz"
-                  {...register("citizenship")}
-                /> */}
 
                   <Controller
-                    name="citizenship"
+                    name="country_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
@@ -333,31 +431,22 @@ const PersonalInfo = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem
-                              value="uzbekistan"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              O`zbekiston
-                            </SelectItem>
-                            <SelectItem
-                              value="usa"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              USA
-                            </SelectItem>
-                            <SelectItem
-                              value="ksa"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              KSA
-                            </SelectItem>
+                            {countries.map((item) => (
+                              <SelectItem
+                                key={item.id}
+                                value={item.name}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item.name}
+                              </SelectItem>
+                            ))}
                           </SelectGroup>
                         </SelectContent>
                       </Select>
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.citizenship?.message}
+                    {form.formState.errors.country_id?.message}
                   </span>
                 </div>
               </div>
@@ -403,7 +492,11 @@ const PersonalInfo = () => {
                 </div>
               </div>
 
-              <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+              <Button
+                className={`${
+                  !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                } w-full !py-[14px] h-auto`}
+              >
                 Davom etish
               </Button>
             </Form>

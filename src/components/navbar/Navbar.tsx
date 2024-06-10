@@ -13,15 +13,21 @@ import { links } from "../profileSidebar/ProfileSidebar";
 import Container from "../container/Container";
 import { useEffect } from "react";
 import { userStore } from "@/store/main.store";
+import { useLocalStorage } from "usehooks-ts";
 
 const Navbar = () => {
   const { isLoading, user, getMyData } = userStore();
   const { isOpenBurger, setIsOpenBurger } = useIndexStore();
+  const [userData, serUserData] = useLocalStorage("userData", {});
   const path = usePathname();
 
   useEffect(() => {
     getMyData();
   }, []);
+
+  useEffect(() => {
+    serUserData(user);
+  }, [user]);
 
   return (
     <div className="w-full h-12 bg-[#18324D]">

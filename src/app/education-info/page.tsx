@@ -3,12 +3,11 @@
 import BaseIcon from "@/components/icons/BaseIcon";
 import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/datePicker/DatePicker.1";
 import {
   Select,
   SelectContent,
@@ -18,25 +17,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { DatePicker } from "@/components/datePicker/DatePicker";
+import { formStore } from "@/store/form.store";
 
 const schema = z.object({
-  college: z.string().min(3, "college is required"),
-  year_of_entiring_college: z
-    .date()
-    .min(new Date(1900, 0, 1), "year_of_entiring_college is required"),
-  yead_of_graduation_collage: z
-    .date()
-    .min(new Date(1900, 0, 1), "yead_of_graduation_collage is required"),
-  region: z.string().min(3, "region is required"),
-  district: z.string().min(3, "district is required"),
-  collage_name: z.string().min(3, "collage_name is required"),
-  degree_name: z.string().min(3, "diploma_name is required"),
+  education: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
+  entered_year: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
+  graduation_year: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
+  region_id: z.string({
+    required_error: "Viloyatni tanlang",
+  }),
+  district_id: z.string({
+    required_error: "Tumanni tanlang",
+  }),
+  education_name: z
+    .string({
+      required_error: "Bu maydonni to'ldiring",
+    })
+    .min(3, "Kamida 3 ta harf bo'lishi kerak"),
+  certificate_name: z
+    .string({
+      required_error: "Bu maydonni to'ldiring",
+    })
+    .min(3, "Kamida 3 ta harf bo'lishi kerak"),
+  is_cert_privileged: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -60,129 +76,100 @@ const collageItems = [
   },
 ];
 
-const regions = [
-  {
-    value: "tashkent",
-    label: "Toshkent",
-  },
-  {
-    value: "bukhara",
-    label: "Bukhara",
-  },
-  {
-    value: "samarqand",
-    label: "Samarqand",
-  },
-  {
-    value: "navoi",
-    label: "Navoi",
-  },
-  {
-    value: "jizzax",
-    label: "Jizzax",
-  },
-  {
-    value: "qashqadaryo",
-    label: "Qashqadaryo",
-  },
-  {
-    value: "sirdaryo",
-    label: "Sirdaryo",
-  },
-  {
-    value: "qoraqalpogiston",
-    label: "Qoraqalpogiston",
-  },
-  {
-    value: "andijon",
-    label: "Andijon",
-  },
-  {
-    value: "namangan",
-    label: "Namangan",
-  },
-  {
-    value: "surxondaryo",
-    label: "Surxondaryo",
-  },
-];
-
-const district = [
-  {
-    value: "toshkent",
-    label: "Toshkent",
-  },
-  {
-    value: "bukhara",
-    label: "Bukhara",
-  },
-  {
-    value: "samarqand",
-    label: "Samarqand",
-  },
-  {
-    value: "navoi",
-    label: "Navoi",
-  },
-];
-
 const certificates = [
   {
-    value: "ielts",
+    id: "1",
     label: "IELTS",
   },
   {
-    value: "toefl",
+    id: "2",
     label: "TOEFL",
   },
   {
-    value: "gre",
+    id: "3",
     label: "GRE",
   },
   {
-    value: "gmat",
+    id: "4",
     label: "GMAT",
   },
 ];
 
 const EducationInfo = () => {
+  const { isLoading, updateEduInfo, regions, getRegions, fileUpload } =
+    formStore();
   const [hasLanguageDegree, setHasLanguageDegree] = useState(false);
   const [degreeFile, setDegreeFile] = useState<any>(null);
-  const [isHonorsDegree, setIsHonorsDegree] = useState(false);
-  const [certificat, setCertificate] = useState<string>("");
+  const [certificatId, setCertificateId] = useState<string>("");
+  const [districts, setDistricts] = useState([]);
   const [certificateFile, setCertificateFile] = useState<any>(null);
-  const [educationInfo, setEducationInfo] = useLocalStorage(
-    "educationInfo",
-    {}
-  );
+  const [langCertificate, setLangCertificate] = useState<any>(null);
+  const [langCertificateId, setLangCertificateId] = useState<string>("");
   const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      ...educationInfo,
-    },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setEducationInfo(data);
-    router.push("/choose-direction");
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const result = await updateEduInfo({
+      ...data,
+      entered_year: new Date(data.entered_year).toISOString().split("T")[0],
+      graduation_year: new Date(data.graduation_year)
+        .toISOString()
+        .split("T")[0],
+      region_id: `${
+        regions.find((region) => region.name === data.region_id).id
+      }`,
+      district_id: `${
+        districts.find((district) => district?.name === data.district_id).id
+      }`,
+      graduation_cert_id: certificatId,
+      is_cert_privileged: data.is_cert_privileged
+        ? data.is_cert_privileged
+        : false,
+      language_cert_id: langCertificateId,
+      language_cert_type: langCertificate,
+    });
+
+    result.success ? router.push("/choose-direction") : null;
   };
 
-  function handleSetDegreeFile(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleSetDegreeFile(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     if (event.target.files && event.target.files.length > 0) {
       setDegreeFile(event.target.files[0]);
+      let formdata = new FormData();
+      formdata.append("file", event.target.files[0]);
+      const res = await fileUpload(formdata);
+
+      res.success ? setCertificateId(res.data.id) : null;
     }
   }
 
-  function handleSetCertificateFile(
+  async function handleSetCertificateFile(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     if (event.target.files && event.target.files.length > 0) {
       setCertificateFile(event.target.files[0]);
+
+      let formdata = new FormData();
+      formdata.append("file", event.target.files[0]);
+      const res = await fileUpload(formdata);
+
+      res.success ? setLangCertificateId(res.data.id) : null;
     }
   }
+
+  useEffect(() => {
+    getRegions();
+  }, []);
+
+  const years = [
+    2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
+    2022, 2023, 2024,
+  ];
 
   return (
     <SEO>
@@ -203,13 +190,13 @@ const EducationInfo = () => {
                 </label>
 
                 <Controller
-                  name="college"
+                  name="education"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="college"
+                          id="education"
                           placeholder="Kollej"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -231,7 +218,7 @@ const EducationInfo = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.college?.message}
+                  {form.formState.errors.education?.message}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
@@ -242,39 +229,96 @@ const EducationInfo = () => {
                   >
                     Kirgan yili
                   </label>
-                  <Controller
+                  {/* <Controller
                     control={form.control}
-                    name="year_of_entiring_college"
+                    name="entered_year"
                     render={({ field }) => (
                       <DatePicker
                         {...field}
                         className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
                       />
                     )}
+                  /> */}
+                  <Controller
+                    name="entered_year"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
+                          <SelectValue
+                            id="entered_year"
+                            placeholder="Yilni tanlang"
+                            className="!text-[#9ca3af]"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {years.reverse().map((item) => (
+                              <SelectItem
+                                key={item}
+                                value={`${item}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.year_of_entiring_college?.message}
+                    {form.formState.errors.entered_year?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
                   <label
-                    htmlFor="yead_of_graduation_collage"
+                    htmlFor="graduation_year"
                     className="text-[#424A53] font-medium text-sm"
                   >
                     Bitirgan yili
                   </label>
-                  <Controller
+                  {/* <Controller
                     control={form.control}
-                    name="yead_of_graduation_collage"
+                    name="graduation_year"
                     render={({ field }) => (
                       <DatePicker
                         {...field}
                         className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
                       />
                     )}
+                  /> */}
+
+                  <Controller
+                    name="graduation_year"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
+                          <SelectValue
+                            id="graduation_year"
+                            placeholder="Yilni tanlang"
+                            className="!text-[#9ca3af]"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {years.reverse().map((item) => (
+                              <SelectItem
+                                key={item}
+                                value={`${item}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.yead_of_graduation_collage?.message}
+                    {form.formState.errors.graduation_year?.message}
                   </span>
                 </div>
               </div>
@@ -288,13 +332,22 @@ const EducationInfo = () => {
                     Ta’lim dargohi joylashgan viloyat yoki shahar
                   </label>
                   <Controller
-                    name="region"
+                    name="region_id"
                     control={form.control}
                     render={({ field }) => (
-                      <Select {...field} onValueChange={field.onChange}>
+                      <Select
+                        {...field}
+                        onValueChange={(value) => {
+                          field.onChange(value);
+                          setDistricts(
+                            regions.find((item) => item.name === value)
+                              .districts
+                          );
+                        }}
+                      >
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
-                            id="region"
+                            id="region_id"
                             placeholder="Viloyat"
                             className=" placeholder:!text-[#6E7781]"
                           />
@@ -303,11 +356,11 @@ const EducationInfo = () => {
                           <SelectGroup>
                             {regions.map((item) => (
                               <SelectItem
-                                key={item.value}
-                                value={item.value}
+                                key={item.id}
+                                value={item.name}
                                 className="!text-[#424A53] cursor-pointer"
                               >
-                                {item.label}
+                                {item.name}
                               </SelectItem>
                             ))}
                           </SelectGroup>
@@ -316,48 +369,79 @@ const EducationInfo = () => {
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.region?.message}
+                    {form.formState.errors.region_id?.message}
                   </span>
                 </div>
-                <div className="flex-1 w-full">
-                  <label
-                    htmlFor="district"
-                    className="text-[#424A53] font-medium text-sm"
-                  >
-                    Tumanni tanlang
-                  </label>
-                  <Controller
-                    name="district"
-                    control={form.control}
-                    render={({ field }) => (
-                      <Select {...field} onValueChange={field.onChange}>
-                        <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
-                          <SelectValue
-                            id="district"
-                            placeholder="Tumanni tanlang"
-                            className=" placeholder:!text-[#6E7781]"
-                          />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            {district.map((item) => (
-                              <SelectItem
-                                key={item.value}
-                                value={item.value}
-                                className="!text-[#424A53] cursor-pointer"
-                              >
-                                {item.label}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                  <span className="text-red-400 text-xs">
-                    {form.formState.errors.district?.message}
-                  </span>
-                </div>
+                {districts.length ? (
+                  <div className="flex-1 w-full">
+                    <label
+                      htmlFor="district"
+                      className="text-[#424A53] font-medium text-sm"
+                    >
+                      Tumanni tanlang
+                    </label>
+                    <Controller
+                      name="district_id"
+                      control={form.control}
+                      render={({ field }) => (
+                        <Select {...field} onValueChange={field.onChange}>
+                          <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781] disabled">
+                            <SelectValue
+                              id="district_id"
+                              placeholder="Tumanni tanlang"
+                              className=" placeholder:!text-[#6E7781]"
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {districts?.map(
+                                (item: { id: number; name: string }) => (
+                                  <SelectItem
+                                    key={item.id}
+                                    value={item.name}
+                                    className="!text-[#424A53] cursor-pointer"
+                                  >
+                                    {item.name}
+                                  </SelectItem>
+                                )
+                              )}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                    <span className="text-red-400 text-xs">
+                      {form.formState.errors.district_id?.message}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex-1 w-full">
+                    <label
+                      htmlFor="district"
+                      className="text-[#424A53] font-medium text-sm"
+                    >
+                      Tumanni tanlang
+                    </label>
+                    <Controller
+                      name="district_id"
+                      control={form.control}
+                      render={({ field }) => (
+                        <Select {...field} onValueChange={field.onChange}>
+                          <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781] cursor-auto">
+                            <SelectValue
+                              id="district_id"
+                              placeholder="Tumanni tanlang"
+                              className=" placeholder:!text-[#6E7781]"
+                            />
+                          </SelectTrigger>
+                        </Select>
+                      )}
+                    />
+                    <span className="text-red-400 text-xs">
+                      {form.formState.errors.district_id?.message}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="w-full mb-6">
@@ -371,10 +455,10 @@ const EducationInfo = () => {
                   id="collage_name"
                   className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
                   placeholder="Ta’lim muassasasi nomi"
-                  {...form.register("collage_name")}
+                  {...form.register("education_name")}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.collage_name?.message}
+                  {form.formState.errors.education_name?.message}
                 </span>
               </div>
 
@@ -410,12 +494,12 @@ const EducationInfo = () => {
                     type="file"
                     onChange={(e) => {
                       handleSetDegreeFile(e);
-                      form.setValue("degree_name", e.target.value);
+                      form.setValue("certificate_name", e.target.value);
                     }}
                   />
                 </div>
                 <span className="text-red-400 text-xs block">
-                  {form.formState.errors.degree_name?.message}
+                  {form.formState.errors.certificate_name?.message}
                 </span>
                 <span className="text-[#57606A] text-sm">
                   Hajmi 5 MBdan katta bo’lmagan JPEG, JPG, PNG, PDF fayllarni
@@ -425,16 +509,27 @@ const EducationInfo = () => {
 
               <div className="mb-6">
                 <div className="flex gap-2 items-center">
-                  <Checkbox
-                    id="honors_degree"
-                    onChange={() => setIsHonorsDegree(!isHonorsDegree)}
-                  />
-                  <label
-                    htmlFor="honors_degree"
-                    className="text-[#424A53] font-medium text-sm"
-                  >
-                    Imtiyozli diplom yoki shahodatnoma
-                  </label>
+                  <FormField
+                    control={form.control}
+                    name="is_cert_privileged"
+                    render={({ field }) => (
+                      <FormItem className="flex gap-2 items-center">
+                        <FormControl className="mt-2">
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            id="is_cert_privileged"
+                          />
+                        </FormControl>
+                        <label
+                          htmlFor="is_cert_privileged"
+                          className="text-[#424A53] font-medium text-sm "
+                        >
+                          Imtiyozli diplom yoki shahodatnoma
+                        </label>
+                      </FormItem>
+                    )}
+                  ></FormField>
                 </div>
               </div>
 
@@ -495,7 +590,13 @@ const EducationInfo = () => {
                       >
                         Sertifikat turi
                       </label>
-                      <Select>
+                      <Select
+                        onValueChange={(value) => {
+                          setLangCertificate(
+                            certificates.find((cer) => cer.label === value)?.id
+                          );
+                        }}
+                      >
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="certificates"
@@ -507,8 +608,8 @@ const EducationInfo = () => {
                           <SelectGroup>
                             {certificates.map((item) => (
                               <SelectItem
-                                key={item.value}
-                                value={item.value}
+                                key={item.id}
+                                value={item.label}
                                 className="!text-[#424A53] cursor-pointer"
                               >
                                 {item.label}
@@ -517,9 +618,6 @@ const EducationInfo = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <span className="text-red-400 text-xs">
-                        {form.formState.errors.region?.message}
-                      </span>
                     </div>
                     <div className="flex-1 w-full">
                       <label
@@ -562,7 +660,11 @@ const EducationInfo = () => {
                 </div>
               ) : null}
 
-              <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+              <Button
+                className={`${
+                  !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                } w-full !py-[14px] h-auto`}
+              >
                 Davom etish
               </Button>
             </Form>
