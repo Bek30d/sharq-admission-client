@@ -1,6 +1,5 @@
 "use client";
 
-import BaseIcon from "@/components/icons/BaseIcon";
 import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
@@ -23,41 +22,86 @@ import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
-import { personalInfoStore } from "@/store/personal-info.store";
 import { formatPassportField, unformatPassportField } from "@/lib/utils";
 import { DatePicker } from "@/components/datePicker/DatePicker";
+import { formStore } from "@/store/form.store";
+import BaseIcon from "@/components/icons/BaseIcon";
 
 const schema = z.object({
-  last_name: z.string().min(3, "lastname is required"),
-  first_name: z.string().min(3, "name is required"),
-  fathers_name: z.string().min(3, "fathername is required"),
-  birthday: z.date().min(new Date(1900, 0, 1), "birthdate is required"),
-  passport_number: z
+  last_name: z.string({
+    required_error: "Familiyangizni kiriting",
+  }),
+  first_name: z.string({
+    required_error: "Ismingizni kiriting",
+  }),
+  fathers_name: z.string({
+    required_error: "Otangizni ismini kiriting",
+  }),
+  birthday: z
     .string()
+    .regex(/^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, {
+      message: "Birthdate must be in the format YYYY-MM-DD and valid",
+    }),
+  passport_number: z
+    .string({
+      required_error: "Pasport raqamingiz",
+    })
     .regex(
       /^[A-Za-z]{2}\d{7}$/,
       "Invalid format. Expected format: 2 letters followed by 7 digits"
     ),
   jshshir: z
-    .string()
+    .string({
+      required_error: "JSHSHIR",
+    })
     .regex(/^\d{14}$/, "Invalid format. Expected format: 14 digits"),
-  gender: z.string().min(3, "Gender is required"),
-  country_id: z.string().min(3, "citizenship be at least 18"),
-  region_id: z.string(),
-  phone: z.string().min(3, "phone is required"),
-  additionaphone: z.string().min(3, "additionaphone is required"),
+  gender: z.string({
+    required_error: "Jinsingizni tanlang",
+  }),
+  country_id: z.string({
+    required_error: "Fuqaroligingiz tanlang",
+  }),
+  region_id: z.string({
+    required_error: "Tug'ilgan viloyatingizni tanlang",
+  }),
+  phone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
+  additionaphone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const PersonalInfo = () => {
-  const { isLoading, aboutMe, fileUpload, getRegions, regions } =
-    personalInfoStore();
+  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
   const [image, setImage] = useState<any>("");
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage("userData", {});
   const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
   const router = useRouter();
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      ...personalInfo,
+    },
+  });
+
+  const [birthdate, setBirthdate] = useState("");
+
+  const handleBirthdateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let value = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    if (value.length > 8) value = value.slice(0, 8); // Limit to 8 digits
+
+    const formattedValue = value.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+    setBirthdate(formattedValue);
+
+    form.setValue("birthday", formattedValue);
+  };
 
   async function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
@@ -69,13 +113,6 @@ const PersonalInfo = () => {
       res.success ? setImageId(res.data.id) : null;
     }
   }
-
-  const form = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      ...personalInfo,
-    },
-  });
 
   const countries = [
     {
@@ -211,13 +248,27 @@ const PersonalInfo = () => {
                   >
                     Tug`ilgan sanangiz
                   </label>
-                  <Controller
+                  <div className="relative">
+                    <BaseIcon
+                      name="calendar"
+                      cn="absolute !right-4 top-1/2 tranform -translate-y-1/2"
+                      color="#424A53"
+                    />
+                    <Input
+                      id="birthday"
+                      className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
+                      placeholder="Tug`ilgan sanangiz"
+                      value={birthdate}
+                      onChange={handleBirthdateChange}
+                    />
+                  </div>
+                  {/* <Controller
                     control={form.control}
                     name="birthday"
                     render={({ field }) => (
                       <DatePicker {...field} className="border-none" />
                     )}
-                  />
+                  /> */}
                   <span className="text-red-400 text-xs">
                     {form.formState.errors.birthday?.message}
                   </span>

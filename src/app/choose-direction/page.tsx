@@ -23,7 +23,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -31,28 +30,38 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { formStore } from "@/store/form.store";
+import { userStore } from "@/store/main.store";
 
 const schema = z.object({
-  degree: z.string().min(3, "degree is required"),
-  directions: z.string().min(3, "directions is required"),
-  education_type: z.string().min(3, "education_type is required"),
-  education_lang: z.string().min(3, "education_lang is required"),
+  degree: z.string({
+    invalid_type_error: "Invalid name",
+    required_error: "Ta'lim darajani tanlash majburiy",
+  }),
+  edu_direction: z.string({
+    invalid_type_error: "Invalid name",
+    required_error: "Ta'lim yo'nalishini tanlash majburiy",
+  }),
+  education_form: z.string({
+    invalid_type_error: "Invalid name",
+    required_error: "Ta'lim shaklini tanlash majburiy",
+  }),
+  edu_lang: z.string({
+    invalid_type_error: "Invalid name",
+    required_error: "Ta'lim tilini tanlash majburiy",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const degrees = [
   {
-    value: "bakalavr",
+    value: "bachelor",
     label: "Bakalavr",
   },
   {
-    value: "magistr",
+    value: "master",
     label: "Magistr",
-  },
-  {
-    value: "doctor",
-    label: "Doctor",
   },
 ];
 
@@ -73,53 +82,61 @@ const directions = [
 
 const education_types = [
   {
-    value: "kunduzgi",
+    value: "day",
     label: "Kunduzgi",
   },
   {
-    value: "kechgi",
+    value: "evening",
     label: "Kechgi",
   },
   {
-    value: "sirtqi",
+    value: "extramural",
     label: "Sirtqi",
+  },
+  {
+    value: "remote",
+    label: "Onlayn",
   },
 ];
 
 const education_lang = [
   {
-    value: "english",
+    value: "en",
     label: "Englizcha",
   },
   {
-    value: "russian",
+    value: "ru",
     label: "Ruscha",
   },
   {
-    value: "uzbek",
+    value: "uz",
     label: "O'zbekcha",
   },
 ];
 
 const ChooseDirection = () => {
+  const { user } = userStore();
+  const { chooseDirection } = formStore();
   const [isReliable, setIsReliable] = useState(false);
-  const [directionInfo, setDirectionInfo] = useLocalStorage(
-    "directionInfo",
-    {}
-  );
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      ...directionInfo,
+      // ...directionInfo,
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setDirectionInfo(data);
-    setIsOpen(true);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // setDirectionInfo(data);
+    // setIsOpen(true);
+
+    const result = chooseDirection(user.id, {
+      ...data,
+      faculty: "bachelor",
+      is_confirmed: isReliable,
+    });
   };
 
   return (
@@ -174,20 +191,20 @@ const ChooseDirection = () => {
               </div>
               <div className="mb-6 w-full">
                 <label
-                  htmlFor="directions"
+                  htmlFor="edu_direction"
                   className="text-[#424A53] font-medium text-sm"
                 >
                   Yo’nalish yoki mutaxxassislik
                 </label>
 
                 <Controller
-                  name="directions"
+                  name="edu_direction"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="directions"
+                          id="edu_direction"
                           placeholder="Yo'nalishni tanlang"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -209,25 +226,25 @@ const ChooseDirection = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.directions?.message}
+                  {form.formState.errors.edu_direction?.message}
                 </span>
               </div>
               <div className="mb-6 w-full">
                 <label
-                  htmlFor="education_type"
+                  htmlFor="education_form"
                   className="text-[#424A53] font-medium text-sm"
                 >
                   Ta’lim shakli
                 </label>
 
                 <Controller
-                  name="education_type"
+                  name="education_form"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="education_type"
+                          id="education_form"
                           placeholder="Ta'lim turini tanlang"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -249,7 +266,7 @@ const ChooseDirection = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.education_type?.message}
+                  {form.formState.errors.education_form?.message}
                 </span>
               </div>
               <div className="mb-6 w-full">
@@ -261,13 +278,13 @@ const ChooseDirection = () => {
                 </label>
 
                 <Controller
-                  name="education_lang"
+                  name="edu_lang"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="education_lang"
+                          id="edu_lang"
                           placeholder="Ta'lim tilini tanlang"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -289,14 +306,14 @@ const ChooseDirection = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.education_lang?.message}
+                  {form.formState.errors.edu_lang?.message}
                 </span>
               </div>
 
               <div className="flex gap-2 mb-10">
                 <Checkbox
                   id="honors_degree"
-                  onChange={() => setIsReliable(!isReliable)}
+                  onCheckedChange={() => setIsReliable(!isReliable)}
                   className="mt-1"
                 />
                 <label
@@ -335,12 +352,18 @@ const ChooseDirection = () => {
 
               <AlertDialog open={isOpen}>
                 <AlertDialogTrigger asChild>
-                  <Button
-                    type="submit"
-                    className="!bg-[#18324D] w-full !py-[14px] h-auto"
-                  >
-                    Jo’natish
-                  </Button>
+                  {isReliable ? (
+                    <Button
+                      type="submit"
+                      className="!bg-[#18324D] w-full !py-[14px] h-auto"
+                    >
+                      Jo’natish
+                    </Button>
+                  ) : (
+                    <Button className="!bg-[#18324d83] w-full !py-[14px] h-auto !cursor-auto">
+                      Jo’natish
+                    </Button>
+                  )}
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>

@@ -1,4 +1,4 @@
-import { ABOUT_ME, GET_REGIONS, UPLOAD } from '@/api/personal-info';
+import { ABOUT_ME, CHOOSE_DIRECTION, EDUCATION_INFO, GET_REGIONS, UPLOAD } from '@/api/form'
 import { create } from 'zustand'
 
 interface useSoreState {
@@ -7,9 +7,11 @@ interface useSoreState {
   aboutMe: (data:any) => Promise<any>;
   fileUpload: (data:any) => Promise<any>;
   getRegions: () => Promise<any>;
+  updateEduInfo: (data: any) => Promise<any>;
+  chooseDirection: (id: string, data: any) => Promise<any>;
 }
 
-export const personalInfoStore = create<useSoreState>((set) => ({
+export const formStore = create<useSoreState>((set) => ({
   isLoading: false,
   regions: [],
   aboutMe: async (data:any) => {
@@ -43,8 +45,27 @@ export const personalInfoStore = create<useSoreState>((set) => ({
       regions: result.data.regions
     })
     }
-    
-    
+  },
 
+  updateEduInfo: async (data:any) => {
+    set({ isLoading: true });
+
+    const result = await EDUCATION_INFO(data);    
+
+    set({
+      isLoading: false,
+    });
+
+    return result
+  },
+
+  chooseDirection: async (id: string, data: any) => {
+    set({ isLoading: true });
+    const result = await CHOOSE_DIRECTION(id, data);
+    set({
+      isLoading: false,
+    })
+
+    return result
   }
 }))

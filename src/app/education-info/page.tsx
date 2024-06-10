@@ -23,22 +23,39 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { eduStore } from "@/store/education.store";
 import { DatePicker } from "@/components/datePicker/DatePicker";
-import { personalInfoStore } from "@/store/personal-info.store";
+import { formStore } from "@/store/form.store";
 
 const schema = z.object({
-  education: z.string().min(3, "college is required"),
+  education: z.string({
+    required_error: "Bu maydonni to'ldiring",
+  }),
   entered_year: z
-    .date()
+    .date({
+      required_error: "Bu maydonni to'ldiring",
+    })
     .min(new Date(1900, 0, 1), "year_of_entiring_college is required"),
   graduation_year: z
-    .date()
+    .date({
+      required_error: "Bu maydonni to'ldiring",
+    })
     .min(new Date(1900, 0, 1), "yead_of_graduation_collage is required"),
-  region_id: z.string().min(3, "region is required"),
-  district_id: z.string().min(3, "district is required"),
-  education_name: z.string().min(3, "collage_name is required"),
-  certificate_name: z.string().min(3, "diploma_name is required"),
+  region_id: z.string({
+    required_error: "Viloyatni tanlang",
+  }),
+  district_id: z.string({
+    required_error: "Tumanni tanlang",
+  }),
+  education_name: z
+    .string({
+      required_error: "Bu maydonni to'ldiring",
+    })
+    .min(3, "Kamida 3 ta harf bo'lishi kerak"),
+  certificate_name: z
+    .string({
+      required_error: "Bu maydonni to'ldiring",
+    })
+    .min(3, "Kamida 3 ta harf bo'lishi kerak"),
   is_cert_privileged: z.boolean().optional(),
 });
 
@@ -83,8 +100,8 @@ const certificates = [
 ];
 
 const EducationInfo = () => {
-  const { isLoading, updateEduInfo } = eduStore();
-  const { regions, getRegions, fileUpload } = personalInfoStore();
+  const { isLoading, updateEduInfo, regions, getRegions, fileUpload } =
+    formStore();
   const [hasLanguageDegree, setHasLanguageDegree] = useState(false);
   const [degreeFile, setDegreeFile] = useState<any>(null);
   const [certificatId, setCertificateId] = useState<string>("");
