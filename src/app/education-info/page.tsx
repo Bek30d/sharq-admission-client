@@ -22,9 +22,9 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { DatePicker } from "@/components/datePicker/DatePicker";
 import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const schema = z.object({
   edu_type: z.string({
@@ -232,16 +232,6 @@ const EducationInfo = () => {
                   >
                     Kirgan yili
                   </label>
-                  {/* <Controller
-                    control={form.control}
-                    name="entered_year"
-                    render={({ field }) => (
-                      <DatePicker
-                        {...field}
-                        className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
-                      />
-                    )}
-                  /> */}
                   <Controller
                     name="entered_year"
                     control={form.control}
@@ -678,4 +668,4 @@ const EducationInfo = () => {
   );
 };
 
-export default EducationInfo;
+export default withAuth(EducationInfo);

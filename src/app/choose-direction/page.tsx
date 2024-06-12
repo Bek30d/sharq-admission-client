@@ -21,6 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import Done from "@/components/done/Done";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const schema = z.object({
   degree: z.string({
@@ -109,7 +110,7 @@ const education_lang = [
 
 const ChooseDirection = () => {
   const { user } = userStore();
-  const { chooseDirection } = formStore();
+  const { chooseDirection, isLoading } = formStore();
   const [isReliable, setIsReliable] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [id, setId] = useState<number>(0);
@@ -386,7 +387,7 @@ const ChooseDirection = () => {
                   <BaseIcon name="arrowRight" />
                 </div>
 
-                {isReliable ? (
+                {isReliable || isLoading ? (
                   <Button
                     type="submit"
                     className="!bg-[#18324D] w-full !py-[14px] h-auto"
@@ -407,4 +408,4 @@ const ChooseDirection = () => {
   );
 };
 
-export default ChooseDirection;
+export default withAuth(ChooseDirection);

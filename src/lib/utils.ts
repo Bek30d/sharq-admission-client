@@ -10,6 +10,14 @@ export const unformatDate = (value: string) => {
   return value.replace(/\D+/g, ""); // Remove all non-digit characters
 };
 
+export const formatDate = (value: string) => {
+  return new Date(value)
+    .toISOString()
+    .split("T")[0];
+}
+
+
+
 export const formatPassportField = (value: string) => {
   const cleanedValue = value.replace(/\W+/g, ""); // Remove all non-word characters
   const part1 = cleanedValue.slice(0, 2);
