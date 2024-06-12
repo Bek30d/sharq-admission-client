@@ -19,11 +19,14 @@ const Navbar = () => {
   const { isLoading, user, getMyData } = userStore();
   const { isOpenBurger, setIsOpenBurger } = useIndexStore();
   const [userData, serUserData] = useLocalStorage("userData", {});
+  const token = localStorage.getItem("access_token");
   const path = usePathname();
 
   useEffect(() => {
-    getMyData();
-  }, []);
+    if (token) {
+      getMyData();
+    }
+  }, [token]);
 
   useEffect(() => {
     serUserData(user);

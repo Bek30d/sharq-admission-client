@@ -9,6 +9,8 @@ import SEO from "@/layouts/SEO";
 
 export default function Home() {
   const { push } = useRouter();
+  const token = localStorage.getItem("access_token");
+
   return (
     <SEO>
       <main className="min-h-[calc(100vh-48px)] relative flex lg:items-center justify-center">
@@ -29,7 +31,7 @@ export default function Home() {
               </p>
               <div className="h-4 md:hidden" />
               <Button
-                onClick={() => push("/auth")}
+                onClick={() => (token ? push("/personal-info") : push("/auth"))}
                 className="w-fit py-4 xl:px-12 md:px-8 !bg-white hover:!bg-[#18324D] duration-300 shadow-lg text-[#191919] hover:text-white"
               >
                 Ariza qoldirish

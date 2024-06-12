@@ -24,3 +24,10 @@ export const formatPassportField = (value: string) => {
 export const unformatPassportField = (value: string) => {
   return value.replace(/\W+/g, ""); // Remove all non-word characters
 };
+
+
+export const isAuthenticated = (): boolean => {
+  if (typeof window === 'undefined') return false; // Return false if code is running on server-side
+  const token = localStorage.getItem('access_token');
+  return token !== null;
+};

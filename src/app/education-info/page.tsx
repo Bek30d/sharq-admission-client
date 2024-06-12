@@ -18,16 +18,16 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { DatePicker } from "@/components/datePicker/DatePicker";
 import { formStore } from "@/store/form.store";
+import { userStore } from "@/store/main.store";
 
 const schema = z.object({
-  education: z.string({
+  edu_type: z.string({
     required_error: "Bu maydonni to'ldiring",
   }),
   entered_year: z.string({
@@ -96,6 +96,7 @@ const certificates = [
 ];
 
 const EducationInfo = () => {
+  const { user } = userStore();
   const { isLoading, updateEduInfo, regions, getRegions, fileUpload } =
     formStore();
   const [hasLanguageDegree, setHasLanguageDegree] = useState(false);
@@ -114,6 +115,7 @@ const EducationInfo = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const result = await updateEduInfo({
       ...data,
+      user_id: user.id,
       entered_year: new Date(data.entered_year).toISOString().split("T")[0],
       graduation_year: new Date(data.graduation_year)
         .toISOString()
@@ -130,6 +132,7 @@ const EducationInfo = () => {
         : false,
       language_cert_id: langCertificateId,
       language_cert_type: langCertificate,
+      is_cert_existed: hasLanguageDegree,
     });
 
     result.success ? router.push("/choose-direction") : null;
@@ -190,13 +193,13 @@ const EducationInfo = () => {
                 </label>
 
                 <Controller
-                  name="education"
+                  name="edu_type"
                   control={form.control}
                   render={({ field }) => (
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
-                          id="education"
+                          id="edu_type"
                           placeholder="Kollej"
                           className=" placeholder:!text-[#6E7781]"
                         />
@@ -218,7 +221,7 @@ const EducationInfo = () => {
                   )}
                 />
                 <span className="text-red-400 text-xs">
-                  {form.formState.errors.education?.message}
+                  {form.formState.errors.edu_type?.message}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">

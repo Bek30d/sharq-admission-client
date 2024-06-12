@@ -20,11 +20,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
-import { useRouter } from "next/navigation";
 import bigLogo from "../../../public/assets/big_logo.svg";
 import { formatPassportField, unformatPassportField } from "@/lib/utils";
 import { formStore } from "@/store/form.store";
 import BaseIcon from "@/components/icons/BaseIcon";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const schema = z.object({
   last_name: z.string({
@@ -79,7 +79,6 @@ const PersonalInfo = () => {
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage("userData", {});
   const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
-  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -130,13 +129,11 @@ const PersonalInfo = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isLoading) {
-      console.log(data);
-
       const formattedBirthday = new Date(data.birthday)
         .toISOString()
         .split("T")[0];
 
-      setPersonalInfo(data);
+      setPersonalInfo({ ...data, birthday: formattedBirthday });
 
       const res = await aboutMe({
         ...data,
@@ -148,9 +145,9 @@ const PersonalInfo = () => {
         )?.id,
       });
 
-      if (res.success) {
-        router.push("/education-info");
-      }
+      // if (res.success) {
+      //   router.push("/education-info");
+      // }
     }
   };
 
@@ -515,4 +512,4 @@ const PersonalInfo = () => {
   );
 };
 
-export default PersonalInfo;
+export default withAuth(PersonalInfo);

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BaseIcon from "../icons/BaseIcon";
 import icons from "../icons/icons";
 import Link from "next/link";
 import FormLayout from "@/layouts/FormLayout";
+import { useRouter } from "next/navigation";
 
 const Card = ({ icon, title }: { icon: keyof typeof icons; title: string }) => {
   return (
@@ -14,7 +15,8 @@ const Card = ({ icon, title }: { icon: keyof typeof icons; title: string }) => {
     </div>
   );
 };
-const Done = () => {
+const Done = ({ id }: { id: number }) => {
+  const router = useRouter();
   const data: { icon: keyof typeof icons; title: string }[] = [
     {
       icon: "document_search",
@@ -56,7 +58,7 @@ const Done = () => {
             Sizning arizangiz muvaffaqiyatli topshirildi.
           </p>
           <p className="text-[#18324D] text-center">
-            Ariza raqamingiz: <span className="text-blue-500">0001</span>
+            Ariza raqamingiz: <span className="text-blue-500">{id}</span>
           </p>
         </div>
 
