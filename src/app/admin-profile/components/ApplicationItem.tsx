@@ -1,14 +1,20 @@
 import BaseIcon from "@/components/icons/BaseIcon";
+import { ApplicationT } from "@/store/admin.store";
 import React from "react";
-import { ItemType } from "../page";
 
-const ApplicationItem = ({
-  date,
-  number,
-  status,
-  faculty_name,
-  id,
-}: ItemType) => {
+const statusLabels = {
+  pending: "Kutilmoqda",
+  accepted: "Qabul qilingan",
+  rejected: "Rad etildi",
+}
+
+const ApplicationItem = (
+  { id,
+    edu_direction,
+    edu_type,
+    full_name,
+    status,
+  }: ApplicationT) => {
   return (
     <div className="py-[22px] bg-white rounded-lg flex justify-between mb-2">
       <div className=" flex items-center">
@@ -17,29 +23,28 @@ const ApplicationItem = ({
         </p>
 
         <p className="w-[265px] pl-5  text-[#24292F] text-sm font-medium">
-          {number}
+          {full_name}
         </p>
 
         <p className="w-[265px] pl-5  text-[#24292F] text-sm font-medium">
-          {date}
+          {edu_direction}
         </p>
 
         <p className="w-[265px] pl-5  text-[#24292F] text-sm font-medium !whitespace-normal">
-          {faculty_name}
+          {edu_type}
         </p>
 
         <div className="w-[265px] pl-5  flex items-center gap-2 ">
           <div
-            className={`w-2.5 h-2.5 rounded-full ${
-              status.value === "pending"
-                ? "bg-[#F39B33]"
-                : status.value === "accepted"
+            className={`w-2.5 h-2.5 rounded-full ${status === "pending"
+              ? "bg-[#F39B33]"
+              : status === "accepted"
                 ? "bg-[#1CB854]"
                 : "bg-[#FF0000]"
-            }`}
+              }`}
           ></div>
           <p className="text-center text-[#24292F] text-sm font-medium !whitespace-normal">
-            {status.label}
+            {statusLabels[status]}
           </p>
         </div>
       </div>

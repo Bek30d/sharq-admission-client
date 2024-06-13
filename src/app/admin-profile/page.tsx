@@ -12,9 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AdminProfileLayout from "@/layouts/AdminProfileLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ApplicationItem from "./components/ApplicationItem";
 import FilterSidebar from "./components/FilterSidebar";
+import { useAdminStore } from "@/store/admin.store";
 
 export type ItemType = {
   id: number;
@@ -96,6 +97,12 @@ const applicationStatus = [
 
 const AdminProfile = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const { getApplications, applications } = useAdminStore()
+
+  useEffect(() => {
+    getApplications()
+  }, [])
+
   return (
     <AdminProfileLayout>
       <div>
@@ -177,8 +184,8 @@ const AdminProfile = () => {
           </p>
         </div>
 
-        {items.map((item) => (
-          <ApplicationItem key={item.id} {...item} />
+        {applications.map((item) => (
+          <ApplicationItem key={item.random_id} {...item} />
         ))}
       </div>
 
