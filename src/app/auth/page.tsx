@@ -19,7 +19,7 @@ const schema = z.object({
 
 const Auth = () => {
   const router = useRouter();
-  const { postPhone } = useAuthStore();
+  const { isLoading, postPhone } = useAuthStore();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -60,7 +60,11 @@ telefon raqamingizni kiriting."
                 {form.formState.errors.phone?.message}
               </span>
             </div>
-            <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+            <Button
+              className={`${
+                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+              } w-full !py-[14px] h-auto`}
+            >
               Davom etish
             </Button>
           </div>

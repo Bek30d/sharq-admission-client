@@ -2,13 +2,12 @@
 
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import user from "../../../public/assets/user-profile.png";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/datePicker/DatePicker.1";
 import {
   Select,
   SelectContent,
@@ -21,40 +20,132 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/navigation";
-import bigLogo from "../../../public/assets/big_logo.svg";
 import ProfileLayout from "@/layouts/ProfileLayout";
+import BaseIcon from "@/components/icons/BaseIcon";
+import {
+  formatDate,
+  formatPassportField,
+  unformatPassportField,
+} from "@/lib/utils";
+import { formStore } from "@/store/form.store";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const schema = z.object({
-  lastname: z.string().min(3, "lastname is required"),
-  name: z.string().min(3, "name is required"),
-  fathername: z.string().min(3, "fathername is required"),
-  birthdate: z.date().min(new Date(1900, 0, 1), "birthdate is required"),
-  idnumber: z
+  last_name: z.string({
+    required_error: "Familiyangizni kiriting",
+  }),
+  first_name: z.string({
+    required_error: "Ismingizni kiriting",
+  }),
+  fathers_name: z.string({
+    required_error: "Otangizni ismini kiriting",
+  }),
+  birthday: z
     .string()
+    .regex(/^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, {
+      message: "Birthdate must be in the format YYYY-MM-DD and valid",
+    }),
+  passport_number: z
+    .string({
+      required_error: "Pasport raqamingiz",
+    })
     .regex(
       /^[A-Za-z]{2}\d{7}$/,
       "Invalid format. Expected format: 2 letters followed by 7 digits"
     ),
   jshshir: z
-    .string()
+    .string({
+      required_error: "JSHSHIR",
+    })
     .regex(/^\d{14}$/, "Invalid format. Expected format: 14 digits"),
-  gender: z.string().min(3, "Gender is required"),
-  citizenship: z.string().min(3, "citizenship be at least 18"),
-  region: z.string().min(3, "region is required"),
-  phone: z.string().min(3, "phone is required"),
-  additionaphone: z.string().min(3, "additionaphone is required"),
+  gender: z.string({
+    required_error: "Jinsingizni tanlang",
+  }),
+  country_id: z.string({
+    required_error: "Fuqaroligingiz tanlang",
+  }),
+  region_id: z.string({
+    required_error: "Tug'ilgan viloyatingizni tanlang",
+  }),
+  phone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
+  additionaphone: z.string({
+    required_error: "Telefon raqamingizni kiriting",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
+type PersonalInfo = {
+  last_name: string;
+  first_name: string;
+  fathers_name: string;
+  birthday: string;
+  passport_number: string;
+  jshshir: string;
+  gender: string;
+  country_id: string;
+  region_id: string;
+  phone: string;
+  additionaphone: string;
+};
+
+const countries = [
+  {
+    id: 1,
+    name: "Uzbekistan",
+  },
+  {
+    id: 2,
+    name: "Russia",
+  },
+  {
+    id: 3,
+    name: "United Kingdom",
+  },
+];
 
 const Profile = () => {
-  const [image, setImage] = useState<any>("");
-  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {});
   const router = useRouter();
+  const [image, setImage] = useState<any>("");
+  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
+  const [imageId, setImageId] = useState<string>("");
+  const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
+    "userData",
+    {}
+  );
+  const [birthdate, setBirthdate] = useState(() => {
+    if (personalInfo?.birthday) {
+      return formatDate(personalInfo?.birthday);
+    } else {
+      return "";
+    }
+  });
+  const [customDisplayValue, setCustomDisplayValue] = useState(() => {
+    if (personalInfo.passport_number) {
+      return formatPassportField(personalInfo.passport_number);
+    }
+  });
 
-  function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleSetImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0]);
+      let formdata = new FormData();
+      formdata.append("file", event.target.files[0]);
+      const res = await fileUpload(formdata);
+
+      res.success ? setImageId(res.data.id) : null;
     }
   }
 
@@ -62,12 +153,42 @@ const Profile = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       ...personalInfo,
+      birthday: birthdate,
+      country_id: `${personalInfo.country_id}`,
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    setPersonalInfo(data);
-    router.push("/education-info");
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (!isLoading) {
+      setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
+
+      const res = await aboutMe({
+        ...data,
+        birthday: formatDate(data.birthday),
+        image_id: imageId,
+      });
+    }
+  };
+
+  const handleBirthdateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let value = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    if (value.length > 8) value = value.slice(0, 8); // Limit to 8 digits
+
+    const formattedValue = value.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+    setBirthdate(formattedValue);
+
+    form.setValue("birthday", formattedValue);
+  };
+
+  useEffect(() => {
+    getRegions();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push("/");
   };
 
   return (
@@ -107,10 +228,10 @@ const Profile = () => {
                     id="lastname"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Familiyangizni kiriting"
-                    {...form.register("lastname")}
+                    {...form.register("last_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.lastname?.message}
+                    {form.formState.errors.last_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -124,10 +245,10 @@ const Profile = () => {
                     id="name"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Ismingizni kiriting"
-                    {...form.register("name")}
+                    {...form.register("first_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.name?.message}
+                    {form.formState.errors.first_name?.message}
                   </span>
                 </div>
               </div>
@@ -143,47 +264,63 @@ const Profile = () => {
                     id="fathername"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
                     placeholder="Otangizni ismi"
-                    {...form.register("fathername")}
+                    {...form.register("fathers_name")}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.fathername?.message}
+                    {form.formState.errors.fathers_name?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
                   <label
-                    htmlFor="birthdate"
+                    htmlFor="birthday"
                     className="text-[#424A53] font-medium text-sm"
                   >
                     Tug`ilgan sanangiz
                   </label>
-                  <Controller
-                    control={form.control}
-                    name="birthdate"
-                    render={({ field }) => (
-                      <DatePicker {...field} className="border-none" />
-                    )}
-                  />
+                  <div className="relative">
+                    <BaseIcon
+                      name="calendar"
+                      cn="absolute !right-4 top-1/2 tranform -translate-y-1/2"
+                      color="#424A53"
+                    />
+                    <Input
+                      id="birthday"
+                      className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
+                      placeholder="yyyy-mm-dd"
+                      value={birthdate}
+                      onChange={handleBirthdateChange}
+                    />
+                  </div>
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.birthdate?.message}
+                    {form.formState.errors.birthday?.message}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
                 <div className="flex-1 w-full">
                   <label
-                    htmlFor="idnumber"
+                    htmlFor="passport_number"
                     className="text-[#424A53] font-medium text-sm"
                   >
                     Passport / ID seriya va raqami
                   </label>
                   <Input
-                    id="idnumber"
+                    id="passport_number"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53] uppercase"
                     placeholder="Passport / ID seriya va raqami"
-                    {...form.register("idnumber")}
+                    value={customDisplayValue}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      const formattedValue = formatPassportField(inputValue);
+                      setCustomDisplayValue(formattedValue);
+                      form.setValue(
+                        "passport_number",
+                        unformatPassportField(inputValue)
+                      );
+                    }}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.idnumber?.message}
+                    {form.formState.errors.passport_number?.message}
                   </span>
                 </div>
                 <div className="flex-1 w-full">
@@ -235,7 +372,7 @@ const Profile = () => {
                                 Male
                               </SelectItem>
                               <SelectItem
-                                value="Female"
+                                value="female"
                                 className="!text-[#424A53] cursor-pointer"
                               >
                                 Female
@@ -250,56 +387,43 @@ const Profile = () => {
                     </span>
                   </div>
                   <label
-                    htmlFor="region"
+                    htmlFor="region_id"
                     className="text-[#424A53] font-medium text-sm"
                   >
                     Tug’ilgan joy
                   </label>
-                  {/* <Input
-                  id="region"
-                  className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                  placeholder="Tug’ilgan joyingizni kiriting"
-                  {...register("region")}
-                /> */}
 
                   <Controller
-                    name="region"
+                    name="region_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                           <SelectValue
+                            id="region_id"
                             placeholder="Tug`ilgan joyingizni kiriting"
                             className="!text-[#9ca3af]"
                           />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem
-                              value="chilonzor"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Chilonzor
-                            </SelectItem>
-                            <SelectItem
-                              value="mirobod"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Mirobod
-                            </SelectItem>{" "}
-                            <SelectItem
-                              value="yunusobod"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              Yunusobod
-                            </SelectItem>
+                            {regions.map((region) => (
+                              <SelectItem
+                                key={region.id}
+                                value={`${region.id}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {region.name}
+                              </SelectItem>
+                            ))}
                           </SelectGroup>
                         </SelectContent>
                       </Select>
                     )}
                   />
+
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.region?.message}
+                    {form.formState.errors.region_id?.message}
                   </span>
                 </div>
                 <div className="flex-1">
@@ -309,15 +433,9 @@ const Profile = () => {
                   >
                     Fuqarolik
                   </label>
-                  {/* <Input
-                  id="citizenship"
-                  className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                  placeholder="Fuqaroligingiz"
-                  {...register("citizenship")}
-                /> */}
 
                   <Controller
-                    name="citizenship"
+                    name="country_id"
                     control={form.control}
                     render={({ field }) => (
                       <Select {...field} onValueChange={field.onChange}>
@@ -325,38 +443,41 @@ const Profile = () => {
                           <SelectValue
                             placeholder="Fuqaroligingiz"
                             className="!text-[#9ca3af]"
-                          />
+                          >
+                            {form.getValues("country_id")
+                              ? countries.find(
+                                  (country) =>
+                                    `${country.id}` ==
+                                    form.getValues("country_id")
+                                )?.name
+                              : ""}
+                          </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem
-                              value="uzbekistan"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              O`zbekiston
-                            </SelectItem>
-                            <SelectItem
-                              value="usa"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              USA
-                            </SelectItem>
-                            <SelectItem
-                              value="ksa"
-                              className="!text-[#424A53] cursor-pointer"
-                            >
-                              KSA
-                            </SelectItem>
+                            {countries.map((item) => (
+                              <SelectItem
+                                key={item.id}
+                                value={`${item.id}`}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item.name}
+                              </SelectItem>
+                            ))}
                           </SelectGroup>
                         </SelectContent>
                       </Select>
                     )}
                   />
                   <span className="text-red-400 text-xs">
-                    {form.formState.errors.citizenship?.message}
+                    {form.formState.errors.country_id?.message}
                   </span>
                 </div>
               </div>
+
+              <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
+                Bog`lanish uchun ma`lumotlar
+              </h2>
 
               <div className="flex flex-col sm:flex-row  justify-between items-center gap-6 mb-12">
                 <div className="flex-1 w-full">
@@ -395,8 +516,49 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end">
-                <Button className="!bg-[#0969DA] !py-[14px] h-auto w-full sm:w-fit">
+              <div className="flex justify-between items-center">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="border-red-500 text-red-500 hover:!text-red-500"
+                    >
+                      Profildan chiqish
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Profildan chiqish</DialogTitle>
+                      <DialogDescription>
+                        Siz haqiqatdan ham profildan chiqmoqchimisiz?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="sm:justify-start">
+                      <Button
+                        onClick={handleLogout}
+                        type="button"
+                        variant="secondary"
+                        className="border !border-red-500 !text-red-500 hover:!text-red-500 p-2"
+                      >
+                        Xa, chiqish
+                      </Button>
+                      <DialogClose asChild>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="border !border-[#096bda89] !text-[#096bda89] hover:!text-[#096bda89] p-2"
+                        >
+                          Yopish
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                <Button
+                  className={`${
+                    isLoading ? "!bg-[#096bda89]" : "!bg-[#0969DA]"
+                  } !py-[14px] h-auto w-full sm:w-fit`}
+                >
                   Ma’lumotlarni saqlash
                 </Button>
               </div>
@@ -408,4 +570,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);

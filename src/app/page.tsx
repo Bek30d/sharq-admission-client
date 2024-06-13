@@ -9,9 +9,15 @@ import SEO from "@/layouts/SEO";
 
 export default function Home() {
   const { push } = useRouter();
+  const token = localStorage.getItem("access_token");
+
   return (
     <SEO>
-      <main className="min-h-[calc(100vh-48px)] relative flex lg:items-center justify-center">
+      <main
+        className={`${
+          token ? "min-h-[calc(100vh-56px)]" : "min-h-[calc(100vh-48px)]"
+        } relative flex lg:items-center justify-center`}
+      >
         <div className="w-full h-[calc(100%+48px)] absolute -top-12 -z-10 bg-gradient-to-b from-[#18324D] to-[#3874B3]" />
         <Container>
           <div className="flex lg:flex-row flex-col xl:gap-24 md:gap-10 md:justify-between xl flex-wrap justify-center">
@@ -29,7 +35,7 @@ export default function Home() {
               </p>
               <div className="h-4 md:hidden" />
               <Button
-                onClick={() => push("/auth")}
+                onClick={() => (token ? push("/personal-info") : push("/auth"))}
                 className="w-fit py-4 xl:px-12 md:px-8 !bg-white hover:!bg-[#18324D] duration-300 shadow-lg text-[#191919] hover:text-white"
               >
                 Ariza qoldirish

@@ -1,3 +1,4 @@
+"use client";
 import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
@@ -5,6 +6,7 @@ import React from "react";
 import random from "../../../../public/assets/random_image.jpg";
 import { Button } from "@/components/ui/button";
 import BaseIcon from "@/components/icons/BaseIcon";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const ApplicantInfo = () => {
   return (
@@ -132,4 +134,4 @@ const ApplicantInfo = () => {
   );
 };
 
-export default ApplicantInfo;
+export default withAuth(ApplicantInfo);
