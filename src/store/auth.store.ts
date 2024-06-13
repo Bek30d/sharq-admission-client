@@ -1,6 +1,7 @@
 import { LOGIN, POST_PASSPORT, POST_PHONE } from "@/api/auth";
 import { create } from "zustand";
-import {setCookie } from "nookies"
+import cookies from "nookies"
+import {setCookie} from "@/lib/cookies";
 
 interface AuthState {
     isLoading: boolean;
@@ -35,7 +36,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             if(res.success) {
                 set({isLoading: false})
                 localStorage.setItem('access_token', res?.data?.token)
-                setCookie(null, 'access_token', res?.data?.token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
+                cookies.set(null, 'access_token', res?.data?.token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
+                setCookie('access_token', res?.data?.token)
                 return 1
             }
         } catch (error) {
@@ -47,9 +49,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         try {
             const res: any = await POST_PASSPORT(passport_number, birthday);
             if(res.success) {
-                set({isLoading: false})
                 return 1
             }
+            set({isLoading: false})
         } catch (error) {
             console.log(error);
         }

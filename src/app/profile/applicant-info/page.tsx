@@ -1,3 +1,4 @@
+"use client";
 import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
