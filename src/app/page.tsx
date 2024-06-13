@@ -13,7 +13,11 @@ export default function Home() {
 
   return (
     <SEO>
-      <main className="min-h-[calc(100vh-48px)] relative flex lg:items-center justify-center">
+      <main
+        className={`${
+          token ? "min-h-[calc(100vh-56px)]" : "min-h-[calc(100vh-48px)]"
+        } relative flex lg:items-center justify-center`}
+      >
         <div className="w-full h-[calc(100%+48px)] absolute -top-12 -z-10 bg-gradient-to-b from-[#18324D] to-[#3874B3]" />
         <Container>
           <div className="flex lg:flex-row flex-col xl:gap-24 md:gap-10 md:justify-between xl flex-wrap justify-center">

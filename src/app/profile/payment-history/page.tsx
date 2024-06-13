@@ -3,6 +3,7 @@ import SEO from "@/layouts/SEO";
 import React from "react";
 import Item from "./components/Item";
 import MobileITem from "./components/MobileItem";
+import withAuth from "@/components/with-auth/WithAuth";
 
 export type ItemType = {
   id: number;
@@ -79,4 +80,4 @@ const PaymentHistory = () => {
   );
 };
 
-export default PaymentHistory;
+export default withAuth(PaymentHistory);

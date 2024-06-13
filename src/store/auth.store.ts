@@ -1,5 +1,6 @@
 import { LOGIN, POST_PASSPORT, POST_PHONE } from "@/api/auth";
 import { create } from "zustand";
+import {setCookie } from "nookies"
 
 interface AuthState {
     isLoading: boolean;
@@ -34,6 +35,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             if(res.success) {
                 set({isLoading: false})
                 localStorage.setItem('access_token', res?.data?.token)
+                setCookie(null, 'access_token', res?.data?.token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
                 return 1
             }
         } catch (error) {

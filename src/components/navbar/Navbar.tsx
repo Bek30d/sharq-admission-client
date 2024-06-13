@@ -14,9 +14,10 @@ import Container from "../container/Container";
 import { useEffect } from "react";
 import { userStore } from "@/store/main.store";
 import { useLocalStorage } from "usehooks-ts";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const Navbar = () => {
-  const { isLoading, user, getMyData } = userStore();
+  const { user, getMyData } = userStore();
   const { isOpenBurger, setIsOpenBurger } = useIndexStore();
   const [userData, serUserData] = useLocalStorage("userData", {});
   const token = localStorage.getItem("access_token");
@@ -33,9 +34,9 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className="w-full h-12 bg-[#18324D]">
+    <div className="w-full bg-[#18324D]">
       <Container>
-        <div className="md:flex pt-1.5 justify-between items-center hidden">
+        <div className="md:flex py-3 justify-between items-center hidden">
           <Link href="/">
             <Image
               src={Logo}
@@ -103,6 +104,19 @@ const Navbar = () => {
                 />
               </button>
             </div>
+            {token ? (
+              <Link
+                href="/profile"
+                className="w-8 h-8 flex justify-center items-center bg-[#F5F8FF] rounded-full"
+              >
+                <Avatar>
+                  <AvatarImage src={user.image} />
+                  <AvatarFallback>
+                    <BaseIcon name="user" />
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
+            ) : null}
           </div>
         </div>
       </Container>
