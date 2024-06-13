@@ -2,6 +2,7 @@ import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
 import React from "react";
 import MessageItem from "./components/MessageItem";
+import withAuth from "@/components/with-auth/WithAuth";
 
 export type MessageType = {
   id: number;
@@ -57,4 +58,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default withAuth(Notifications);

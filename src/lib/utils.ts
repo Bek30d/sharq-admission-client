@@ -10,6 +10,14 @@ export const unformatDate = (value: string) => {
   return value.replace(/\D+/g, ""); // Remove all non-digit characters
 };
 
+export const formatDate = (value: string) => {
+  return new Date(value)
+    .toISOString()
+    .split("T")[0];
+}
+
+
+
 export const formatPassportField = (value: string) => {
   const cleanedValue = value.replace(/\W+/g, ""); // Remove all non-word characters
   const part1 = cleanedValue.slice(0, 2);
@@ -23,4 +31,16 @@ export const formatPassportField = (value: string) => {
 
 export const unformatPassportField = (value: string) => {
   return value.replace(/\W+/g, ""); // Remove all non-word characters
+};
+
+
+export const isAuthenticated = (): boolean => {
+  if (typeof window === 'undefined') return false; // Return false if code is running on server-side
+  const token = localStorage.getItem('access_token');
+  return token !== null;
+};
+
+
+export const isAuthenticatedSSR = (token: string | null): boolean => {
+  return token !== null;
 };

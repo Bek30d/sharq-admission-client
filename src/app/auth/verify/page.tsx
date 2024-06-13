@@ -25,7 +25,7 @@ const schema = z.object({
 const Verify = () => {
   const [displayValue, setDisplayValue] = useState<string>("");
   const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
-  const { postPassport } = useAuthStore();
+  const { postPassport, isLoading } = useAuthStore();
 
   const router = useRouter();
 
@@ -98,7 +98,7 @@ const Verify = () => {
                 id="password"
                 type="text"
                 className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
-                placeholder="dd - mm - yyyy"
+                placeholder="yyyy - mm - dd"
                 value={displayValue}
                 onChange={(e) => {
                   const inputValue = e.target.value;
@@ -111,7 +111,11 @@ const Verify = () => {
                 {form.formState.errors.birthDate?.message}
               </span>
             </div>
-            <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+            <Button
+              className={`${
+                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+              } w-full !py-[14px] h-auto`}
+            >
               Davom etish
             </Button>
           </div>

@@ -19,7 +19,7 @@ const schema = z.object({
 const Login = () => {
   let initialTime = 60;
   const [time, setTime] = useState(initialTime);
-  const { phone, login, postPhone } = useAuthStore();
+  const { phone, login, postPhone, isLoading } = useAuthStore();
   const router = useRouter();
   const circumference = 2 * Math.PI * 15;
   const offset = circumference - (time / initialTime) * circumference;
@@ -154,7 +154,11 @@ const Login = () => {
             >
               Qayta yuborish
             </button>
-            <Button className="!bg-[#18324D] w-full !py-[14px] h-auto">
+            <Button
+              className={`${
+                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+              } w-full !py-[14px] h-auto`}
+            >
               Davom etish
             </Button>
           </div>

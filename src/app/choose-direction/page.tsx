@@ -21,11 +21,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import Done from "@/components/done/Done";
+import withAuth from "@/components/with-auth/WithAuth";
 
 const schema = z.object({
   degree: z.string({
     invalid_type_error: "Invalid name",
     required_error: "Ta'lim darajani tanlash majburiy",
+  }),
+  faculty: z.string({
+    invalid_type_error: "Invalid name",
+    required_error: "Fakultetni tanlash majburiy",
   }),
   edu_direction: z.string({
     invalid_type_error: "Invalid name",
@@ -105,9 +110,10 @@ const education_lang = [
 
 const ChooseDirection = () => {
   const { user } = userStore();
-  const { chooseDirection } = formStore();
+  const { chooseDirection, isLoading } = formStore();
   const [isReliable, setIsReliable] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const [id, setId] = useState<number>(0);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -117,19 +123,20 @@ const ChooseDirection = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const result = chooseDirection(user.id, {
+    const result = await chooseDirection(user.id, {
       ...data,
       faculty: "bachelor",
       is_confirmed: isReliable,
     });
 
+    setId(result.data.data.id);
     result.success ? setIsDone(true) : setIsDone(false);
   };
 
   return (
     <SEO>
       {isDone ? (
-        <Done />
+        <Done id={id} />
       ) : (
         <FormLayout>
           <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
@@ -217,6 +224,46 @@ const ChooseDirection = () => {
                   />
                   <span className="text-red-400 text-xs">
                     {form.formState.errors.edu_direction?.message}
+                  </span>
+                </div>
+                <div className="mb-6 w-full">
+                  <label
+                    htmlFor="college"
+                    className="text-[#424A53] font-medium text-sm"
+                  >
+                    Fakultet
+                  </label>
+
+                  <Controller
+                    name="faculty"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
+                          <SelectValue
+                            id="faculty"
+                            placeholder="Darajani tanlang"
+                            className=" placeholder:!text-[#6E7781]"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {degrees.map((item) => (
+                              <SelectItem
+                                key={item.value}
+                                value={item.value}
+                                className="!text-[#424A53] cursor-pointer"
+                              >
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  <span className="text-red-400 text-xs">
+                    {form.formState.errors.degree?.message}
                   </span>
                 </div>
                 <div className="mb-6 w-full">
@@ -340,7 +387,7 @@ const ChooseDirection = () => {
                   <BaseIcon name="arrowRight" />
                 </div>
 
-                {isReliable ? (
+                {isReliable || isLoading ? (
                   <Button
                     type="submit"
                     className="!bg-[#18324D] w-full !py-[14px] h-auto"
@@ -361,4 +408,4 @@ const ChooseDirection = () => {
   );
 };
 
-export default ChooseDirection;
+export default withAuth(ChooseDirection);
