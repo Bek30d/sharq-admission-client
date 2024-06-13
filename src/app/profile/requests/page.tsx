@@ -1,61 +1,45 @@
-"use client";
-
 import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
 import React from "react";
-import Item from "./components/Item";
 import MobileITem from "./components/MobileITem";
-import withAuth from "@/components/with-auth/WithAuth";
+import { cookies } from "next/headers";
+import toast, { Toaster } from "react-hot-toast";
+import Item from "./components/Item";
 
 export type ItemType = {
-  id: number;
-  number: string;
-  date: string;
-  faculty_name: string;
-  status: {
-    value: string;
-    label: string;
-  };
+  apply_number: string;
+  created_at: string;
+  faculty: string;
+  status: string;
 };
 
-const items: ItemType[] = [
-  {
-    id: 1,
-    number: "0001",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "pending",
-      label: "Ko’rib chiqilmoqda",
-    },
-  },
-  {
-    id: 2,
-    number: "0002",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "accepted",
-      label: "Qabul qilingan",
-    },
-  },
-  {
-    id: 3,
-    number: "0003",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "rejected",
-      label: "Rad etildi",
-    },
-  },
-];
+async function getData(token: string) {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + "/my-applications",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-const Requests = () => {
+  if (!res.ok) {
+    toast.error("Xatolik yuz berdi");
+  }
+
+  return res.json();
+}
+const Requests = async () => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("access_token");
+  const myApplications = await getData(token?.value || "");
+
   return (
     <SEO>
       <ProfileLayout title="Arizalar">
-        <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">
+        <Toaster />
+        <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1">
           <p className="px-5 text-[#57606A] font-medium">No</p>
           <p className="pl-5 pr-9 text-[#57606A] font-medium">Ariza raqami</p>
           <p className="pl-5 pr-12 text-[#57606A] font-medium">Berilgan sana</p>
@@ -64,18 +48,30 @@ const Requests = () => {
         </div>
 
         <div className="hidden lg:block">
-          {items.map((item) => (
-            <Item key={item.id} {...item} />
-          ))}
+          {myApplications.data.data.length ? (
+            myApplications.data.data.map((item: ItemType, index: number) => (
+              <Item key={item.apply_number} item={item} index={index} />
+            ))
+          ) : (
+            <p className="text-[#424A53] font-medium text-lg text-center mt-10">
+              Arizalar topilmadi
+            </p>
+          )}
         </div>
         <div className="block lg:hidden">
-          {items.map((item) => (
-            <MobileITem key={item.id} {...item} />
-          ))}
+          {myApplications.data.data.length ? (
+            myApplications.data.data.map((item: ItemType) => (
+              <MobileITem key={item.apply_number} item={item} />
+            ))
+          ) : (
+            <p className="text-[#424A53] font-medium text-lg text-center mt-10">
+              Arizalar topilmadi
+            </p>
+          )}
         </div>
       </ProfileLayout>
     </SEO>
   );
 };
 
-export default withAuth(Requests);
+export default Requests;

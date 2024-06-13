@@ -17,6 +17,6 @@ export function EDUCATION_INFO(data: any) {
   return axios.post('/education/store', data)
 }
 
-export function CHOOSE_DIRECTION(id, data){
+export function CHOOSE_DIRECTION(id: string, data: any) {
   return axios.post(`/direction/store/${id}`, data)
 }
