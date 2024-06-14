@@ -1,20 +1,23 @@
-import { ABOUT_ME, CHOOSE_DIRECTION, EDUCATION_INFO, GET_REGIONS, UPLOAD } from '@/api/form'
+import { ABOUT_ME, CHOOSE_DIRECTION, EDUCATION_INFO, GET_COUNTRIES, GET_REGIONS, UPLOAD } from '@/api/form'
 import toast from 'react-hot-toast';
 import { create } from 'zustand'
 
 interface useSoreState {
   isLoading: boolean;
   regions: any[];
+  countries: any[];
   aboutMe: (data:any) => Promise<any>;
   fileUpload: (data:any) => Promise<any>;
   getRegions: () => Promise<any>;
   updateEduInfo: (data: any) => Promise<any>;
   chooseDirection: (id: string, data: any) => Promise<any>;
+  getCountries: () => Promise<any>;
 }
 
 export const formStore = create<useSoreState>((set) => ({
   isLoading: false,
   regions: [],
+  countries: [],
   aboutMe: async (data:any) => {
     set({ isLoading: true });
     let result = {}
@@ -56,6 +59,22 @@ export const formStore = create<useSoreState>((set) => ({
     return result
   },
 
+  getCountries: async () => {
+    let result = {}
+    
+    try {
+      result = await GET_COUNTRIES()
+      if(result.success){
+      set({
+        countries: result.data
+      })
+    } else {
+      toast.error("Davlatlarni olishda xatolik yuz berdi");
+    }
+    } catch (error) {
+      toast.error("Serverda xatolik yuz berdi");
+    }
+  },
   getRegions: async () => {
     let result = {}
     

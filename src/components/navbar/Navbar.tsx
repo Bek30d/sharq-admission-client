@@ -19,7 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 const Navbar = () => {
   const { user, getMyData } = userStore();
   const { isOpenBurger, setIsOpenBurger } = useIndexStore();
-  const [userData, serUserData] = useLocalStorage("userData", {});
+  const [_, serUserData] = useLocalStorage("userData", {});
   const token = localStorage.getItem("access_token");
   const path = usePathname();
 

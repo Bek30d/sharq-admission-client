@@ -95,13 +95,22 @@ type PersonalInfo = {
 
 const PersonalInfo = () => {
   const router = useRouter();
-  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
+  const {
+    isLoading,
+    aboutMe,
+    fileUpload,
+    getCountries,
+    countries,
+    getRegions,
+    regions,
+  } = formStore();
   const [image, setImage] = useState<any>("");
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
     "userData",
     {}
   );
+  const [_, setIsAccessEdu] = useLocalStorage("isAccessEdu", false);
   const [customDisplayValue, setCustomDisplayValue] = useState(() => {
     if (personalInfo.passport_number) {
       return formatPassportField(personalInfo.passport_number);
@@ -147,25 +156,8 @@ const PersonalInfo = () => {
     }
   }
 
-  const countries = [
-    {
-      id: 1,
-      name: "Uzbekistan",
-    },
-    {
-      id: 2,
-      name: "Russia",
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-    },
-  ];
-
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isLoading) {
-      setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
-
       const res = await aboutMe({
         ...data,
         birthday: formatDate(data.birthday),
@@ -173,6 +165,8 @@ const PersonalInfo = () => {
       });
 
       if (res.success) {
+        setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
+        setIsAccessEdu(true);
         router.push("/education-info");
       }
     }
@@ -180,6 +174,7 @@ const PersonalInfo = () => {
 
   useEffect(() => {
     getRegions();
+    getCountries();
   }, []);
 
   return (

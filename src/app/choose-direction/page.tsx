@@ -23,6 +23,7 @@ import { userStore } from "@/store/main.store";
 import Done from "@/components/done/Done";
 import withAuth from "@/components/with-auth/WithAuth";
 import { Toaster } from "react-hot-toast";
+import { useLocalStorage } from "usehooks-ts";
 
 const schema = z.object({
   degree: z.string({
@@ -115,6 +116,8 @@ const ChooseDirection = () => {
   const [isReliable, setIsReliable] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [id, setId] = useState<number>(0);
+  const [isAccessEdu, setIsAccessEdu] = useLocalStorage("isAccessEdu", false);
+  const [_, setIsAccessChose] = useLocalStorage("isAccessChooseDir", false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -131,7 +134,17 @@ const ChooseDirection = () => {
     });
 
     setId(result.data.data.id);
-    result.success ? setIsDone(true) : setIsDone(false);
+
+    if (result.success) {
+      setIsDone(true);
+
+      setTimeout(() => {
+        setIsAccessEdu(false);
+        setIsAccessChose(false);
+      }, 5000);
+    } else {
+      setIsDone(false);
+    }
   };
 
   return (
