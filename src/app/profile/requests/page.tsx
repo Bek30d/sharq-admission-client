@@ -25,7 +25,7 @@ async function getData(token: string) {
   );
 
   if (!res.ok) {
-    toast.error("Xatolik yuz berdi");
+    console.log("error");
   }
 
   return res.json();
@@ -34,6 +34,8 @@ const Requests = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get("access_token");
   const myApplications = await getData(token?.value || "");
+
+  console.log(myApplications);
 
   return (
     <SEO>
@@ -48,8 +50,8 @@ const Requests = async () => {
         </div>
 
         <div className="hidden lg:block">
-          {myApplications.data.data.length ? (
-            myApplications.data.data.map((item: ItemType, index: number) => (
+          {myApplications?.data?.length ? (
+            myApplications.data.map((item: ItemType, index: number) => (
               <Item key={item.apply_number} item={item} index={index} />
             ))
           ) : (
@@ -59,8 +61,8 @@ const Requests = async () => {
           )}
         </div>
         <div className="block lg:hidden">
-          {myApplications.data.data.length ? (
-            myApplications.data.data.map((item: ItemType) => (
+          {myApplications?.data?.length ? (
+            myApplications.data.map((item: ItemType) => (
               <MobileITem key={item.apply_number} item={item} />
             ))
           ) : (

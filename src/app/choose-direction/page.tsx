@@ -22,6 +22,8 @@ import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import Done from "@/components/done/Done";
 import withAuth from "@/components/with-auth/WithAuth";
+import { Toaster } from "react-hot-toast";
+import { useLocalStorage } from "usehooks-ts";
 
 const schema = z.object({
   degree: z.string({
@@ -114,6 +116,8 @@ const ChooseDirection = () => {
   const [isReliable, setIsReliable] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [id, setId] = useState<number>(0);
+  const [isAccessEdu, setIsAccessEdu] = useLocalStorage("isAccessEdu", false);
+  const [_, setIsAccessChose] = useLocalStorage("isAccessChooseDir", false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -130,7 +134,17 @@ const ChooseDirection = () => {
     });
 
     setId(result.data.data.id);
-    result.success ? setIsDone(true) : setIsDone(false);
+
+    if (result.success) {
+      setIsDone(true);
+
+      setTimeout(() => {
+        setIsAccessEdu(false);
+        setIsAccessChose(false);
+      }, 5000);
+    } else {
+      setIsDone(false);
+    }
   };
 
   return (
@@ -139,6 +153,7 @@ const ChooseDirection = () => {
         <Done id={id} />
       ) : (
         <FormLayout>
+          <Toaster />
           <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
             <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
               Yo’nalishni tanlash

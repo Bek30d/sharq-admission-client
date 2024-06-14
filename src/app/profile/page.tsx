@@ -101,25 +101,18 @@ type PersonalInfo = {
   additionaphone: string;
 };
 
-const countries = [
-  {
-    id: 1,
-    name: "Uzbekistan",
-  },
-  {
-    id: 2,
-    name: "Russia",
-  },
-  {
-    id: 3,
-    name: "United Kingdom",
-  },
-];
-
 const Profile = () => {
   const router = useRouter();
   const [image, setImage] = useState<any>("");
-  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
+  const {
+    isLoading,
+    aboutMe,
+    fileUpload,
+    getRegions,
+    regions,
+    getCountries,
+    countries,
+  } = formStore();
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
     "userData",
@@ -184,6 +177,7 @@ const Profile = () => {
 
   useEffect(() => {
     getRegions();
+    getCountries();
   }, []);
 
   const handleLogout = () => {

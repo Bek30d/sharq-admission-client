@@ -25,6 +25,8 @@ import { Label } from "@/components/ui/label";
 import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import withAuth from "@/components/with-auth/WithAuth";
+import { Toaster } from "react-hot-toast";
+import { useLocalStorage } from "usehooks-ts";
 
 const schema = z.object({
   edu_type: z.string({
@@ -106,6 +108,7 @@ const EducationInfo = () => {
   const [certificateFile, setCertificateFile] = useState<any>(null);
   const [langCertificate, setLangCertificate] = useState<any>(null);
   const [langCertificateId, setLangCertificateId] = useState<string>("");
+  const [_, setIsAccessChooseDir] = useLocalStorage("isAccessChooseDir", false);
   const router = useRouter();
 
   const form = useForm<FormData>({
@@ -135,7 +138,10 @@ const EducationInfo = () => {
       is_cert_existed: hasLanguageDegree,
     });
 
-    result.success ? router.push("/choose-direction") : null;
+    if (result.success) {
+      router.push("/choose-direction");
+      setIsAccessChooseDir(true);
+    }
   };
 
   async function handleSetDegreeFile(
@@ -177,6 +183,7 @@ const EducationInfo = () => {
   return (
     <SEO>
       <FormLayout>
+        <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Ta’lim ma’lumotlari
@@ -271,16 +278,6 @@ const EducationInfo = () => {
                   >
                     Bitirgan yili
                   </label>
-                  {/* <Controller
-                    control={form.control}
-                    name="graduation_year"
-                    render={({ field }) => (
-                      <DatePicker
-                        {...field}
-                        className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]"
-                      />
-                    )}
-                  /> */}
 
                   <Controller
                     name="graduation_year"

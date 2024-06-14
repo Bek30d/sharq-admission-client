@@ -30,6 +30,7 @@ import { formStore } from "@/store/form.store";
 import BaseIcon from "@/components/icons/BaseIcon";
 import withAuth from "@/components/with-auth/WithAuth";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 const schema = z.object({
   last_name: z.string({
@@ -94,13 +95,22 @@ type PersonalInfo = {
 
 const PersonalInfo = () => {
   const router = useRouter();
-  const { isLoading, aboutMe, fileUpload, getRegions, regions } = formStore();
+  const {
+    isLoading,
+    aboutMe,
+    fileUpload,
+    getCountries,
+    countries,
+    getRegions,
+    regions,
+  } = formStore();
   const [image, setImage] = useState<any>("");
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
     "userData",
     {}
   );
+  const [_, setIsAccessEdu] = useLocalStorage("isAccessEdu", false);
   const [customDisplayValue, setCustomDisplayValue] = useState(() => {
     if (personalInfo.passport_number) {
       return formatPassportField(personalInfo.passport_number);
@@ -146,27 +156,8 @@ const PersonalInfo = () => {
     }
   }
 
-  const countries = [
-    {
-      id: 1,
-      name: "Uzbekistan",
-    },
-    {
-      id: 2,
-      name: "Russia",
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-    },
-  ];
-
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!isLoading) {
-      setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
-
-      console.log(data);
-
       const res = await aboutMe({
         ...data,
         birthday: formatDate(data.birthday),
@@ -174,6 +165,8 @@ const PersonalInfo = () => {
       });
 
       if (res.success) {
+        setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
+        setIsAccessEdu(true);
         router.push("/education-info");
       }
     }
@@ -181,11 +174,13 @@ const PersonalInfo = () => {
 
   useEffect(() => {
     getRegions();
+    getCountries();
   }, []);
 
   return (
     <SEO>
       <FormLayout>
+        <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl relative">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Shaxsiy ma’lumotlar
