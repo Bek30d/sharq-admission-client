@@ -22,6 +22,7 @@ import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import Done from "@/components/done/Done";
 import withAuth from "@/components/with-auth/WithAuth";
+import { Toaster } from "react-hot-toast";
 
 const schema = z.object({
   degree: z.string({
@@ -139,6 +140,7 @@ const ChooseDirection = () => {
         <Done id={id} />
       ) : (
         <FormLayout>
+          <Toaster />
           <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
             <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
               Yo’nalishni tanlash

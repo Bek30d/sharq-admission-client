@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { formStore } from "@/store/form.store";
 import { userStore } from "@/store/main.store";
 import withAuth from "@/components/with-auth/WithAuth";
+import { Toaster } from "react-hot-toast";
 
 const schema = z.object({
   edu_type: z.string({
@@ -177,6 +178,7 @@ const EducationInfo = () => {
   return (
     <SEO>
       <FormLayout>
+        <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Ta’lim ma’lumotlari

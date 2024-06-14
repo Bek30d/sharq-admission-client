@@ -30,6 +30,7 @@ import { formStore } from "@/store/form.store";
 import BaseIcon from "@/components/icons/BaseIcon";
 import withAuth from "@/components/with-auth/WithAuth";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 const schema = z.object({
   last_name: z.string({
@@ -165,8 +166,6 @@ const PersonalInfo = () => {
     if (!isLoading) {
       setPersonalInfo({ ...data, birthday: formatDate(data.birthday) });
 
-      console.log(data);
-
       const res = await aboutMe({
         ...data,
         birthday: formatDate(data.birthday),
@@ -186,6 +185,7 @@ const PersonalInfo = () => {
   return (
     <SEO>
       <FormLayout>
+        <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl relative">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
             Shaxsiy ma’lumotlar
