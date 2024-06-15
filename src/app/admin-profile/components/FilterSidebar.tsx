@@ -31,6 +31,21 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
+import { useAdminStore } from "@/store/admin.store";
+
+export type Filter = {
+  full_name?: string;
+  edu_direction?: string;
+  education_form?: string;
+  from_date?: string;
+  status?: 'pending' | 'accepted' | 'rejected';
+  to_date?: string;
+  faculty?: string;
+  entered_year?: number;
+  graduation_year?: number;
+  edu_type?: string;
+  gender?: 'male' | 'female';
+}
 
 const educationDirections = [
   {
@@ -66,14 +81,55 @@ const applicationStatus = [
   },
 ];
 
+const faculties = [
+  {
+    value: "Moliya va iqtisod",
+    label: "Moliya va iqtisod",
+  },
+  {
+    value: "Buxgalteriya",
+    label: "Buxgalteriya",
+  },
+  {
+    value: "Kompyuter texnologiyalari",
+    label: "Kompyuter texnologiyalari",
+  },
+];
+
+
 const FilterSidebar = ({
+  filter,
+  setFilter,
   isShowSideBar,
   setIsShowSideBar,
 }: {
+  filter: Filter | null;
+  setFilter: React.Dispatch<React.SetStateAction<Filter | null>>
   isShowSideBar: boolean;
   setIsShowSideBar: (v: boolean) => void;
 }) => {
   const [date, setDate] = useState<Date>();
+  const { getApplications } = useAdminStore()
+
+
+  const handleChange = (e: any, param: keyof Filter) => {
+    setFilter((prev) => ({
+      ...prev,
+      [param]: e,
+    }))
+  }
+
+  const handleSubmit = () => {
+    getApplications(filter)
+    setIsShowSideBar(false)
+  }
+
+  const handleCancel = () => {
+    setFilter(null)
+    getApplications()
+    setIsShowSideBar(false)
+  }
+
   return (
     <Sheet open={isShowSideBar} onOpenChange={setIsShowSideBar}>
       <SheetContent className="!p-0 overflow-y-auto">
@@ -87,9 +143,9 @@ const FilterSidebar = ({
 
         <div className="px-5">
           <div className="mb-5">
-            <Select>
+            <Select value={filter?.faculty} onValueChange={(e) => handleChange(e, "faculty")}>
               <Label className="text-[#6E7781] text-sm">
-                Ta’lim yo’nalishi
+                Fakultet
               </Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
                 <SelectValue placeholder="Ariza holati" />
@@ -106,7 +162,7 @@ const FilterSidebar = ({
             </Select>
           </div>
           <div className="mb-5">
-            <Select>
+            <Select value={filter?.education_form} onValueChange={(e) => handleChange(e, "education_form")}>
               <Label className="text-[#6E7781] text-sm">Ta’lim shakli</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
                 <SelectValue placeholder="Ariza holati" />
@@ -124,10 +180,10 @@ const FilterSidebar = ({
           </div>
           <div className="mb-5">
             <Label className="text-[#6E7781] text-sm">Ariza sanasi</Label>
-            <AdminDatePicker className="!w-full" />
+            <AdminDatePicker key={"1"} filter={filter} setFilter={setFilter} className="!w-full" />
           </div>
           <div className="mb-5">
-            <Select>
+            <Select value={filter?.edu_direction} onValueChange={(e) => handleChange(e, "edu_direction")}>
               <Label className="text-[#6E7781] text-sm">Hudud</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
                 <SelectValue placeholder="Ariza holati" />
@@ -144,7 +200,7 @@ const FilterSidebar = ({
             </Select>
           </div>
           <div className="mb-5">
-            <Select>
+            <Select value={filter?.gender} onValueChange={(e) => handleChange(e, "gender")}>
               <Label className="text-[#6E7781] text-sm">Jinsi</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
                 <SelectValue placeholder="Hammasi" />
@@ -164,7 +220,7 @@ const FilterSidebar = ({
             </Select>
           </div>
           <div className="mb-5">
-            <Select>
+            <Select value={filter?.edu_type} onValueChange={(e) => handleChange(e, "edu_type")}>
               <Label className="text-[#6E7781] text-sm">
                 Bitirgan ta’lim dargohi
               </Label>
@@ -212,10 +268,10 @@ const FilterSidebar = ({
           </div>
 
           <div className="flex items-center justify-end gap-3 mb-6">
-            <Button className="py-3 px-5 !bg-white border border-[#0550AE] !text-[#0550AE]">
+            <Button onClick={handleCancel} className="py-3 px-5 !bg-white border border-[#0550AE] !text-[#0550AE]">
               Bekor qilish
             </Button>
-            <Button className="text-white !bg-[#0550AE] py-3 px-5">
+            <Button onClick={handleSubmit} className="text-white !bg-[#0550AE] py-3 px-5">
               Ko’rsatish
             </Button>
           </div>

@@ -18,11 +18,11 @@ export const links: LinkType[] = [
     name: "Abaituriyent arizalari",
     icon: "student_doc",
   },
-  {
-    path: "/admin-profile/payments",
-    name: "To’lovlar",
-    icon: "payment_time",
-  },
+  // {
+  //   path: "/admin-profile/payments",
+  //   name: "To’lovlar",
+  //   icon: "payment_time",
+  // },
   {
     path: "/admin-profile/reports",
     name: "Hisobotlar",
@@ -38,9 +38,8 @@ const AdminHeader = () => {
         {links.map((item, index) => (
           <Link key={index} href={item.path}>
             <div
-              className={`flex gap-2 items-center px-3.5 py-3 rounded-md ${
-                pathname === item.path ? "bg-[#F6F8FA]" : ""
-              }`}
+              className={`flex gap-2 items-center px-3.5 py-3 rounded-md ${pathname === item.path ? "bg-[#F6F8FA]" : ""
+                }`}
             >
               <BaseIcon
                 name={item.icon}
@@ -49,9 +48,8 @@ const AdminHeader = () => {
                 color={pathname === item.path ? "#0055FB" : "#424A53"}
               />
               <p
-                className={`${
-                  pathname === item.path ? "text-[#0055FB]" : "text-[#424A53]"
-                } font-medium`}
+                className={`${pathname === item.path ? "text-[#0055FB]" : "text-[#424A53]"
+                  } font-medium`}
               >
                 {item.name}
               </p>

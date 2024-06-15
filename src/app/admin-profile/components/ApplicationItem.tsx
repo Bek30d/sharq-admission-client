@@ -1,5 +1,6 @@
 import BaseIcon from "@/components/icons/BaseIcon";
 import { ApplicationT } from "@/store/admin.store";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const statusLabels = {
@@ -15,8 +16,13 @@ const ApplicationItem = (
     full_name,
     status,
   }: ApplicationT) => {
+
+  const router = useRouter();
+
+  const handleOpenDetails = () => router.push(`/admin-profile/${id}`)
+
   return (
-    <div className="py-[22px] bg-white rounded-lg flex justify-between mb-2">
+    <button onClick={handleOpenDetails} className="py-[22px] bg-white rounded-lg flex justify-between mb-2 cursor-pointer">
       <div className=" flex items-center">
         <p className="w-[60px] text-center text-[#24292F] text-sm font-medium">
           {id}
@@ -57,7 +63,7 @@ const ApplicationItem = (
           <BaseIcon name="pencil" color="#0055FB" />
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
