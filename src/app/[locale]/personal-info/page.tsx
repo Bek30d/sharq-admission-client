@@ -4,7 +4,7 @@ import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import user from "../../../public/assets/user-profile.png";
+import user from "../../../../public/assets/user-profile.png";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
-import bigLogo from "../../../public/assets/big_logo.svg";
+import bigLogo from "../../../../public/assets/big_logo.svg";
 import {
   formatDate,
   formatPassportField,

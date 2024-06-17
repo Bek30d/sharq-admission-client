@@ -1,15 +1,17 @@
 "use client";
 import Image from "next/image";
-import Logo from "../../public/assets/logo.svg";
-import FaceInage from "../../public/assets/main_image.jpg";
+import Logo from "../../../public/assets/logo.svg";
+import FaceInage from "../../../public/assets/main_image.jpg";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import Container from "@/components/container/Container";
 import SEO from "@/layouts/SEO";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/navigation";
 
 export default function Home() {
-  const { push } = useRouter();
   const token = localStorage.getItem("access_token");
+  const t = useTranslations("Home");
+  const router = useRouter();
 
   return (
     <SEO>
@@ -25,20 +27,19 @@ export default function Home() {
               <Image src={Logo} alt="logo" />
               <div className="h-4 md:hidden" />
               <p className="text-white md:font-medium font-semibold xl:text-6xl lg:text-5xl md:text-6xl text-3xl md:text-start text-center xl:leading-tight lg:leading-tight md:leading-tight leading-normal tracking-[-1.28px]">
-                2024-2025 oʻquv yili uchun qabul{" "}
-                <span className="md:inline lg:block">boshlandi</span>
+                {t("title")}
               </p>
               <p className="text-white text-xl leading-snug tracking-wide md:text-start text-center">
-                Maqsadimiz ta’lim orqali har tomonlama tanqidiy fikrlay oladigan
-                o’z bilimi va salohiyati bilan o’zining va atrofdagilarning
-                hayotini yaxshilay oladigan kadrlarni tayyorlashdir.
+                {t("description")}
               </p>
               <div className="h-4 md:hidden" />
               <Button
-                onClick={() => (token ? push("/personal-info") : push("/auth"))}
+                onClick={() =>
+                  token ? router.push("/personal-info") : router.push("/auth")
+                }
                 className="w-fit py-4 xl:px-12 md:px-8 !bg-white hover:!bg-[#18324D] duration-300 shadow-lg text-[#191919] hover:text-white"
               >
-                Ariza qoldirish
+                {t("button")}
               </Button>
             </div>
             <div className="lg:block hidden flex-1">

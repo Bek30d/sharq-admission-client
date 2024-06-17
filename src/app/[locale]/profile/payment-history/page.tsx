@@ -1,10 +1,10 @@
-"use client";
 import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
 import React from "react";
 import Item from "./components/Item";
 import MobileITem from "./components/MobileItem";
 import withAuth from "@/components/with-auth/WithAuth";
+import { cookies } from "next/headers";
 
 export type ItemType = {
   id: number;
@@ -50,7 +50,31 @@ const items: ItemType[] = [
   },
 ];
 
-const PaymentHistory = () => {
+async function getData(token: string) {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + "/my-payment-histories",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.log("error");
+  }
+
+  return res.json();
+}
+
+const PaymentHistory = async () => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("access_token");
+  const paymentHistory = await getData(token?.value || "");
+
+  console.log(paymentHistory, "paymentHistory");
+
   return (
     <SEO>
       <ProfileLayout title="To’lov tarixi">
@@ -67,18 +91,28 @@ const PaymentHistory = () => {
         </div>
 
         <div className="hidden lg:block">
-          {items.map((item) => (
-            <Item key={item.id} {...item} />
-          ))}
+          {paymentHistory?.data?.length ? (
+            paymentHistory.data.map((item: ItemType, index: number) => (
+              <Item key={item.id} {...item} />
+            ))
+          ) : (
+            <p className="text-[#424A53] font-medium text-lg text-center mt-10">
+              Tolov tarixi topilmadi
+            </p>
+          )}
         </div>
         <div className="block lg:hidden">
-          {items.map((item) => (
-            <MobileITem key={item.id} {...item} />
-          ))}
+          {paymentHistory?.data?.length ? (
+            items.map((item) => <MobileITem key={item.id} {...item} />)
+          ) : (
+            <p className="text-[#424A53] font-medium text-lg text-center mt-10">
+              Tolov tarixi topilmadi
+            </p>
+          )}
         </div>
       </ProfileLayout>
     </SEO>
   );
 };
 
-export default withAuth(PaymentHistory);
+export default PaymentHistory;

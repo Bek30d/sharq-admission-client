@@ -35,8 +35,6 @@ const Requests = async () => {
   const token = cookieStore.get("access_token");
   const myApplications = await getData(token?.value || "");
 
-  console.log(myApplications);
-
   return (
     <SEO>
       <ProfileLayout title="Arizalar">
