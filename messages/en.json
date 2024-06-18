@@ -3,5 +3,141 @@
     "title": "Admission for the 2024-2025 academic year has begun",
     "description": "Our goal is to train personnel who can improve their lives and those around them with their knowledge and potential, who can think critically in all aspects through education.",
     "button": "Submit an application"
-  }
+  },
+
+  "FormTab": {
+  "title_1": "Personal Information",
+  "title_2": "Education Information",
+  "title_3": "Choose direction",
+  "description_1": "Passport, address and phone number",
+  "description_2": "Secondary education and foreign language certificate",
+  "description_3": "Direction, specialization and form of education"
+  },
+  
+  "PersonalInfo": {
+  "title": "Personal Information",
+  "last_name": "Your Last Name",
+  "enter_your_last_name": "Enter your last name",
+  "first_name": "Your first name",
+  "enter_your_first_name": "Enter your first name",
+  "father_name": "Your father's name",
+  "enter_your_father_name": "Enter your father's name",
+  "birthday": "Your date of birth",
+  "enter_your_birthday": "Enter your birthday",
+  "passport_number": "Passport / ID series and number",
+  "jshshir": "JSHSHIR",
+  "gender": "Your gender",
+  "enter_your_gender": "Select your gender",
+  "male": "Male",
+  "female": "Female",
+  "citizenship": "Your citizenship",
+  "enter_your_citizenship": "Select your citizenship",
+  "phone_number": "Your phone number",
+  "enter_your_phone_number": "Enter your phone number",
+  "additional_phone_number": "Your additional phone number",
+  "enter_your_additional_phone_number": "Enter your additional phone number",
+  "address": "Your address",
+  "enter_your_address": "Enter your address",
+  "submit": "Continue",
+  "title_2": "Contact Information",
+  "logout": "Logout",
+  "logout_desc": "Are you sure you want to logout?",
+  "yes_logout": "Yes, logout",
+  "close": "Close",
+  "save_info": "Save data"
+  },
+
+
+  "EducationInfo": {
+  "title": "Educational Information",
+  "collage_label": "Education institution attended or attended",
+  "collage": "Select a school",
+  "entered_year_label": "Entered Year",
+  "entered_year": "Select a year",
+  "graduation_year_label": "Graduation Language",
+  "collage_region_address": "Region or city where the educational institution is located",
+  "collage_district_address": "District where the educational institution is located",
+  "select_region": "Select region",
+  "select_district": "Select a district",
+  "collage_name": "Educational Institution Name",
+  "diploma_name": "Copy of diploma or certificate",
+  "diploma_desc": "Upload JPEG, JPG, PNG, PDF files no larger than 5MB",
+  "download": "Download",
+  "privilege_label": "Privilege Diploma or Certificate",
+  "certificate_title": "Do you have a foreign language certificate?",
+  "yes": "Yes, available",
+  "no": "No, not available",
+  "certificate_desc": "Applicants with the following international or national English language certificates are exempt from entrance exams: IELTS – 5.5 and above; TOEFL IBT – 46-59 and above; TOEFL ITP – 450 and above; CEFR – B2 and above.",
+  "certificate_label": "Certificate Type",
+  "select_certificate": "Select certificate type",
+  "certificate_name_label": "Upload a copy of your certificate",
+  "certificate_name": "Diploma or certificate name",
+  "certificate_name_desc": "Upload JPEG, JPG, PNG, PDF files no larger than 5 MB",
+  "submit": "Continue"
+  },
+
+  "ChooseDirection": {
+  "title": "Choose direction",
+  "degree": "Education level",
+  "select_degree": "Select a degree",
+  "direction": "Direction or specialization",
+  "select_direction": "Select direction",
+  "faculty": "Faculty",
+  "select_faculty": "Select Faculty",
+  "edu_type": "Education Type",
+  "select_edu_type": "Select the type of education",
+  "edu_lang": "Language of Education",
+  "select_edu_lang": "Select the language of education",
+  "accept_desc": "I have filled out all the information in the application with my own hand, I guarantee that my information is correct. If I have incorrect or false information about myself I understand that the university admissions department has the right to reject my application if I enter it.",
+  "payment_title": "Make a payment",
+  "payment_desc": "The specified payment amount is ",
+  "send": "Send"
+  },
+
+  "Sidebar": {
+  "profile": "My page",
+  "requests": "My requests",
+  "notifications": "Notifications",
+  "applicant_info": "Applicant record sheet",
+  "payment_history": "Payment history"
+  },
+  
+  "Requests": {
+  "request_number": "Request Number",
+  "date": "Given date",
+  "faculty_name": "Faculty Name",
+  "request_status": "Request Status",
+  "no_requests": "You have no requests"
+  },
+  "ApplicantInfo": {
+  "title": "Applicant record sheet",
+  "personal_info": "Personal Information",
+  "id": "ID",
+  "f_i_o": "Full name",
+  "passport_number": "Passport",
+  "jshshir": "JSHSHIR",
+  "birthday": "Date of birth",
+  "gender": "Gender",
+  "education_info": "Selected field of study",
+  "edu_lang": "Language of Education",
+  "test_taking_alphabet": "Test Taking Alphabet",
+  "foreign_lang": "Foreign language",
+  "test_taking_subjects": "Test Taking Subjects",
+  "payment_status": "Test payment status",
+  "invoices_number": "Invoice number",
+  "status": "Payment Status",
+  "unpaid": "Unpaid",
+  "paid": "Paid",
+  "note_to_applicant": "Note to applicant",
+  "note_desc": "The applicant is personally responsible for the accuracy of the information on this note.",
+  "date": "Registered time:",
+  "save": "Save"
+  },
+  "PaymentHistory": {
+    "goal": "Goal",
+    "date": "Date of payments",
+    "amount": "Payment amount",
+    "payment_status": "Payment Status",
+    "no_payment": "You have no payment history"
+    }
 }

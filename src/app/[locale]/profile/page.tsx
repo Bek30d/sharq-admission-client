@@ -3,7 +3,7 @@
 import SEO from "@/layouts/SEO";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import user from "../../../public/assets/user-profile.png";
+import user from "../../../../public/assets/user-profile.png";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useLocalStorage } from "usehooks-ts";
-import { useRouter } from "next/navigation";
 import ProfileLayout from "@/layouts/ProfileLayout";
 import BaseIcon from "@/components/icons/BaseIcon";
 import {
@@ -38,8 +37,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import withAuth from "@/components/with-auth/WithAuth";
+import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 const schema = z.object({
   last_name: z.string({
@@ -103,6 +103,7 @@ type PersonalInfo = {
 
 const Profile = () => {
   const router = useRouter();
+  const t = useTranslations("PersonalInfo");
   const [image, setImage] = useState<any>("");
   const {
     isLoading,
@@ -216,12 +217,12 @@ const Profile = () => {
                     htmlFor="lastname"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Familiyangiz
+                    {t("last_name")}
                   </label>
                   <Input
                     id="lastname"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Familiyangizni kiriting"
+                    placeholder={t("enter_your_last_name")}
                     {...form.register("last_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -233,12 +234,12 @@ const Profile = () => {
                     htmlFor="name"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Ismingiz
+                    {t("first_name")}
                   </label>
                   <Input
                     id="name"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Ismingizni kiriting"
+                    placeholder={t("enter_your_first_name")}
                     {...form.register("first_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -252,12 +253,12 @@ const Profile = () => {
                     htmlFor="fathername"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Otangizni ismi
+                    {t("father_name")}
                   </label>
                   <Input
                     id="fathername"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Otangizni ismi"
+                    placeholder={t("enter_your_father_name")}
                     {...form.register("fathers_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -269,7 +270,7 @@ const Profile = () => {
                     htmlFor="birthday"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Tug`ilgan sanangiz
+                    {t("birthday")}
                   </label>
                   <div className="relative">
                     <BaseIcon
@@ -296,12 +297,12 @@ const Profile = () => {
                     htmlFor="passport_number"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Passport / ID seriya va raqami
+                    {t("passport_number")}
                   </label>
                   <Input
                     id="passport_number"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53] uppercase"
-                    placeholder="Passport / ID seriya va raqami"
+                    placeholder={t("passport_number")}
                     value={customDisplayValue}
                     onChange={(e) => {
                       const inputValue = e.target.value;
@@ -322,12 +323,12 @@ const Profile = () => {
                     htmlFor="jshshir"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    JSHSHIR
+                    {t("jshshir")}
                   </label>
                   <Input
                     id="jshshir"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="JSHSHIR"
+                    placeholder={t("jshshir")}
                     {...form.register("jshshir")}
                   />
                   <span className="text-red-400 text-xs">
@@ -342,7 +343,7 @@ const Profile = () => {
                       htmlFor="gender"
                       className="text-[#424A53] font-medium text-sm"
                     >
-                      Jinsingiz
+                      {t("gender")}
                     </label>
 
                     <Controller
@@ -353,7 +354,7 @@ const Profile = () => {
                           <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                             <SelectValue
                               id="gender"
-                              placeholder="Select a gender"
+                              placeholder={t("enter_your_gender")}
                               className="!text-[#9ca3af]"
                             />
                           </SelectTrigger>
@@ -363,13 +364,13 @@ const Profile = () => {
                                 value="male"
                                 className="!text-[#424A53] cursor-pointer"
                               >
-                                Male
+                                {t("male")}
                               </SelectItem>
                               <SelectItem
                                 value="female"
                                 className="!text-[#424A53] cursor-pointer"
                               >
-                                Female
+                                {t("female")}
                               </SelectItem>
                             </SelectGroup>
                           </SelectContent>
@@ -384,7 +385,7 @@ const Profile = () => {
                     htmlFor="region_id"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Tug’ilgan joy
+                    {t("address")}
                   </label>
 
                   <Controller
@@ -395,7 +396,7 @@ const Profile = () => {
                         <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                           <SelectValue
                             id="region_id"
-                            placeholder="Tug`ilgan joyingizni kiriting"
+                            placeholder={t("enter_your_address")}
                             className="!text-[#9ca3af]"
                           />
                         </SelectTrigger>
@@ -425,7 +426,7 @@ const Profile = () => {
                     htmlFor="citizenship"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Fuqarolik
+                    {t("citizenship")}
                   </label>
 
                   <Controller
@@ -435,7 +436,7 @@ const Profile = () => {
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                           <SelectValue
-                            placeholder="Fuqaroligingiz"
+                            placeholder={t("enter_your_citizenship")}
                             className="!text-[#9ca3af]"
                           >
                             {form.getValues("country_id")
@@ -470,7 +471,7 @@ const Profile = () => {
               </div>
 
               <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-                Bog`lanish uchun ma`lumotlar
+                {t("title_2")}
               </h2>
 
               <div className="flex flex-col sm:flex-row  justify-between items-center gap-6 mb-12">
@@ -479,7 +480,7 @@ const Profile = () => {
                     htmlFor="phone"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Shaxsiy telefon raqamingiz
+                    {t("phone_number")}
                   </label>
                   <Input
                     id="phone"
@@ -496,7 +497,7 @@ const Profile = () => {
                     htmlFor="additionaphone"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Qo’shimcha raqam
+                    {t("additional_phone_number")}
                   </label>
                   <Input
                     id="additionaphone"
@@ -517,15 +518,13 @@ const Profile = () => {
                       variant="outline"
                       className="border-red-500 text-red-500 hover:!text-red-500"
                     >
-                      Profildan chiqish
+                      {t("logout")}
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                      <DialogTitle>Profildan chiqish</DialogTitle>
-                      <DialogDescription>
-                        Siz haqiqatdan ham profildan chiqmoqchimisiz?
-                      </DialogDescription>
+                      <DialogTitle>{t("logout")}</DialogTitle>
+                      <DialogDescription>{t("logout_desc")}</DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="sm:justify-start">
                       <Button
@@ -534,7 +533,7 @@ const Profile = () => {
                         variant="secondary"
                         className="border !border-red-500 !text-red-500 hover:!text-red-500 p-2"
                       >
-                        Xa, chiqish
+                        {t("yes_logout")}
                       </Button>
                       <DialogClose asChild>
                         <Button
@@ -542,7 +541,7 @@ const Profile = () => {
                           variant="secondary"
                           className="border !border-[#096bda89] !text-[#096bda89] hover:!text-[#096bda89] p-2"
                         >
-                          Yopish
+                          {t("close")}
                         </Button>
                       </DialogClose>
                     </DialogFooter>
@@ -553,7 +552,7 @@ const Profile = () => {
                     isLoading ? "!bg-[#096bda89]" : "!bg-[#0969DA]"
                   } !py-[14px] h-auto w-full sm:w-fit`}
                 >
-                  Ma’lumotlarni saqlash
+                  {t("save_info")}
                 </Button>
               </div>
             </Form>

@@ -1,9 +1,9 @@
 import ProfileLayout from "@/layouts/ProfileLayout";
 import SEO from "@/layouts/SEO";
-import React, { useRef } from "react";
+import React from "react";
 import { cookies } from "next/headers";
-import { useReactToPrint } from "react-to-print";
 import MainComponent from "./components/MainComponent";
+import { getTranslations } from "next-intl/server";
 
 async function getData(token: string) {
   const res = await fetch(
@@ -27,10 +27,11 @@ const ApplicantInfo = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get("access_token");
   const applicantInfo = await getData(token?.value || "");
+  const t = await getTranslations("ApplicantInfo");
 
   return (
     <SEO>
-      <ProfileLayout title="Abituriyent qayd varaqasi">
+      <ProfileLayout title={t("title")}>
         <MainComponent applicantInfo={applicantInfo} />
       </ProfileLayout>
     </SEO>

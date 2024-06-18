@@ -29,8 +29,9 @@ import {
 import { formStore } from "@/store/form.store";
 import BaseIcon from "@/components/icons/BaseIcon";
 import withAuth from "@/components/with-auth/WithAuth";
-import { useRouter } from "next/navigation";
 import { Toaster } from "react-hot-toast";
+import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 const schema = z.object({
   last_name: z.string({
@@ -95,6 +96,7 @@ type PersonalInfo = {
 
 const PersonalInfo = () => {
   const router = useRouter();
+  const t = useTranslations("PersonalInfo");
   const {
     isLoading,
     aboutMe,
@@ -183,7 +185,7 @@ const PersonalInfo = () => {
         <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl relative">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-            Shaxsiy ma’lumotlar
+            {t("title")}
           </h2>
           <div className="bg-[#F6F8FA] mb-8 w-40 h-40 flex items-center justify-center rounded-full shadow border border-[#EAEEF2] cursor-pointer overflow-hidden object-cover object-center">
             <label htmlFor="imageUpload">
@@ -212,12 +214,12 @@ const PersonalInfo = () => {
                     htmlFor="lastname"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Familiyangiz
+                    {t("last_name")}
                   </label>
                   <Input
                     id="lastname"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Familiyangizni kiriting"
+                    placeholder={t("enter_your_last_name")}
                     {...form.register("last_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -229,12 +231,12 @@ const PersonalInfo = () => {
                     htmlFor="name"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Ismingiz
+                    {t("first_name")}
                   </label>
                   <Input
                     id="name"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Ismingizni kiriting"
+                    placeholder={t("enter_your_first_name")}
                     {...form.register("first_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -248,12 +250,12 @@ const PersonalInfo = () => {
                     htmlFor="fathername"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Otangizni ismi
+                    {t("father_name")}
                   </label>
                   <Input
                     id="fathername"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="Otangizni ismi"
+                    placeholder={t("enter_your_father_name")}
                     {...form.register("fathers_name")}
                   />
                   <span className="text-red-400 text-xs">
@@ -265,7 +267,7 @@ const PersonalInfo = () => {
                     htmlFor="birthday"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Tug`ilgan sanangiz
+                    {t("birthday")}
                   </label>
                   <div className="relative">
                     <BaseIcon
@@ -292,12 +294,12 @@ const PersonalInfo = () => {
                     htmlFor="passport_number"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Passport / ID seriya va raqami
+                    {t("passport_number")}
                   </label>
                   <Input
                     id="passport_number"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53] uppercase"
-                    placeholder="Passport / ID seriya va raqami"
+                    placeholder={t("passport_number")}
                     value={customDisplayValue}
                     onChange={(e) => {
                       const inputValue = e.target.value;
@@ -318,12 +320,12 @@ const PersonalInfo = () => {
                     htmlFor="jshshir"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    JSHSHIR
+                    {t("jshshir")}
                   </label>
                   <Input
                     id="jshshir"
                     className="border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]"
-                    placeholder="JSHSHIR"
+                    placeholder={t("jshshir")}
                     {...form.register("jshshir")}
                   />
                   <span className="text-red-400 text-xs">
@@ -338,7 +340,7 @@ const PersonalInfo = () => {
                       htmlFor="gender"
                       className="text-[#424A53] font-medium text-sm"
                     >
-                      Jinsingiz
+                      {t("gender")}
                     </label>
 
                     <Controller
@@ -349,7 +351,7 @@ const PersonalInfo = () => {
                           <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                             <SelectValue
                               id="gender"
-                              placeholder="Select a gender"
+                              placeholder={t("enter_your_gender")}
                               className="!text-[#9ca3af]"
                             />
                           </SelectTrigger>
@@ -359,13 +361,13 @@ const PersonalInfo = () => {
                                 value="male"
                                 className="!text-[#424A53] cursor-pointer"
                               >
-                                Male
+                                {t("male")}
                               </SelectItem>
                               <SelectItem
                                 value="female"
                                 className="!text-[#424A53] cursor-pointer"
                               >
-                                Female
+                                {t("female")}
                               </SelectItem>
                             </SelectGroup>
                           </SelectContent>
@@ -380,7 +382,7 @@ const PersonalInfo = () => {
                     htmlFor="region_id"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Tug’ilgan joy
+                    {t("address")}
                   </label>
 
                   <Controller
@@ -391,7 +393,7 @@ const PersonalInfo = () => {
                         <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                           <SelectValue
                             id="region_id"
-                            placeholder="Tug`ilgan joyingizni kiriting"
+                            placeholder={t("enter_your_address")}
                             className="!text-[#9ca3af]"
                           />
                         </SelectTrigger>
@@ -421,7 +423,7 @@ const PersonalInfo = () => {
                     htmlFor="citizenship"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Fuqarolik
+                    {t("citizenship")}
                   </label>
 
                   <Controller
@@ -431,7 +433,7 @@ const PersonalInfo = () => {
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger className="w-full h-auto border-none bg-[#F6F8FA] outline-none !py-4 !px-3 text-[#424A53]">
                           <SelectValue
-                            placeholder="Fuqaroligingiz"
+                            placeholder={t("citizenship")}
                             className="!text-[#9ca3af]"
                           >
                             {form.getValues("country_id")
@@ -466,7 +468,7 @@ const PersonalInfo = () => {
               </div>
 
               <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-                Bog`lanish uchun ma`lumotlar
+                {t("title_2")}
               </h2>
 
               <div className="flex flex-col sm:flex-row  justify-between items-center gap-6 mb-12">
@@ -475,7 +477,7 @@ const PersonalInfo = () => {
                     htmlFor="phone"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Shaxsiy telefon raqamingiz
+                    {t("phone_number")}
                   </label>
                   <Input
                     id="phone"
@@ -492,7 +494,7 @@ const PersonalInfo = () => {
                     htmlFor="additionaphone"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Qo’shimcha raqam
+                    {t("additional_phone_number")}
                   </label>
                   <Input
                     id="additionaphone"
@@ -511,7 +513,7 @@ const PersonalInfo = () => {
                   !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
                 } w-full !py-[14px] h-auto`}
               >
-                Davom etish
+                {t("submit")}
               </Button>
             </Form>
           </form>

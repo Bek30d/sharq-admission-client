@@ -8,13 +8,14 @@ import HamburgerButton from "../hamburger-button/HamburgerButton";
 import { useIndexStore } from "@/store";
 import Logo from "../../../public/assets/logo.svg";
 import Link from "next/link";
-import { links } from "../profileSidebar/ProfileSidebar";
+import { LinkType, links } from "../profileSidebar/ProfileSidebar";
 import Container from "../container/Container";
 import { useEffect } from "react";
 import { userStore } from "@/store/main.store";
 import { useLocalStorage } from "usehooks-ts";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { usePathname, useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
   const { user, getMyData } = userStore();
@@ -23,6 +24,35 @@ const Navbar = () => {
   const token = localStorage.getItem("access_token");
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("Sidebar");
+
+  const links: LinkType[] = [
+    {
+      path: "/profile",
+      name: t("profile"),
+      icon: "user",
+    },
+    {
+      path: "/profile/requests",
+      name: t("requests"),
+      icon: "request",
+    },
+    {
+      path: "/profile/notifications",
+      name: t("notifications"),
+      icon: "bell",
+    },
+    {
+      path: "/profile/applicant-info",
+      name: t("applicant_info"),
+      icon: "student_doc",
+    },
+    {
+      path: "/profile/payment-history",
+      name: t("payment_history"),
+      icon: "payment_time",
+    },
+  ];
 
   useEffect(() => {
     if (token) {
@@ -36,7 +66,6 @@ const Navbar = () => {
 
   const handleChangeLanguage = (lang: string) => {
     router.push(pathname, { locale: lang });
-    console.log(lang);
   };
 
   return (
@@ -111,9 +140,9 @@ const Navbar = () => {
               </button>
             </div>
             {token ? (
-              <Link
-                href="/profile"
-                className="w-8 h-8 flex justify-center items-center bg-[#F5F8FF] rounded-full"
+              <div
+                onClick={() => router.push("/profile")}
+                className="w-8 h-8 flex justify-center items-center bg-[#F5F8FF] rounded-full cursor-pointer"
               >
                 <Avatar>
                   <AvatarImage src={user.image} />
@@ -121,7 +150,7 @@ const Navbar = () => {
                     <BaseIcon name="user" />
                   </AvatarFallback>
                 </Avatar>
-              </Link>
+              </div>
             ) : null}
           </div>
         </div>

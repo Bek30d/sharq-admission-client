@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -27,6 +26,8 @@ import { userStore } from "@/store/main.store";
 import withAuth from "@/components/with-auth/WithAuth";
 import { Toaster } from "react-hot-toast";
 import { useLocalStorage } from "usehooks-ts";
+import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 const schema = z.object({
   edu_type: z.string({
@@ -110,6 +111,7 @@ const EducationInfo = () => {
   const [langCertificateId, setLangCertificateId] = useState<string>("");
   const [_, setIsAccessChooseDir] = useLocalStorage("isAccessChooseDir", false);
   const router = useRouter();
+  const t = useTranslations("EducationInfo");
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -186,7 +188,7 @@ const EducationInfo = () => {
         <Toaster />
         <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
           <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-            Ta’lim ma’lumotlari
+            {t("title")}
           </h2>
 
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -196,7 +198,7 @@ const EducationInfo = () => {
                   htmlFor="college"
                   className="text-[#424A53] font-medium text-sm"
                 >
-                  Bitirgan yoki tahsil olayotgan ta’lim tdargohi
+                  {t("collage_label")}
                 </label>
 
                 <Controller
@@ -207,7 +209,7 @@ const EducationInfo = () => {
                       <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                         <SelectValue
                           id="edu_type"
-                          placeholder="Kollej"
+                          placeholder={t("collage")}
                           className=" placeholder:!text-[#6E7781]"
                         />
                       </SelectTrigger>
@@ -237,7 +239,7 @@ const EducationInfo = () => {
                     htmlFor="year_of_entiring_college"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Kirgan yili
+                    {t("entered_year_label")}
                   </label>
                   <Controller
                     name="entered_year"
@@ -247,7 +249,7 @@ const EducationInfo = () => {
                         <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="entered_year"
-                            placeholder="Yilni tanlang"
+                            placeholder={t("entered_year")}
                             className="!text-[#9ca3af]"
                           />
                         </SelectTrigger>
@@ -276,7 +278,7 @@ const EducationInfo = () => {
                     htmlFor="graduation_year"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Bitirgan yili
+                    {t("graduation_year_label")}
                   </label>
 
                   <Controller
@@ -287,7 +289,7 @@ const EducationInfo = () => {
                         <SelectTrigger className="!border border-[#D0D7DE] !bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="graduation_year"
-                            placeholder="Yilni tanlang"
+                            placeholder={t("entered_year")}
                             className="!text-[#9ca3af]"
                           />
                         </SelectTrigger>
@@ -319,7 +321,7 @@ const EducationInfo = () => {
                     htmlFor="region"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Ta’lim dargohi joylashgan viloyat yoki shahar
+                    {t("collage_region_address")}
                   </label>
                   <Controller
                     name="region_id"
@@ -338,7 +340,7 @@ const EducationInfo = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="region_id"
-                            placeholder="Viloyat"
+                            placeholder={t("select_region")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -368,7 +370,7 @@ const EducationInfo = () => {
                       htmlFor="district"
                       className="text-[#424A53] font-medium text-sm"
                     >
-                      Tumanni tanlang
+                      {t("collage_district_address")}
                     </label>
                     <Controller
                       name="district_id"
@@ -378,7 +380,7 @@ const EducationInfo = () => {
                           <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781] disabled">
                             <SelectValue
                               id="district_id"
-                              placeholder="Tumanni tanlang"
+                              placeholder={t("select_district")}
                               className=" placeholder:!text-[#6E7781]"
                             />
                           </SelectTrigger>
@@ -410,7 +412,7 @@ const EducationInfo = () => {
                       htmlFor="district"
                       className="text-[#424A53] font-medium text-sm"
                     >
-                      Tumanni tanlang
+                      {t("collage_district_address")}
                     </label>
                     <Controller
                       name="district_id"
@@ -420,7 +422,7 @@ const EducationInfo = () => {
                           <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781] cursor-auto">
                             <SelectValue
                               id="district_id"
-                              placeholder="Tumanni tanlang"
+                              placeholder={t("select_district")}
                               className=" placeholder:!text-[#6E7781]"
                             />
                           </SelectTrigger>
@@ -439,12 +441,12 @@ const EducationInfo = () => {
                   htmlFor="collage_name"
                   className="text-[#424A53] font-medium text-sm"
                 >
-                  Ta’lim muassasasi nomi
+                  {t("collage_name")}
                 </label>
                 <Input
                   id="collage_name"
                   className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
-                  placeholder="Ta’lim muassasasi nomi"
+                  placeholder={t("collage_name")}
                   {...form.register("education_name")}
                 />
                 <span className="text-red-400 text-xs">
@@ -457,13 +459,13 @@ const EducationInfo = () => {
                   htmlFor="collage_name"
                   className="text-[#424A53] font-medium text-sm"
                 >
-                  Diplom yoki shahodatnoma nusxasi
+                  {t("diploma_name")}
                 </label>
 
                 <div className="flex gap-2 items-center">
                   <Input
                     className="!border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
-                    placeholder="Diplom yoki shahodatnoma nomi"
+                    placeholder={t("diploma_name")}
                     id="degree_name"
                     value={degreeFile?.name}
                     disabled
@@ -472,7 +474,7 @@ const EducationInfo = () => {
                     <div className="h-max border !border-[#0969DA] !bg-transparent flex gap-1.5 items-center py-3 px-5 rounded-lg cursor-pointer">
                       <BaseIcon name="upload" color="#0969DA" />
                       <span className="text-[#0969DA] text-lg font-medium hidden sm:block">
-                        Yuklash
+                        {t("download")}
                       </span>
                     </div>
                   </label>
@@ -492,8 +494,7 @@ const EducationInfo = () => {
                   {form.formState.errors.certificate_name?.message}
                 </span>
                 <span className="text-[#57606A] text-sm">
-                  Hajmi 5 MBdan katta bo’lmagan JPEG, JPG, PNG, PDF fayllarni
-                  yuklang
+                  {t("diploma_desc")}
                 </span>
               </div>
 
@@ -515,7 +516,7 @@ const EducationInfo = () => {
                           htmlFor="is_cert_privileged"
                           className="text-[#424A53] font-medium text-sm "
                         >
-                          Imtiyozli diplom yoki shahodatnoma
+                          {t("privilege_label")}
                         </label>
                       </FormItem>
                     )}
@@ -528,7 +529,7 @@ const EducationInfo = () => {
                   htmlFor="has_foreign_language_degree"
                   className="text-[#424A53] font-medium text-sm "
                 >
-                  Sizda chet tili sertifikati mavjudmi?
+                  {t("certificate_title")}
                 </label>
                 <RadioGroup defaultValue="no" className="flex gap-8 mt-3">
                   <div className="flex items-center space-x-2">
@@ -542,7 +543,7 @@ const EducationInfo = () => {
                       htmlFor="no"
                       className="!text-[#424A53] font-normal cursor-pointer"
                     >
-                      Yo’q, mavjud emas
+                      {t("no")}
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -556,7 +557,7 @@ const EducationInfo = () => {
                       htmlFor="yes"
                       className="!text-[#424A53] font-normal cursor-pointer"
                     >
-                      Ha, mavjud
+                      {t("yes")}
                     </Label>
                   </div>
                 </RadioGroup>
@@ -565,11 +566,7 @@ const EducationInfo = () => {
               {hasLanguageDegree ? (
                 <div>
                   <p className="text-[#424A53] font-light mb-6">
-                    Ingliz tilidan quyidagi xalqaro yoki milliy sertifikatga ega
-                    boʻlgan abituriyentlar kirish imtihonlaridan ozod etiladi:
-                    IELTS – 5,5 va undan yuqori; TOEFL IBT – 46-59 va undan
-                    yuqori; TOEFL ITP – 450 va undan yuqori; CEFR – B2 va undan
-                    yuqori.
+                    {t("certificate_desc")}
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-between gap-6 mb-10">
@@ -578,7 +575,7 @@ const EducationInfo = () => {
                         htmlFor="certificates"
                         className="text-[#424A53] font-medium text-sm"
                       >
-                        Sertifikat turi
+                        {t("certificate_label")}
                       </label>
                       <Select
                         onValueChange={(value) => {
@@ -590,7 +587,7 @@ const EducationInfo = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="certificates"
-                            placeholder="Sertifikat"
+                            placeholder={t("select_certificate")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -614,12 +611,12 @@ const EducationInfo = () => {
                         htmlFor="certificates_name"
                         className="text-[#424A53] font-medium text-sm"
                       >
-                        Sertifikatingiz nusxasini yuklang
+                        {t("certificate_name_label")}
                       </label>
                       <div className="flex gap-2 items-center">
                         <Input
                           className="!border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
-                          placeholder="Diplom yoki shahodatnoma nomi"
+                          placeholder={t("certificate_name")}
                           id="certificates_name"
                           value={certificateFile?.name}
                           disabled
@@ -628,7 +625,7 @@ const EducationInfo = () => {
                           <div className="h-max border !border-[#0969DA] !bg-transparent flex gap-1.5 items-center py-3 px-5 rounded-lg cursor-pointer">
                             <BaseIcon name="upload" color="#0969DA" />
                             <span className="text-[#0969DA] text-lg font-medium hidden sm:block">
-                              Yuklash
+                              {t("download")}
                             </span>
                           </div>
                         </label>
@@ -642,8 +639,7 @@ const EducationInfo = () => {
                         />
                       </div>
                       <p className="text-[#57606A] text-sm w-64">
-                        Hajmi 5 MBdan katta bo’lmagan JPEG, JPG, PNG, PDF
-                        fayllarni yuklang
+                        {t("certificate_name_desc")}
                       </p>
                     </div>
                   </div>
@@ -655,7 +651,7 @@ const EducationInfo = () => {
                   !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
                 } w-full !py-[14px] h-auto`}
               >
-                Davom etish
+                {t("submit")}
               </Button>
             </Form>
           </form>

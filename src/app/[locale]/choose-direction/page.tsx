@@ -24,6 +24,8 @@ import Done from "@/components/done/Done";
 import withAuth from "@/components/with-auth/WithAuth";
 import { Toaster } from "react-hot-toast";
 import { useLocalStorage } from "usehooks-ts";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/navigation";
 
 const schema = z.object({
   degree: z.string({
@@ -118,6 +120,8 @@ const ChooseDirection = () => {
   const [id, setId] = useState<number>(0);
   const [isAccessEdu, setIsAccessEdu] = useLocalStorage("isAccessEdu", false);
   const [_, setIsAccessChose] = useLocalStorage("isAccessChooseDir", false);
+  const t = useTranslations("ChooseDirection");
+  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -156,7 +160,7 @@ const ChooseDirection = () => {
           <Toaster />
           <div className="my-5 py-6 px-5 md:p-10 bg-white rounded-2xl">
             <h2 className="text-[28px] md:text-[32px] font-semibold text-[#18324D] mb-8">
-              Yo’nalishni tanlash
+              {t("title")}
             </h2>
 
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -166,7 +170,7 @@ const ChooseDirection = () => {
                     htmlFor="college"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Daraja
+                    {t("degree")}
                   </label>
 
                   <Controller
@@ -177,7 +181,7 @@ const ChooseDirection = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="degree"
-                            placeholder="Darajani tanlang"
+                            placeholder={t("select_degree")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -206,7 +210,7 @@ const ChooseDirection = () => {
                     htmlFor="edu_direction"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Yo’nalish yoki mutaxxassislik
+                    {t("direction")}
                   </label>
 
                   <Controller
@@ -217,7 +221,7 @@ const ChooseDirection = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="edu_direction"
-                            placeholder="Yo'nalishni tanlang"
+                            placeholder={t("select_direction")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -246,7 +250,7 @@ const ChooseDirection = () => {
                     htmlFor="college"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Fakultet
+                    {t("faculty")}
                   </label>
 
                   <Controller
@@ -257,7 +261,7 @@ const ChooseDirection = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="faculty"
-                            placeholder="Darajani tanlang"
+                            placeholder={t("select_faculty")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -286,7 +290,7 @@ const ChooseDirection = () => {
                     htmlFor="education_form"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Ta’lim shakli
+                    {t("edu_type")}
                   </label>
 
                   <Controller
@@ -297,7 +301,7 @@ const ChooseDirection = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="education_form"
-                            placeholder="Ta'lim turini tanlang"
+                            placeholder={t("select_edu_type")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -326,7 +330,7 @@ const ChooseDirection = () => {
                     htmlFor="education_lang"
                     className="text-[#424A53] font-medium text-sm"
                   >
-                    Ta’lim tili
+                    {t("edu_lang")}
                   </label>
 
                   <Controller
@@ -337,7 +341,7 @@ const ChooseDirection = () => {
                         <SelectTrigger className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 h-auto text-[#424A53] placeholder:text-[#6E7781]">
                           <SelectValue
                             id="edu_lang"
-                            placeholder="Ta'lim tilini tanlang"
+                            placeholder={t("select_edu_lang")}
                             className=" placeholder:!text-[#6E7781]"
                           />
                         </SelectTrigger>
@@ -372,15 +376,11 @@ const ChooseDirection = () => {
                     htmlFor="honors_degree"
                     className="text-[#444444] font-light text-sm"
                   >
-                    Arizadagi barcha ma’lumotlarni o‘z qo‘lim bilan to‘ldirdim,
-                    ma’lumotlarim to‘g‘riligiga kafolat beraman. Agar men o‘zim
-                    haqimda noto‘g‘ri yoki yolg‘on ma’lumotlar kiritgan bo‘lsam,
-                    oliygoh qabul bo‘limi mening arizamni rad etishga haqli
-                    ekanligini bilaman.
+                    {t("accept_desc")}
                   </label>
                 </div>
 
-                <div className="flex justify-between items-center bg-[#F6F8FA] p-4 rounded-2xl mb-10">
+                <div className="flex justify-between items-center bg-[#F6F8FA] p-4 rounded-2xl mb-10 cursor-pointer" onClick={() => router.push("/payment")}>
                   <div className="flex items-center gap-2">
                     <div className="w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#EAEEF2]">
                       <BaseIcon name="payment_time" />
@@ -388,10 +388,10 @@ const ChooseDirection = () => {
 
                     <div>
                       <h3 className="text-[#424A53] font-semibold text-xl">
-                        To’ovni amalga oshirish
+                        {t("payment_title")}
                       </h3>
                       <p className="text-[#57606A] text-sm">
-                        Belgilangan to’lov miqdori{" "}
+                        {t("payment_desc")}
                         <span className="text-[#424A53] font-medium italic">
                           115 000 uzs
                         </span>
@@ -407,11 +407,11 @@ const ChooseDirection = () => {
                     type="submit"
                     className="!bg-[#18324D] w-full !py-[14px] h-auto"
                   >
-                    Jo’natish
+                    {t("send")}
                   </Button>
                 ) : (
                   <Button className="!bg-[#18324d83] w-full !py-[14px] h-auto !cursor-auto">
-                    Jo’natish
+                    {t("send")}
                   </Button>
                 )}
               </Form>

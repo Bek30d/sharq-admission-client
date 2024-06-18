@@ -3,8 +3,8 @@ import SEO from "@/layouts/SEO";
 import React from "react";
 import Item from "./components/Item";
 import MobileITem from "./components/MobileItem";
-import withAuth from "@/components/with-auth/WithAuth";
 import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 
 export type ItemType = {
   id: number;
@@ -72,21 +72,18 @@ const PaymentHistory = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get("access_token");
   const paymentHistory = await getData(token?.value || "");
-
-  console.log(paymentHistory, "paymentHistory");
+  const t = await getTranslations("PaymentHistory");
 
   return (
     <SEO>
       <ProfileLayout title="To’lov tarixi">
         <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">
           <p className="pl-6 pr-5 text-[#57606A] font-medium">No</p>
-          <p className="pl-5 pr-24 text-[#57606A] font-medium">Maqsad</p>
-          <p className="pl-5 pr-12 text-[#57606A] font-medium">
-            To’lovlar sanasi
-          </p>
-          <p className="pl-5 pr-12 text-[#57606A] font-medium">Miqdor</p>
+          <p className="pl-5 pr-24 text-[#57606A] font-medium">{t("goal")}</p>
+          <p className="pl-5 pr-12 text-[#57606A] font-medium">{t("date")}</p>
+          <p className="pl-5 pr-12 text-[#57606A] font-medium">{t("amount")}</p>
           <p className="pl-5 pr-20 text-[#57606A] font-medium">
-            To’lov statusi
+            {t("payment_status")}
           </p>
         </div>
 
@@ -97,7 +94,7 @@ const PaymentHistory = async () => {
             ))
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
-              Tolov tarixi topilmadi
+              {t("no_payment")}
             </p>
           )}
         </div>
@@ -106,7 +103,7 @@ const PaymentHistory = async () => {
             items.map((item) => <MobileITem key={item.id} {...item} />)
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
-              Tolov tarixi topilmadi
+              {t("no_payment")}
             </p>
           )}
         </div>

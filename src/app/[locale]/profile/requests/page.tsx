@@ -3,8 +3,9 @@ import SEO from "@/layouts/SEO";
 import React from "react";
 import MobileITem from "./components/MobileITem";
 import { cookies } from "next/headers";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Item from "./components/Item";
+import { getTranslations } from "next-intl/server";
 
 export type ItemType = {
   apply_number: string;
@@ -34,6 +35,7 @@ const Requests = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get("access_token");
   const myApplications = await getData(token?.value || "");
+  const t = await getTranslations("Requests");
 
   return (
     <SEO>
@@ -41,10 +43,16 @@ const Requests = async () => {
         <Toaster />
         <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1">
           <p className="px-5 text-[#57606A] font-medium">No</p>
-          <p className="pl-5 pr-9 text-[#57606A] font-medium">Ariza raqami</p>
-          <p className="pl-5 pr-12 text-[#57606A] font-medium">Berilgan sana</p>
-          <p className="pl-5 pr-12 text-[#57606A] font-medium">Fakultet nomi</p>
-          <p className="pl-5 pr-20 text-[#57606A] font-medium">Ariza statusi</p>
+          <p className="pl-5 pr-9 text-[#57606A] font-medium">
+            {t("request_number")}
+          </p>
+          <p className="pl-5 pr-12 text-[#57606A] font-medium">{t("date")}</p>
+          <p className="pl-5 pr-12 text-[#57606A] font-medium">
+            {t("faculty_name")}
+          </p>
+          <p className="pl-5 pr-20 text-[#57606A] font-medium">
+            {t("request_status")}
+          </p>
         </div>
 
         <div className="hidden lg:block">
@@ -54,7 +62,7 @@ const Requests = async () => {
             ))
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
-              Arizalar topilmadi
+              {t("no_requests")}
             </p>
           )}
         </div>
@@ -65,7 +73,7 @@ const Requests = async () => {
             ))
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
-              Arizalar topilmadi
+              {t("no_requests")}
             </p>
           )}
         </div>
