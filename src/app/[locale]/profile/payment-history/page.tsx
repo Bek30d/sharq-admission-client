@@ -5,6 +5,7 @@ import Item from "./components/Item";
 import MobileITem from "./components/MobileItem";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export type ItemType = {
   id: number;
@@ -73,6 +74,10 @@ const PaymentHistory = async () => {
   const token = cookieStore.get("access_token");
   const paymentHistory = await getData(token?.value || "");
   const t = await getTranslations("PaymentHistory");
+
+  if (!token?.value) {
+    redirect("/");
+  }
 
   return (
     <SEO>

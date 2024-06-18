@@ -6,7 +6,7 @@ import Click from "../../../../public/assets/click.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Wrapper from "./Wrapper";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 
 const paymentMethods = [
   {

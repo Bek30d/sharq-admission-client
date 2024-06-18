@@ -8,7 +8,7 @@ import HamburgerButton from "../hamburger-button/HamburgerButton";
 import { useIndexStore } from "@/store";
 import Logo from "../../../public/assets/logo.svg";
 import Link from "next/link";
-import { LinkType, links } from "../profileSidebar/ProfileSidebar";
+import { LinkType } from "../profileSidebar/ProfileSidebar";
 import Container from "../container/Container";
 import { useEffect } from "react";
 import { userStore } from "@/store/main.store";

@@ -1,9 +1,9 @@
 // components/withAuth.tsx
 
 import { useEffect, ComponentType } from "react";
-import { useRouter, usePathname } from "next/navigation";
 import { isAuthenticated } from "@/lib/utils";
 import { useLocalStorage } from "usehooks-ts";
+import { usePathname, useRouter } from "@/navigation";
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
   const AuthComponent = (props: P) => {

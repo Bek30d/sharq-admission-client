@@ -4,6 +4,7 @@ import React from "react";
 import { cookies } from "next/headers";
 import MainComponent from "./components/MainComponent";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 async function getData(token: string) {
   const res = await fetch(
@@ -28,6 +29,10 @@ const ApplicantInfo = async () => {
   const token = cookieStore.get("access_token");
   const applicantInfo = await getData(token?.value || "");
   const t = await getTranslations("ApplicantInfo");
+
+  if (!token?.value) {
+    redirect("/");
+  }
 
   return (
     <SEO>

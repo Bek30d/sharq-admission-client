@@ -140,5 +140,19 @@
     "amount": "To’lov miqdori",
     "payment_status": "Tolov holati",
     "no_payment": "Sizda to’lov tarixi yo’q"
+  },
+
+  "Done": {
+    "title": "Ariza Muvaffaqiyatli Topshirildi!",
+    "success_title": "Sizning arizangiz muvaffaqiyatli topshirildi.",
+    "request_number":"Ariza raqami",
+    "request_status": "Arizangiz ko'rib chiqilmoqda.",
+    "additional_docs": "Qo'shimcha hujjatlar taqdim etilishi kerak bo'lsa, biz siz bilan bog'lanamiz.",
+    "exam": "Imtihon yoki suhbat sanasi haqida sizga xabar beriladi.",
+    "home": "Asosiy sahifaga qaytish",
+    "profile": "Shaxsiy sahifaga o'tish",
+    "new_request": "Yangi ariza topshirish",
+    "phone": "Telefon",
+    "email": "Elektron pochta"
   }
 }

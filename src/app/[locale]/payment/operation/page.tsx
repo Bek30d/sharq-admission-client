@@ -5,12 +5,12 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PaymentLayout from "@/layouts/PaymentLayout";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import Wrapper from "../Wrapper";
 import PaymentDetailsCard from "./PaymentDetailsCard";
+import { useRouter } from "@/navigation";
 
 type FormData = z.infer<typeof schema>;
 

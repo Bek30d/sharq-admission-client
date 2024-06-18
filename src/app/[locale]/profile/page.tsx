@@ -40,6 +40,7 @@ import {
 import withAuth from "@/components/with-auth/WithAuth";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { setCookie } from "@/lib/cookies";
 
 const schema = z.object({
   last_name: z.string({
@@ -183,6 +184,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.clear();
+    setCookie("access_token", "");
     router.push("/");
   };
 

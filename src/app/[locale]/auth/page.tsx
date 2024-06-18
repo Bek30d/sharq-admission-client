@@ -7,8 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
+import { useRouter } from "@/navigation";
 
 type FormData = z.infer<typeof schema>;
 const phoneRegex = new RegExp(/^\+998\d{9}$/);

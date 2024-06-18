@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { Toaster } from "react-hot-toast";
 import Item from "./components/Item";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export type ItemType = {
   apply_number: string;
@@ -36,6 +37,10 @@ const Requests = async () => {
   const token = cookieStore.get("access_token");
   const myApplications = await getData(token?.value || "");
   const t = await getTranslations("Requests");
+
+  if (!token?.value) {
+    redirect("/");
+  }
 
   return (
     <SEO>

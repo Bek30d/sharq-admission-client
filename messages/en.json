@@ -139,5 +139,19 @@
     "amount": "Payment amount",
     "payment_status": "Payment Status",
     "no_payment": "You have no payment history"
-    }
+    },
+
+    "Done": {
+      "title": "Application Submitted Successfully!",
+      "success_title": "Your application has been successfully submitted.",
+      "request_number":"Request Number",
+      "request_status": "Your request is being processed.",
+      "additional_docs": "We will contact you if additional documents need to be provided.",
+      "exam": "You will be notified of the exam or interview date.",
+      "home": "Back to home page",
+      "profile": "Go to personal page",
+      "new_request": "Submit a new request",
+      "phone": "Phone",
+      "email": "Email"
+      }
 }
