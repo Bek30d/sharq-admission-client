@@ -1,4 +1,5 @@
-import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } from "@/api/admin";
+import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS } from "@/api/admin";
+import { ReportType } from "@/app/admin-profile/reports/page";
 import { create } from "zustand";
 
 export type ApplicationT = {
@@ -21,9 +22,11 @@ interface useStoreState {
     applications: ApplicationT[];
     isShowSideBar: boolean;
     details: any | null;
+    reports: ReportType[];
     getApplications: (filter?: any) => void;
     setIsShowSideBar: (isOpen: boolean) => void;
     getApplicationsDetails: (id: number) => Promise<any | null>;
+    getReports: (filter?: any) => void;
 }
 
 export const useAdminStore = create<useStoreState>((set, get) => ({
@@ -31,6 +34,7 @@ export const useAdminStore = create<useStoreState>((set, get) => ({
     applications: [],
     isShowSideBar: false,
     details: null,
+    reports: [],
     getApplications: async (filter?: any) => {
         set({ isLoading: true })
         const response: any = await GET_APPLICATIONS(filter)
@@ -51,6 +55,15 @@ export const useAdminStore = create<useStoreState>((set, get) => ({
         } catch(error) {
             set({ isLoading: false, details: null })
             console.log(error)
+        }
+    },
+    getReports: async (filter?: any) => {
+        set({isLoading: true})
+        const response: any = await GET_REPORTS(filter)
+        if(response?.success) {
+            set({ reports: response.data, isLoading: false })
+        } else {
+            set({ isLoading: false })
         }
     }
 }))

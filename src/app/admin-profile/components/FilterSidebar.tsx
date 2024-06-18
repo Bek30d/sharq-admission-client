@@ -30,8 +30,9 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAdminStore } from "@/store/admin.store";
+import { formStore } from "@/store/form.store";
 
 export type Filter = {
   full_name?: string;
@@ -47,25 +48,6 @@ export type Filter = {
   gender?: 'male' | 'female';
 }
 
-const educationDirections = [
-  {
-    value: "moliya1",
-    label: "Moliya",
-  },
-  {
-    value: "kafedra1",
-    label: "Kafedra",
-  },
-  {
-    value: "moliya",
-    label: "Moliya",
-  },
-  {
-    value: "kafedra",
-    label: "Kafedra",
-  },
-];
-
 const applicationStatus = [
   {
     value: "accepted",
@@ -78,6 +60,17 @@ const applicationStatus = [
   {
     value: "rejected",
     label: "Rad etildi",
+  },
+];
+
+const educationTypes = [
+  {
+    value: "OShniy",
+    label: "OShniy",
+  },
+  {
+    value: "Zauchniy",
+    label: "Zauchniy",
   },
 ];
 
@@ -110,6 +103,7 @@ const FilterSidebar = ({
 }) => {
   const [date, setDate] = useState<Date>();
   const { getApplications } = useAdminStore()
+  const { regions, getRegions } = formStore()
 
 
   const handleChange = (e: any, param: keyof Filter) => {
@@ -130,6 +124,12 @@ const FilterSidebar = ({
     setIsShowSideBar(false)
   }
 
+  useEffect(() => {
+    if (!regions.length) {
+      getRegions()
+    }
+  }, [])
+
   return (
     <Sheet open={isShowSideBar} onOpenChange={setIsShowSideBar}>
       <SheetContent className="!p-0 overflow-y-auto">
@@ -148,11 +148,11 @@ const FilterSidebar = ({
                 Fakultet
               </Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
-                <SelectValue placeholder="Ariza holati" />
+                <SelectValue placeholder="Fakultet nomi" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {applicationStatus.map((item) => (
+                  {faculties.map((item) => (
                     <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
                       {item.label}
                     </SelectItem>
@@ -162,14 +162,14 @@ const FilterSidebar = ({
             </Select>
           </div>
           <div className="mb-5">
-            <Select value={filter?.education_form} onValueChange={(e) => handleChange(e, "education_form")}>
+            <Select value={filter?.edu_type} onValueChange={(e) => handleChange(e, "edu_type")}>
               <Label className="text-[#6E7781] text-sm">Ta’lim shakli</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
-                <SelectValue placeholder="Ariza holati" />
+                <SelectValue placeholder="Ta’lim shakli" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {applicationStatus.map((item) => (
+                  {educationTypes.map((item) => (
                     <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
                       {item.label}
                     </SelectItem>
@@ -186,13 +186,13 @@ const FilterSidebar = ({
             <Select value={filter?.edu_direction} onValueChange={(e) => handleChange(e, "edu_direction")}>
               <Label className="text-[#6E7781] text-sm">Hudud</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
-                <SelectValue placeholder="Ariza holati" />
+                <SelectValue placeholder="Hudud" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {applicationStatus.map((item) => (
-                    <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
-                      {item.label}
+                  {regions.map((item) => (
+                    <SelectItem key={item.id} className="!text-[#24292F]" value={item.name}>
+                      {item.name}
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -203,7 +203,7 @@ const FilterSidebar = ({
             <Select value={filter?.gender} onValueChange={(e) => handleChange(e, "gender")}>
               <Label className="text-[#6E7781] text-sm">Jinsi</Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
-                <SelectValue placeholder="Hammasi" />
+                <SelectValue placeholder="Jinsi" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -225,7 +225,7 @@ const FilterSidebar = ({
                 Bitirgan ta’lim dargohi
               </Label>
               <SelectTrigger className="w-full !border-[#D0D7DE] !py-3 h-auto">
-                <SelectValue placeholder="Ariza holati" />
+                <SelectValue placeholder="Bitirgan ta’lim dargohi" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -252,7 +252,7 @@ const FilterSidebar = ({
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  {date ? format(date, "PPP") : <span>Sanani kiriting</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -260,6 +260,7 @@ const FilterSidebar = ({
                   mode="single"
                   selected={date}
                   onSelect={setDate}
+                  onDayClick={(e) => handleChange(e, 'graduation_year')}
                   initialFocus
                   className="text-[#24292F] hover:!text-[#24292F]"
                 />

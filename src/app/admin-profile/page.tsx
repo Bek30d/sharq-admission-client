@@ -29,39 +29,6 @@ export type ItemType = {
   };
 };
 
-const items: ItemType[] = [
-  {
-    id: 1,
-    number: "0001",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "pending",
-      label: "Ko’rib chiqilmoqda",
-    },
-  },
-  {
-    id: 2,
-    number: "0002",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "accepted",
-      label: "Qabul qilingan",
-    },
-  },
-  {
-    id: 3,
-    number: "0003",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "rejected",
-      label: "Rad etildi",
-    },
-  },
-];
-
 
 const applicationStatus = [
   {

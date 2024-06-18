@@ -1,11 +1,11 @@
 import React from "react";
-import { ItemType } from "../reports/page";
+import { ReportType } from "../reports/page";
 
 const ReportItem = ({
   id,
-  education_direction,
-  applications_number,
-}: ItemType) => {
+  apply_count,
+  edu_direction,
+}: ReportType) => {
   return (
     <div className="py-[22px] bg-white rounded-lg flex justify-between mb-2">
       <div className=" flex items-center">
@@ -14,12 +14,12 @@ const ReportItem = ({
         </p>
 
         <p className="w-[292px] pl-5 text-[#24292F] text-sm font-medium">
-          {education_direction}
+          {edu_direction}
         </p>
       </div>
 
       <p className="w-[562px] pl-5 text-[#24292F] text-sm font-medium">
-        {applications_number}
+        {apply_count}
       </p>
     </div>
   );

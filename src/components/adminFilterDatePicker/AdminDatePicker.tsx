@@ -26,8 +26,6 @@ const AdminDatePicker = ({ className, filter, setFilter }: Props) => {
     to: undefined,
   });
 
-  console.log(date);
-
   React.useEffect(() => {
     setFilter((prev) => ({
       ...prev,

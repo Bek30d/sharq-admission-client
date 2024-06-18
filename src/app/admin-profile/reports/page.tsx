@@ -12,33 +12,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AdminProfileLayout from "@/layouts/AdminProfileLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReportItem from "../components/ReportItem";
-import FilterSidebar from "../components/FilterSidebar";
+import FilterSidebar, { Filter } from "../components/FilterSidebar";
+import { useAdminStore } from "@/store/admin.store";
 
-export type ItemType = {
+export type ReportType = {
   id: number;
-  education_direction: string;
-  applications_number: number;
+  apply_count: number;
+  edu_direction: string;
 };
 
-const items: ItemType[] = [
-  {
-    id: 1,
-    education_direction: "Moliya",
-    applications_number: 400,
-  },
-  {
-    id: 2,
-    education_direction: "Iqtisodiyot",
-    applications_number: 240,
-  },
-  {
-    id: 3,
-    education_direction: "Buxgalteriya",
-    applications_number: 310,
-  },
-];
 
 const educationDirections = [
   {
@@ -76,6 +60,13 @@ const applicationStatus = [
 
 const Reports = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const [filter, setFilter] = useState<Filter | null>(null);
+  const { reports, getReports } = useAdminStore();
+
+  useEffect(() => {
+    getReports()
+  }, [])
+
   return (
     <AdminProfileLayout>
       <div className="flex gap-3 items-center mb-3">
@@ -107,7 +98,7 @@ const Reports = () => {
           </SelectContent>
         </Select>
 
-        <AdminDatePicker />
+        <AdminDatePicker filter={filter} setFilter={setFilter} />
 
         <Select>
           <SelectTrigger className="w-[232px] !border-[#D0D7DE] !py-3 h-auto">
@@ -152,13 +143,15 @@ const Reports = () => {
         </p>
       </div>
 
-      {items.map((item) => (
+      {reports.map((item) => (
         <ReportItem key={item.id} {...item} />
       ))}
 
       <FilterSidebar
         isShowSideBar={isShowSideBar}
         setIsShowSideBar={setIsShowSideBar}
+        filter={filter}
+        setFilter={setFilter}
       />
     </AdminProfileLayout>
   );
