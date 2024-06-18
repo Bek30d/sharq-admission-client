@@ -3,7 +3,8 @@
 import React from "react";
 import icons from "../icons/icons";
 import BaseIcon from "../icons/BaseIcon";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 export type TabType = {
   title: string;
@@ -14,24 +15,24 @@ export type TabType = {
 
 const FormTab = () => {
   const pathname = usePathname();
-  const router = useRouter();
+  const t = useTranslations("FormTab");
 
   const tabs: TabType[] = [
     {
-      title: "Shaxsiy ma’lumotlar",
-      description: "Passport, manzil va  telefon raqam",
+      title: t("title_1"),
+      description: t("description_1"),
       icon: "personalCard",
       path: "/personal-info",
     },
     {
-      title: "Ta’lim ma’lumotlari",
-      description: "O’rta ta’lim va chet tili sertifikati",
+      title: t("title_2"),
+      description: t("description_2"),
       icon: "graduateDocument",
       path: "/education-info",
     },
     {
-      title: "Yo’nalishni tanlsh",
-      description: "Yo’nalish, mutaxassislik va ta’lim shakli",
+      title: t("title_3"),
+      description: t("description_3"),
       icon: "graduateHands",
       path: "/choose-direction",
     },
