@@ -12,9 +12,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AdminProfileLayout from "@/layouts/AdminProfileLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ApplicationItem from "./components/ApplicationItem";
-import FilterSidebar from "./components/FilterSidebar";
+import FilterSidebar, { Filter } from "./components/FilterSidebar";
+import { useAdminStore } from "@/store/admin.store";
+import { directions } from "../choose-direction/page";
 
 export type ItemType = {
   id: number;
@@ -27,57 +29,6 @@ export type ItemType = {
   };
 };
 
-const items: ItemType[] = [
-  {
-    id: 1,
-    number: "0001",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "pending",
-      label: "Ko’rib chiqilmoqda",
-    },
-  },
-  {
-    id: 2,
-    number: "0002",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "accepted",
-      label: "Qabul qilingan",
-    },
-  },
-  {
-    id: 3,
-    number: "0003",
-    date: "20.05.2024",
-    faculty_name: "Moliya va iqtisod",
-    status: {
-      value: "rejected",
-      label: "Rad etildi",
-    },
-  },
-];
-
-const educationDirections = [
-  {
-    value: "moliya1",
-    label: "Moliya",
-  },
-  {
-    value: "kafedra1",
-    label: "Kafedra",
-  },
-  {
-    value: "moliya",
-    label: "Moliya",
-  },
-  {
-    value: "kafedra",
-    label: "Kafedra",
-  },
-];
 
 const applicationStatus = [
   {
@@ -96,6 +47,20 @@ const applicationStatus = [
 
 const AdminProfile = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const { getApplications, applications } = useAdminStore()
+  const [filter, setFilter] = useState<Filter | null>(null);
+
+  const handleChange = (e: any, param: keyof Filter) => {
+    setFilter((prev) => ({
+      ...prev,
+      [param]: e,
+    }))
+  }
+
+  useEffect(() => {
+    getApplications(filter)
+  }, [filter])
+
   return (
     <AdminProfileLayout>
       <div>
@@ -105,6 +70,8 @@ const AdminProfile = () => {
               type="text"
               placeholder="ID yoki Talaba Ismi bo'yicha qidirish"
               className="!border-[#D0D7DE] !p-3 !pl-9"
+              value={filter?.full_name}
+              onChange={(e) => handleChange(e.target.value, 'full_name')}
             />
 
             <BaseIcon
@@ -113,13 +80,13 @@ const AdminProfile = () => {
             />
           </div>
 
-          <Select>
+          <Select value={filter?.edu_direction} onValueChange={(e) => handleChange(e, "edu_direction")}>
             <SelectTrigger className="w-[232px] !border-[#D0D7DE] !py-3 h-auto">
               <SelectValue placeholder="Ta’lim yo’nalish" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {educationDirections.map((item) => (
+                {directions.map((item) => (
                   <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
                     {item.label}
                   </SelectItem>
@@ -127,10 +94,8 @@ const AdminProfile = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-
-          <AdminDatePicker />
-
-          <Select>
+          <AdminDatePicker key={"1"} filter={filter} setFilter={setFilter} />
+          <Select value={filter?.status} onValueChange={(e) => handleChange(e, "status")}>
             <SelectTrigger className="w-[232px] !border-[#D0D7DE] !py-3 h-auto">
               <SelectValue placeholder="Ariza holati" />
             </SelectTrigger>
@@ -177,12 +142,14 @@ const AdminProfile = () => {
           </p>
         </div>
 
-        {items.map((item) => (
+        {applications.map((item) => (
           <ApplicationItem key={item.id} {...item} />
         ))}
       </div>
 
       <FilterSidebar
+        filter={filter}
+        setFilter={setFilter}
         isShowSideBar={isShowSideBar}
         setIsShowSideBar={setIsShowSideBar}
       />

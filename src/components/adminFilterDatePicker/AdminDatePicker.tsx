@@ -12,12 +12,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Filter } from "@/app/admin-profile/components/FilterSidebar";
 
-const AdminDatePicker = ({ className }: { className?: string }) => {
+interface Props {
+  className?: string,
+  filter: Filter | null;
+  setFilter: React.Dispatch<React.SetStateAction<Filter | null>>
+}
+
+const AdminDatePicker = ({ className, filter, setFilter }: Props) => {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
+    from: undefined,
+    to: undefined,
   });
+
+  React.useEffect(() => {
+    setFilter((prev) => ({
+      ...prev,
+      from_date: (date?.from)?.toString(),
+      to_date: (date?.to)?.toString(),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date]);
+
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>

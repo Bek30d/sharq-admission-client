@@ -63,7 +63,7 @@ const degrees = [
   },
 ];
 
-const directions = [
+export const directions = [
   {
     value: "moliya",
     label: "Moliya",
