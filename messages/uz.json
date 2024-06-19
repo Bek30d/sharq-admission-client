@@ -102,6 +102,7 @@
   },
 
   "Requests": {
+    "requests": "Arizalar",
     "request_number": "Ariza raqami",
     "date": "Berilgan sana",
     "faculty_name": "Fakultet nomi",
@@ -135,11 +136,18 @@
   },
 
   "PaymentHistory": {
+    "payment_history": "To’lov tarixi",
     "goal": "Maqsad",
     "date": "To’lovlar sanasi",
     "amount": "To’lov miqdori",
     "payment_status": "Tolov holati",
-    "no_payment": "Sizda to’lov tarixi yo’q"
+    "no_payment": "Sizda to’lov tarixi yo’q",
+    "apply_payment": "Ariza tolovi",
+    "test_payment": "Test tolovi",
+    "accept_payment": "Qabul tolovi",
+    "pending": "Ko’rib chiqilmoqda",
+    "accepted": "Qabul qilindi",
+    "rejected": "Rad etildi"
   },
 
   "Done": {
@@ -154,5 +162,12 @@
     "new_request": "Yangi ariza topshirish",
     "phone": "Telefon",
     "email": "Elektron pochta"
+  },
+
+  "Notifications": {
+    "notifications": "Habarnomalar",
+    "no_notifications": "Sizda habarnomalar yo’q"
   }
+
+
 }

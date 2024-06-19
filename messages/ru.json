@@ -102,6 +102,7 @@
   },
 
   "Requests": {
+    "requests": "Запросы",
   "request_number": "Номер запроса",
   "date": "Указанная дата",
   "faculty_name": "Название факультета",
@@ -133,11 +134,18 @@
     "save": "Сохранить"
     },
     "PaymentHistory": {
+      "payment_history": "История платежей",
       "goal": "Цель",
       "date": "Дата платежей",
       "amount": "Сумма платежа",
       "payment_status": "Статус платежа",
-      "no_payment": "У вас нет истории платежей"
+      "no_payment": "У вас нет истории платежей",
+      "apply_payment": "Сбор за подачу заявления",
+      "test_payment": "Тестовый платеж",
+      "accept_payment": "Комиссия за прием",
+      "pending": "В ожидании",
+      "accepted": "Принято",
+      "rejected": "Отклонено"
       },
 
       "Done": {
@@ -152,5 +160,10 @@
         "new_request": "Отправить новый запрос",
         "phone": "Телефон",
         "email": "Электронная почта"
+        },
+        
+        "Notifications": {
+          "notifications": "Уведомления",
+          "no_notifications": "У вас нет уведомлений"
         }
 }

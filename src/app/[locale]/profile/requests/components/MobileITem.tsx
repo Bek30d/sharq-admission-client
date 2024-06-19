@@ -1,32 +1,35 @@
+"use client";
 import BaseIcon from "@/components/icons/BaseIcon";
 import React from "react";
 import { ItemType } from "../page";
 import { formatDate } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 const MobileITem = ({ item }: { item: ItemType }) => {
+  const t = useTranslations("Requests");
   return (
     <div className="py-6 px-4 bg-white rounded-2xl mb-2">
       <div className="border-b border-[#EAEEF2] mb-4">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[#57606A] font-medium">Ariza raqami:</p>
+          <p className="text-[#57606A] font-medium">{t("request_number")}:</p>
           <p className="text-[#24292F] text-sm font-medium">
             {item.apply_number}
           </p>
         </div>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[#57606A] font-medium">Berilgan sana:</p>
+          <p className="text-[#57606A] font-medium">{t("date")}:</p>
           <p className="text-[#24292F] text-sm font-medium">
             {formatDate(item.created_at)}
           </p>
         </div>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[#57606A] font-medium">Fakultet nomi:</p>
+          <p className="text-[#57606A] font-medium">{t("faculty_name")}:</p>
           <p className="text-[#24292F] text-sm font-medium">
             {item.faculty ? item.faculty : "-"}
           </p>
         </div>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[#57606A] font-medium">Ariza statusi:</p>
+          <p className="text-[#57606A] font-medium">{t("request_status")}:</p>
           <div className="w-52 flex items-center gap-2 ml-3 justify-end">
             <div
               className={`w-2.5 h-2.5 rounded-full ${
@@ -38,11 +41,7 @@ const MobileITem = ({ item }: { item: ItemType }) => {
               }`}
             ></div>
             <p className="text-center text-[#24292F] text-sm font-medium">
-              {item.status === "pending"
-                ? "Ko'rib chiqilmoqda"
-                : item.status === "accepted"
-                ? "Qabul qilingan"
-                : "Rad etildi"}
+              {t(`${item.status}`)}
             </p>
           </div>
         </div>
