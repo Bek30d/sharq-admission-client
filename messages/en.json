@@ -103,6 +103,7 @@
   },
   
   "Requests": {
+    "requests": "Requests",
   "request_number": "Request Number",
   "date": "Given date",
   "faculty_name": "Faculty Name",
@@ -134,11 +135,18 @@
   "save": "Save"
   },
   "PaymentHistory": {
+    "payment_history": "Payment history",
     "goal": "Goal",
     "date": "Date of payments",
     "amount": "Payment amount",
     "payment_status": "Payment Status",
-    "no_payment": "You have no payment history"
+    "no_payment": "You have no payment history",
+    "apply_payment": "Application Fee",
+    "test_payment": "Test Payment",
+    "accept_payment": "Acceptance Fee",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected"
     },
 
     "Done": {
@@ -153,5 +161,10 @@
       "new_request": "Submit a new request",
       "phone": "Phone",
       "email": "Email"
+      },
+
+      "Notifications": {
+        "notifications": "Notifications",
+        "no_notifications": "You have no notifications"
       }
 }

@@ -8,49 +8,11 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export type ItemType = {
-  id: number;
-  goal: string;
-  date: string;
-  amount: string;
-  status: {
-    value: string;
-    label: string;
-  };
+  type: string;
+  price: string;
+  created_at: string;
+  status: string;
 };
-
-const items: ItemType[] = [
-  {
-    id: 1,
-    goal: "Ariza to'lovi",
-    date: "20.05.2024",
-    amount: "224 000 uzs",
-    status: {
-      value: "pending",
-      label: "Kutilmoqda",
-    },
-  },
-  {
-    id: 2,
-    goal: "Ariza to'lovi",
-    date: "20.05.2024",
-    amount: "224 000 uzs",
-    status: {
-      value: "accepted",
-      label: "To'langan	",
-    },
-  },
-  {
-    id: 3,
-    goal: "Ariza to'lovi",
-    date: "20.05.2024",
-    amount: "224 000 uzs",
-    status: {
-      value: "accepted",
-      label: "To'langan	",
-    },
-  },
-];
-
 async function getData(token: string) {
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + "/my-payment-histories",
@@ -81,7 +43,7 @@ const PaymentHistory = async () => {
 
   return (
     <SEO>
-      <ProfileLayout title="To’lov tarixi">
+      <ProfileLayout title={t("payment_history")}>
         <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">
           <p className="pl-6 pr-5 text-[#57606A] font-medium">No</p>
           <p className="pl-5 pr-24 text-[#57606A] font-medium">{t("goal")}</p>
@@ -93,9 +55,9 @@ const PaymentHistory = async () => {
         </div>
 
         <div className="hidden lg:block">
-          {paymentHistory?.data?.length ? (
+          {paymentHistory.data.length ? (
             paymentHistory.data.map((item: ItemType, index: number) => (
-              <Item key={item.id} {...item} />
+              <Item key={index} item={item} index={index + 1} />
             ))
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
@@ -104,8 +66,10 @@ const PaymentHistory = async () => {
           )}
         </div>
         <div className="block lg:hidden">
-          {paymentHistory?.data?.length ? (
-            items.map((item) => <MobileITem key={item.id} {...item} />)
+          {paymentHistory.data.length ? (
+            paymentHistory.data.map((item: ItemType, index: number) => (
+              <MobileITem key={index} item={item} index={index + 1} />
+            ))
           ) : (
             <p className="text-[#424A53] font-medium text-lg text-center mt-10">
               {t("no_payment")}

@@ -44,7 +44,7 @@ const Requests = async () => {
 
   return (
     <SEO>
-      <ProfileLayout title="Arizalar">
+      <ProfileLayout title={t("requests")}>
         <Toaster />
         <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1">
           <p className="px-5 text-[#57606A] font-medium">No</p>

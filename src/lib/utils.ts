@@ -45,3 +45,4 @@ export const isAuthenticatedSSR = (token: string | null): boolean => {
   return token !== null;
 };
 
+
