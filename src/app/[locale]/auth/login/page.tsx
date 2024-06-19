@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
+import toast from "react-hot-toast";
 
 type FormData = z.infer<typeof schema>;
 
@@ -36,11 +37,11 @@ const Login = () => {
   const handleResend = async () => {
     const response = await postPhone(phone);
     if (response === 1) {
-      alert("Kod qayta yuborildi.");
+      toast.success("Kod qayta yuborildi.");
       setTime(initialTime);
       startTimer();
     } else {
-      alert("Xatolik yuz berdi");
+      toast.error("Xatolik yuz berdi");
     }
   };
 
@@ -155,9 +156,8 @@ const Login = () => {
               Qayta yuborish
             </button>
             <Button
-              className={`${
-                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
-              } w-full !py-[14px] h-auto`}
+              className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                } w-full !py-[14px] h-auto`}
             >
               Davom etish
             </Button>

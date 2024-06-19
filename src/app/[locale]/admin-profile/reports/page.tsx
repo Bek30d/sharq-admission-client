@@ -69,7 +69,7 @@ const Reports = () => {
 
   return (
     <AdminProfileLayout>
-      <div className="flex gap-3 items-center mb-3">
+      {/* <div className="flex gap-3 items-center mb-3">
         <div className="relative">
           <Input
             type="text"
@@ -129,7 +129,7 @@ const Reports = () => {
             <p className="text-[#1CB854]">XLS</p>
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 justify-between">
         <div className="flex">
@@ -147,12 +147,12 @@ const Reports = () => {
         <ReportItem key={item.id} {...item} />
       ))}
 
-      <FilterSidebar
+      {/* <FilterSidebar
         isShowSideBar={isShowSideBar}
         setIsShowSideBar={setIsShowSideBar}
         filter={filter}
         setFilter={setFilter}
-      />
+      /> */}
     </AdminProfileLayout>
   );
 };

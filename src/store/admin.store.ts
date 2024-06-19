@@ -1,5 +1,5 @@
 import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS } from "@/api/admin";
-import { ReportType } from "@/app/admin-profile/reports/page";
+import { ReportType } from "@/app/[locale]/admin-profile/reports/page";
 import { create } from "zustand";
 
 export type ApplicationT = {
