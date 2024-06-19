@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import BaseIcon from "../icons/BaseIcon";
 import icons from "../icons/icons";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 export type LinkType = {
   path: string;
@@ -12,40 +12,48 @@ export type LinkType = {
   icon: keyof typeof icons;
 };
 
-export const links: LinkType[] = [
-  {
-    path: "/profile",
-    name: "Mening sahifam",
-    icon: "user",
-  },
-  {
-    path: "/profile/requests",
-    name: "Arizalarim",
-    icon: "request",
-  },
-  {
-    path: "/profile/notifications",
-    name: "Habarnomalar",
-    icon: "bell",
-  },
-  {
-    path: "/profile/applicant-info",
-    name: "Abituriyent qayd varaqasi",
-    icon: "student_doc",
-  },
-  {
-    path: "/profile/payment-history",
-    name: "To’lov tarixi",
-    icon: "payment_time",
-  },
-];
-
 const ProfileSidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const t = useTranslations("Sidebar");
+
+  const links: LinkType[] = [
+    {
+      path: "/profile",
+      name: t("profile"),
+      icon: "user",
+    },
+    {
+      path: "/profile/requests",
+      name: t("requests"),
+      icon: "request",
+    },
+    {
+      path: "/profile/notifications",
+      name: t("notifications"),
+      icon: "bell",
+    },
+    {
+      path: "/profile/applicant-info",
+      name: t("applicant_info"),
+      icon: "student_doc",
+    },
+    {
+      path: "/profile/payment-history",
+      name: t("payment_history"),
+      icon: "payment_time",
+    },
+  ];
+
   return (
     <div className="p-4 bg-white rounded-lg h-fit hidden sm:block">
       {links.map((item, index) => (
-        <Link key={index} href={item.path}>
+        <div
+          key={index}
+          onClick={() => router.push(item.path)}
+          className="cursor-pointer"
+        >
           <div
             className={`flex gap-2 items-center px-2 py-3 rounded-md ${
               pathname === item.path ? "bg-[#F6F8FA]" : ""
@@ -65,7 +73,7 @@ const ProfileSidebar = () => {
               {item.name}
             </p>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

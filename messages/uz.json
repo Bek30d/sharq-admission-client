@@ -1,0 +1,158 @@
+{
+  "Home": {
+    "title": "2024-2025 oʻquv yili uchun qabul boshlandi",
+    "description": "Maqsadimiz ta’lim orqali har tomonlama tanqidiy fikrlay oladigan o’z bilimi va salohiyati bilan o’zining va atrofdagilarning hayotini yaxshilay oladigan kadrlarni tayyorlashdir.",
+    "button": "Ariza qoldirish"
+  },
+
+  "FormTab": {
+    "title_1": "Shaxsiy ma’lumotlar",
+    "title_2": "Ta’lim ma’lumotlari",
+    "title_3": "Yo’nalishni tanlsh",
+    "description_1": "Passport, manzil va telefon raqam",
+    "description_2": "O’rta ta’lim va chet tili sertifikati",
+    "description_3": "Yo’nalish, mutaxassislik va ta’lim shakli"
+  },
+
+  "PersonalInfo": {
+    "title": "Shaxsiy ma’lumotlar",
+    "last_name": "Familiyangiz",
+    "enter_your_last_name": "Familiyangizni kiriting",
+    "first_name": "Ismingiz",
+    "enter_your_first_name": "Ismingizni kiriting",
+    "father_name": "Otangizni ismi",
+    "enter_your_father_name": "Otangizni ismini kiriting",
+    "birthday": "Tug’ilgan sanangiz",
+    "enter_your_birthday": "Tug’ilgan sanangizni kiriting",
+    "passport_number": "Passport / ID seriya va raqami",
+    "jshshir": "JSHSHIR",
+    "gender": "Jinsingiz",
+    "male": "Erkak",
+    "female": "Ayol",
+    "enter_your_gender": "Jinsingizni tanlang",
+    "citizenship": "Fuqaroligingiz",
+    "enter_your_citizenship": "Fuqaroligingizni tanlang",
+    "phone_number": "Telefon raqamingiz",
+    "enter_your_phone_number": "Telefon raqamingizni kiriting",
+    "additional_phone_number": "Qo’shimcha telefon raqamingiz",
+    "enter_your_additional_phone_number": "Qo’shimcha telefon raqamingizni kiriting",
+    "address": "Manzilingiz",
+    "enter_your_address": "Manzilingizni kiriting",
+    "submit": "Davom etish",
+    "title_2": "Bog`lanish uchun ma`lumotlar",
+    "logout": "Profildan chiqish",
+    "logout_desc": "Siz haqiqatdan ham profildan chiqmoqchimisiz?",
+    "yes_logout": "Xa, chiqish",
+    "close": "Yopish",
+    "save_info": "Ma’lumotlarni saqlash"
+  },
+
+  "EducationInfo": {
+    "title": "Ta’lim ma’lumotlari",
+    "collage_label": "Bitirgan yoki tahsil olayotgan ta’lim dargohi",
+    "collage": "Ta'lim dargohini tanlang",
+    "entered_year_label": "Kirgan yili",
+    "entered_year": "Yilni tanlang",
+    "graduation_year_label": "Bitirgan tili",
+    "collage_region_address": "Ta’lim dargohi joylashgan viloyat yoki shahar",
+    "collage_district_address": "Ta’lim dargohi joylashgan tumani",
+    "select_region": "Viloyatni tanlang",
+    "select_district": "Tumanni tanlang",
+    "collage_name": "Ta’lim muassasasi nomi",
+    "diploma_name": "Diplom yoki shahodatnoma nusxasi",
+    "diploma_desc": "Hajmi 5 MBdan katta bo’lmagan JPEG, JPG, PNG, PDF fayllarni yuklang",
+    "download": "Yuklash",
+    "privilege_label": "Imtiyozli diplom yoki shahodatnoma",
+    "certificate_title": "Sizda chet tili sertifikati mavjudmi?",
+    "yes": "Ha, mavjud",
+    "no": "Yo’q, mavjud emas",
+    "certificate_desc": "Ingliz tilidan quyidagi xalqaro yoki milliy sertifikatga ega boʻlgan abituriyentlar kirish imtihonlaridan ozod etiladi: IELTS – 5,5 va undan yuqori; TOEFL IBT – 46-59 va undan yuqori; TOEFL ITP – 450 va undan yuqori; CEFR – B2 va undan yuqori.",
+    "certificate_label": "Sertifikat turi",
+    "select_certificate": "Sertifikat turi tanlang",
+    "certificate_name_label": "Sertifikatingiz nusxasini yuklang",
+    "certificate_name": "Diplom yoki shahodatnoma nomi",
+    "certificate_name_desc": "Hajmi 5 MBdan katta bo’lmagan JPEG, JPG, PNG, PDF fayllarni yuklang",
+    "submit": "Davom etish"
+    },
+
+  "ChooseDirection": {
+    "title": "Yo’nalishni tanlash",
+    "degree": "Ta’lim darajasi",
+    "select_degree": "Ta’lim darajasi tanlang",
+    "direction": "Yo’nalish yoki mutaxxassislik",
+    "select_direction": "Yo’nalishni tanlang",
+    "faculty": "Fakultet",
+    "select_faculty": "Fakultetni tanlang",
+    "edu_type": "Ta’lim shakli",
+    "select_edu_type": "Ta’lim shaklini tanlang",
+    "edu_lang": "Ta’lim tili",
+    "select_edu_lang": "Ta’lim tilini tanlang",
+    "accept_desc": "Arizadagi barcha ma’lumotlarni o‘z qo‘lim bilan to‘ldirdim, ma’lumotlarim to‘g‘riligiga kafolat beraman. Agar men o‘zim haqimda noto‘g‘ri yoki yolg‘on ma’lumotlar kiritgan bo‘lsam, oliygoh qabul bo‘limi mening arizamni rad etishga haqli ekanligini bilaman.",
+    "payment_title": "To’ovni amalga oshirish",
+    "payment_desc": "Belgilangan to’lov miqdori",
+    "send": "Yuborish"
+  },
+
+  "Sidebar": {
+    "profile": "Mening sahifam",
+    "requests": "Arizalarim",
+    "notifications": "Habarnomalar",
+    "applicant_info": "Abituriyent qayd varaqasi",
+    "payment_history": "To’lov tarixi"
+  },
+
+  "Requests": {
+    "request_number": "Ariza raqami",
+    "date": "Berilgan sana",
+    "faculty_name": "Fakultet nomi",
+    "request_status": "Ariza holati",
+    "no_requests": "Sizda arizalar yo’q"
+  },
+
+  "ApplicantInfo": {
+    "title": "Abituriyent qayd varaqasi",
+    "personal_info": "Shaxsiy ma’lumotlar",
+    "id": "ID",
+    "f_i_o": "F.I.O",
+    "passport_number": "Pasport",
+    "jshshir": "JSHSHIR",
+    "birthday": "Tug’ilgan sanasi",
+    "gender": "Jinsi",
+    "education_info": "Tanlangan ta’lim yo’nalishari",
+    "edu_lang": "Ta’lim tili",
+    "test_taking_alphabet": "Test topshirish alifbosi",
+    "foreign_lang": "Chet tili",
+    "test_taking_subjects": "Test topshirish fanlari",
+    "payment_status": "Test sinovlari uchun to’lov holati",
+    "invoys_number": "Invoys raqami",
+    "status": "Tolov holati",
+    "unpaid": "To’lanmagan",
+    "paid": "To’langan",
+    "note_to_applicant": "Abituriyenga eslatma",
+    "note_desc": "Abituriyent ushbu qayd varaqadagi ma’lumotlarning to’g’riligiga shaxsan o’zi javobgar hisoblanadi.",
+    "date": "Ro’yxatga olingan vaqt:",
+    "save": "Saqlash"
+  },
+
+  "PaymentHistory": {
+    "goal": "Maqsad",
+    "date": "To’lovlar sanasi",
+    "amount": "To’lov miqdori",
+    "payment_status": "Tolov holati",
+    "no_payment": "Sizda to’lov tarixi yo’q"
+  },
+
+  "Done": {
+    "title": "Ariza Muvaffaqiyatli Topshirildi!",
+    "success_title": "Sizning arizangiz muvaffaqiyatli topshirildi.",
+    "request_number":"Ariza raqami",
+    "request_status": "Arizangiz ko'rib chiqilmoqda.",
+    "additional_docs": "Qo'shimcha hujjatlar taqdim etilishi kerak bo'lsa, biz siz bilan bog'lanamiz.",
+    "exam": "Imtihon yoki suhbat sanasi haqida sizga xabar beriladi.",
+    "home": "Asosiy sahifaga qaytish",
+    "profile": "Shaxsiy sahifaga o'tish",
+    "new_request": "Yangi ariza topshirish",
+    "phone": "Telefon",
+    "email": "Elektron pochta"
+  }
+}

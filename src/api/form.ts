@@ -8,6 +8,10 @@ export function UPLOAD(data:any){
   return axios.post('/media/upload', data)
 }
 
+export function GET_COUNTRIES() {
+  return axios.get('/countries')
+}
+
 export function GET_REGIONS() {
   return axios.get('/regions')
 }

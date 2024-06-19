@@ -3,8 +3,8 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import icons from "../icons/icons";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import BaseIcon from "../icons/BaseIcon";
+import { usePathname } from "@/navigation";
 
 export type LinkType = {
   path: string;

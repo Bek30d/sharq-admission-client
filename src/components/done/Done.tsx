@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+"use client";
+import React from "react";
 import BaseIcon from "../icons/BaseIcon";
 import icons from "../icons/icons";
 import Link from "next/link";
 import FormLayout from "@/layouts/FormLayout";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const Card = ({ icon, title }: { icon: keyof typeof icons; title: string }) => {
   return (
@@ -16,20 +17,19 @@ const Card = ({ icon, title }: { icon: keyof typeof icons; title: string }) => {
   );
 };
 const Done = ({ id }: { id: number }) => {
-  const router = useRouter();
+  const t = useTranslations("Done");
   const data: { icon: keyof typeof icons; title: string }[] = [
     {
       icon: "document_search",
-      title: "Ariza topshirildi",
+      title: t("request_status"),
     },
     {
       icon: "document_search",
-      title:
-        "Qo'shimcha hujjatlar taqdim etilishi kerak bo'lsa, biz siz bilan bog'lanamiz.",
+      title: t("additional_docs"),
     },
     {
       icon: "document_search",
-      title: "Imtihon yoki suhbat sanasi haqida sizga xabar beriladi.",
+      title: t("exam"),
     },
   ];
 
@@ -50,15 +50,13 @@ const Done = ({ id }: { id: number }) => {
         </div>
 
         <h1 className="text-[32px] font-semibold text-[#18324D] text-center mb-6">
-          Ariza Muvaffaqiyatli Topshirildi!
+          {t("title")}
         </h1>
 
         <div className="mb-12">
+          <p className="text-[#18324D] text-center">{t("success_title")}</p>
           <p className="text-[#18324D] text-center">
-            Sizning arizangiz muvaffaqiyatli topshirildi.
-          </p>
-          <p className="text-[#18324D] text-center">
-            Ariza raqamingiz: <span className="text-blue-500">{id}</span>
+            {t("request_number")}: <span className="text-blue-500">{id}</span>
           </p>
         </div>
 
@@ -70,24 +68,23 @@ const Done = ({ id }: { id: number }) => {
 
         <div className="flex justify-center gap-6 mb-4">
           <Link href="/" className="text-blue-500 underline">
-            Asosiy sahifaga qaytish
+            {t("home")}
           </Link>
           <Link href="/admin" className="text-blue-500 underline">
-            Shaxsiy kabinetga otish
+            {t("profile")}
           </Link>
           <Link href="/personal-info" className="text-blue-500 underline">
-            Yangi ariza topshirish
+            {t("new_request")}
           </Link>
         </div>
 
         <div className="flex justify-center gap-6">
           <p className="text-sm">
-            Telefon:
+            {t("phone")}:
             <span className="text-blue-500"> +998 79 222-0009</span>
           </p>
           <p className="text-sm">
-            Elektron pochta:
-            <span className="text-blue-500"> sharq@talim.com</span>
+            {t("email")}:<span className="text-blue-500"> sharq@talim.com</span>
           </p>
         </div>
       </div>
