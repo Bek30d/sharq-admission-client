@@ -66,7 +66,7 @@ const Payments = () => {
           />
         </div>
 
-        <AdminDatePicker />
+        <AdminDatePicker filter={null} setFilter={() => {}} />
       </div>
 
       <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">

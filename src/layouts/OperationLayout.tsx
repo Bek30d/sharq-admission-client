@@ -1,5 +1,5 @@
-import Wrapper from "@/app/payment/Wrapper";
-import PaymentDetailsCard from "@/app/payment/operation/PaymentDetailsCard";
+import Wrapper from "@/app/[locale]/payment/Wrapper";
+import PaymentDetailsCard from "@/app/[locale]/payment/operation/PaymentDetailsCard";
 import React from "react";
 
 const OperationLayout = ({ children }: { children: React.ReactNode }) => {

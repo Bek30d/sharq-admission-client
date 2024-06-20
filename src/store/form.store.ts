@@ -1,4 +1,5 @@
 import { ABOUT_ME, CHOOSE_DIRECTION, EDUCATION_INFO, GET_COUNTRIES, GET_REGIONS, UPLOAD } from '@/api/form'
+import { AxiosResponse } from 'axios';
 import toast from 'react-hot-toast';
 import { create } from 'zustand'
 
@@ -14,13 +15,18 @@ interface useSoreState {
   getCountries: () => Promise<any>;
 }
 
+interface AboutMeResponse {
+  success: boolean;
+  // other properties...
+}
+
 export const formStore = create<useSoreState>((set) => ({
   isLoading: false,
   regions: [],
   countries: [],
   aboutMe: async (data:any) => {
     set({ isLoading: true });
-    let result = {}
+    let result:any = {}
 
     try {
       result = await ABOUT_ME(data);        
@@ -40,7 +46,7 @@ export const formStore = create<useSoreState>((set) => ({
   },
 
   fileUpload: async (data: any) => {
-    let result = {}
+    let result:any = {}
     set({ isLoading: true });
 
     try {
@@ -60,7 +66,7 @@ export const formStore = create<useSoreState>((set) => ({
   },
 
   getCountries: async () => {
-    let result = {}
+    let result:any = {}
     
     try {
       result = await GET_COUNTRIES()
@@ -76,7 +82,7 @@ export const formStore = create<useSoreState>((set) => ({
     }
   },
   getRegions: async () => {
-    let result = {}
+    let result:any = {}
     
     try {
       result = await GET_REGIONS()
@@ -94,7 +100,7 @@ export const formStore = create<useSoreState>((set) => ({
 
   updateEduInfo: async (data:any) => {
     set({ isLoading: true });
-    let result = {}
+    let result:any = {}
 
     try {
       result = await EDUCATION_INFO(data);    
@@ -114,7 +120,7 @@ export const formStore = create<useSoreState>((set) => ({
   },
 
   chooseDirection: async (id: string, data: any) => {
-    let result = {}
+    let result:any = {}
     set({ isLoading: true });
 
     try {

@@ -12,12 +12,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Filter } from "@/app/admin-profile/components/FilterSidebar";
+import { Filter } from "@/app/[locale]/admin-profile/components/FilterSidebar";
 
 interface Props {
-  className?: string,
+  className?: string;
   filter: Filter | null;
-  setFilter: React.Dispatch<React.SetStateAction<Filter | null>>
+  setFilter: React.Dispatch<React.SetStateAction<Filter | null>>;
 }
 
 const AdminDatePicker = ({ className, filter, setFilter }: Props) => {
@@ -29,8 +29,8 @@ const AdminDatePicker = ({ className, filter, setFilter }: Props) => {
   React.useEffect(() => {
     setFilter((prev) => ({
       ...prev,
-      from_date: (date?.from)?.toString(),
-      to_date: (date?.to)?.toString(),
+      from_date: date?.from?.toString(),
+      to_date: date?.to?.toString(),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);

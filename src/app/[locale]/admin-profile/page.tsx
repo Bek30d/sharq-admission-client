@@ -16,7 +16,6 @@ import React, { useEffect, useState } from "react";
 import ApplicationItem from "./components/ApplicationItem";
 import FilterSidebar, { Filter } from "./components/FilterSidebar";
 import { useAdminStore } from "@/store/admin.store";
-import { directions } from "../choose-direction/page";
 
 export type ItemType = {
   id: number;
@@ -28,7 +27,6 @@ export type ItemType = {
     label: string;
   };
 };
-
 
 const applicationStatus = [
   {
@@ -45,21 +43,36 @@ const applicationStatus = [
   },
 ];
 
+const directions = [
+  {
+    value: "moliya",
+    label: "Moliya",
+  },
+  {
+    value: "kafedra",
+    label: "Kafedra",
+  },
+  {
+    value: "muhandis",
+    label: "Muhandis",
+  },
+];
+
 const AdminProfile = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false);
-  const { getApplications, applications } = useAdminStore()
+  const { getApplications, applications } = useAdminStore();
   const [filter, setFilter] = useState<Filter | null>(null);
 
   const handleChange = (e: any, param: keyof Filter) => {
     setFilter((prev) => ({
       ...prev,
       [param]: e,
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
-    getApplications(filter)
-  }, [filter])
+    getApplications(filter);
+  }, [filter]);
 
   return (
     <AdminProfileLayout>
@@ -71,7 +84,7 @@ const AdminProfile = () => {
               placeholder="ID yoki Talaba Ismi bo'yicha qidirish"
               className="!border-[#D0D7DE] !p-3 !pl-9"
               value={filter?.full_name}
-              onChange={(e) => handleChange(e.target.value, 'full_name')}
+              onChange={(e) => handleChange(e.target.value, "full_name")}
             />
 
             <BaseIcon
@@ -80,14 +93,21 @@ const AdminProfile = () => {
             />
           </div>
 
-          <Select value={filter?.edu_direction} onValueChange={(e) => handleChange(e, "edu_direction")}>
+          <Select
+            value={filter?.edu_direction}
+            onValueChange={(e) => handleChange(e, "edu_direction")}
+          >
             <SelectTrigger className="w-[232px] !border-[#D0D7DE] !py-3 h-auto">
               <SelectValue placeholder="Ta’lim yo’nalish" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {directions.map((item) => (
-                  <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
+                  <SelectItem
+                    key={item.label}
+                    className="!text-[#24292F]"
+                    value={item.value}
+                  >
                     {item.label}
                   </SelectItem>
                 ))}
@@ -95,14 +115,21 @@ const AdminProfile = () => {
             </SelectContent>
           </Select>
           <AdminDatePicker key={"1"} filter={filter} setFilter={setFilter} />
-          <Select value={filter?.status} onValueChange={(e) => handleChange(e, "status")}>
+          <Select
+            value={filter?.status}
+            onValueChange={(e) => handleChange(e, "status")}
+          >
             <SelectTrigger className="w-[232px] !border-[#D0D7DE] !py-3 h-auto">
               <SelectValue placeholder="Ariza holati" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {applicationStatus.map((item) => (
-                  <SelectItem key={item.label} className="!text-[#24292F]" value={item.value}>
+                  <SelectItem
+                    key={item.label}
+                    className="!text-[#24292F]"
+                    value={item.value}
+                  >
                     {item.label}
                   </SelectItem>
                 ))}

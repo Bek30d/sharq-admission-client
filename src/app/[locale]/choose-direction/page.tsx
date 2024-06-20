@@ -1,5 +1,4 @@
 "use client";
-
 import BaseIcon from "@/components/icons/BaseIcon";
 import FormLayout from "@/layouts/FormLayout";
 import SEO from "@/layouts/SEO";
@@ -63,7 +62,7 @@ const degrees = [
   },
 ];
 
-export const directions = [
+const directions = [
   {
     value: "moliya",
     label: "Moliya",
@@ -227,15 +226,17 @@ const ChooseDirection = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            {directions.map((item) => (
-                              <SelectItem
-                                key={item.value}
-                                value={item.value}
-                                className="!text-[#424A53] cursor-pointer"
-                              >
-                                {item.label}
-                              </SelectItem>
-                            ))}
+                            {directions.map(
+                              (item: { value: string; label: string }) => (
+                                <SelectItem
+                                  key={item.value}
+                                  value={item.value}
+                                  className="!text-[#424A53] cursor-pointer"
+                                >
+                                  {item.label}
+                                </SelectItem>
+                              )
+                            )}
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -380,7 +381,10 @@ const ChooseDirection = () => {
                   </label>
                 </div>
 
-                <div className="flex justify-between items-center bg-[#F6F8FA] p-4 rounded-2xl mb-10 cursor-pointer" onClick={() => router.push("/payment")}>
+                <div
+                  className="flex justify-between items-center bg-[#F6F8FA] p-4 rounded-2xl mb-10 cursor-pointer"
+                  onClick={() => router.push("/payment")}
+                >
                   <div className="flex items-center gap-2">
                     <div className="w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#EAEEF2]">
                       <BaseIcon name="payment_time" />

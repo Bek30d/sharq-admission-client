@@ -118,7 +118,19 @@ const Profile = () => {
   const [imageId, setImageId] = useState<string>("");
   const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
     "userData",
-    {}
+    {
+      last_name: "",
+      first_name: "",
+      fathers_name: "",
+      birthday: "",
+      passport_number: "",
+      jshshir: "",
+      gender: "",
+      country_id: "",
+      region_id: "",
+      phone: "",
+      additionaphone: "",
+    }
   );
   const [birthdate, setBirthdate] = useState(() => {
     if (personalInfo?.birthday) {

@@ -14,7 +14,7 @@ export const userStore = create<useSoreState>((set) => ({
   getMyData: async () => {
     set({ isLoading: true });
 
-    const lentRes: { success: boolean; data: any; } = await GET_USER();
+    const lentRes: any = await GET_USER();
 
     if(lentRes.success){
       set({

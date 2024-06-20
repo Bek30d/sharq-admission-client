@@ -23,7 +23,6 @@ export type ReportType = {
   edu_direction: string;
 };
 
-
 const educationDirections = [
   {
     value: "moliya1",
@@ -64,8 +63,8 @@ const Reports = () => {
   const { reports, getReports } = useAdminStore();
 
   useEffect(() => {
-    getReports()
-  }, [])
+    getReports();
+  }, []);
 
   return (
     <AdminProfileLayout>
