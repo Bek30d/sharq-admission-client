@@ -83,7 +83,7 @@ export default function Component() {
   );
 }
 
-function CalendarDaysIcon(props) {
+function CalendarDaysIcon(props: any) {
   return (
     <svg
       {...props}
@@ -111,7 +111,7 @@ function CalendarDaysIcon(props) {
   );
 }
 
-function ChevronLeftIcon(props) {
+function ChevronLeftIcon(props: any) {
   return (
     <svg
       {...props}
@@ -130,7 +130,7 @@ function ChevronLeftIcon(props) {
   );
 }
 
-function ChevronRightIcon(props) {
+function ChevronRightIcon(props: any) {
   return (
     <svg
       {...props}

@@ -129,7 +129,12 @@ const EducationInfo = () => {
         regions.find((region) => region.name === data.region_id).id
       }`,
       district_id: `${
-        districts.find((district) => district?.name === data.district_id).id
+        (
+          districts.find(
+            (district: { id: string; name: string }) =>
+              district?.name === data.district_id
+          ) || { id: "" }
+        ).id || ""
       }`,
       graduation_cert_id: certificatId,
       is_cert_privileged: data.is_cert_privileged
