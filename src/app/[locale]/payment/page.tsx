@@ -7,15 +7,16 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Wrapper from "./Wrapper";
 import { useRouter } from "@/navigation";
+import { usePaymentStore } from "@/store/payment.store";
 
 const paymentMethods = [
   {
-    name: "Payme",
+    name: "payme",
     img: Payme,
     url: "",
   },
   {
-    name: "Click",
+    name: "click",
     img: Click,
     url: "",
   },
@@ -23,7 +24,12 @@ const paymentMethods = [
 
 const Payment = () => {
   const router = useRouter();
-  const [selected, setSelected] = useState("Payme");
+  const [selected, setSelected] = useState("payme");
+  const { getBillingUrl } = usePaymentStore()
+
+  const redirect = () => {
+    getBillingUrl(selected, '7').then((url) => window.location.href = url)
+  }
 
   return (
     <PaymentLayout>
@@ -36,15 +42,14 @@ const Payment = () => {
               className="flex flex-col gap-4 items-center"
             >
               <div
-                className={`md:w-60 md:h-60 h-32 w-full flex justify-center items-center rounded-lg border-2 ${
-                  selected === item.name
-                    ? "bg-[#E8F0FF] border-[#0055FB]"
-                    : "bg-[#F6F8FA] border-[#F6F8FA]"
-                }`}
+                className={`md:w-60 md:h-60 h-32 w-full flex justify-center items-center rounded-lg border-2 ${selected === item.name
+                  ? "bg-[#E8F0FF] border-[#0055FB]"
+                  : "bg-[#F6F8FA] border-[#F6F8FA]"
+                  }`}
               >
                 <Image src={item.img} alt={item.name} className="max-w-[90%]" />
               </div>
-              <span className="text-[#18324D] font-medium text-center">
+              <span className="text-[#18324D] font-medium text-center capitalize">
                 {item.name}
               </span>
             </button>
@@ -52,7 +57,7 @@ const Payment = () => {
         </div>
         <Button
           className="!bg-[#18324D] w-full !py-[14px] h-auto"
-          onClick={() => router.push("/payment/operation")}
+          onClick={redirect}
         >
           Davom etish
         </Button>
