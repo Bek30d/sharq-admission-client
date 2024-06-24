@@ -13,3 +13,8 @@ export const GET_REPORTS = (filter?: any) => {
         params: filter
     })
 }
+
+export const POST_MODERATOR = (phone: string, password: string) => axios.post('/set-admin', {
+    phone,
+    password
+})

@@ -1,4 +1,4 @@
-import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS } from "@/api/admin";
+import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS, POST_MODERATOR } from "@/api/admin";
 import { ReportType } from "@/app/[locale]/admin-profile/reports/page";
 import { create } from "zustand";
 
@@ -27,6 +27,7 @@ interface useStoreState {
     setIsShowSideBar: (isOpen: boolean) => void;
     getApplicationsDetails: (id: number) => Promise<any | null>;
     getReports: (filter?: any) => void;
+    postModerator: (phone: string, password: string) => Promise<any>;
 }
 
 export const useAdminStore = create<useStoreState>((set, get) => ({
@@ -65,5 +66,11 @@ export const useAdminStore = create<useStoreState>((set, get) => ({
         } else {
             set({ isLoading: false })
         }
+    },
+    postModerator: async (phone: string, password: string) => {
+        set({ isLoading: true })
+        const response: any = await POST_MODERATOR(phone, password)
+        console.log(response);
+        return response
     }
 }))
