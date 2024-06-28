@@ -1,13 +1,27 @@
 'use client'
 
-import BaseIcon from '@/components/icons/BaseIcon';
 import { Button } from '@/components/ui/button'
 import AdminProfileLayout from '@/layouts/AdminProfileLayout'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddModeratorBar from '../components/AddModeratorBar';
+import { useAdminStore } from '@/store/admin.store';
+import ModeratorItem from '../components/ModeratorItem';
+
+export type moderatorI = {
+    full_name: string
+    id: number
+    phone: string
+    user_type: string
+}
 
 const Moderators = () => {
     const [isShowSideBar, setIsShowSideBar] = useState(false);
+    const { getModerators, moderators } = useAdminStore()
+
+    useEffect(() => {
+        getModerators()
+    }, [])
+
 
     return (
         <AdminProfileLayout>
@@ -22,19 +36,21 @@ const Moderators = () => {
             </div>
             <div className="py-3.5 bg-white rounded-lg hidden lg:flex items-center mb-1 ">
                 <p className="w-[60px] text-center  text-[#57606A] font-medium">No</p>
-                <p className="w-[265px] pl-5 text-[#57606A] font-medium">
-                    Ariza raqami
+                <p className="w-[265px] text-center pl-5 text-[#57606A] font-medium">
+                    To`liq ismi
                 </p>
-                <p className="w-[265px] pl-5 text-[#57606A] font-medium">
-                    Berilgan sana
-                </p>
-                <p className="w-[265px] pl-5 text-[#57606A] font-medium">
-                    Fakultet nomi
-                </p>
-                <p className="w-[265px] pl-5 text-[#57606A] font-medium">
-                    Ariza statusi
+                <p className="w-[265px] pl-5 text-center text-[#57606A] font-medium">
+                    Telefon raqami
                 </p>
             </div>
+            {
+                moderators.map((item, index) => (
+                    <ModeratorItem
+                        key={index}
+                        {...item}
+                    />
+                ))
+            }
 
             <AddModeratorBar
                 isShowSideBar={isShowSideBar}

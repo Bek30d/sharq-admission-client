@@ -18,3 +18,5 @@ export const POST_MODERATOR = (phone: string, password: string) => axios.post('/
     phone,
     password
 })
+
+export const GET_MODERATORS = () => axios.get('/admin-list')

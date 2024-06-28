@@ -119,7 +119,9 @@ document: `<path fill-rule="evenodd" clip-rule="evenodd" d="M49.1037 17.104L41.5
 document_search: `<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9488 6.9485L16.8852 3.88483C16.4789 3.47858 15.9275 3.25 15.3533 3.25H7.58366C6.38658 3.25 5.41699 4.21958 5.41699 5.41667V20.5833C5.41699 21.7804 6.38658 22.75 7.58366 22.75H18.417C19.6141 22.75 20.5837 21.7804 20.5837 20.5833V8.48033C20.5837 7.90617 20.3551 7.35475 19.9488 6.9485V6.9485Z" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M20.5837 8.66667H16.2503C15.6523 8.66667 15.167 8.18133 15.167 7.58333V3.25" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14.6211 12.6922C15.7519 13.8231 15.7519 15.6566 14.6211 16.7874C13.4902 17.9183 11.6567 17.9183 10.5259 16.7874C9.39502 15.6566 9.39502 13.8231 10.5259 12.6922C11.6567 11.5614 13.4902 11.5614 14.6211 12.6922" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M16.25 18.4167L14.625 16.7917" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+<path d="M16.25 18.4167L14.625 16.7917" stroke="stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+deleteOutline:
+    '<path d="M15.8333 5.83333L15.1105 15.9521C15.0482 16.8243 14.3225 17.5 13.4481 17.5H6.55178C5.67739 17.5 4.95165 16.8243 4.88935 15.9521L4.16659 5.83333M8.33325 9.16667V14.1667M11.6666 9.16667V14.1667M12.4999 5.83333V3.33333C12.4999 2.8731 12.1268 2.5 11.6666 2.5H8.33325C7.87301 2.5 7.49992 2.8731 7.49992 3.33333V5.83333M3.33325 5.83333H16.6666" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
 }
 
 
