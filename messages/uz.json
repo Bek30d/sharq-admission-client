@@ -167,7 +167,20 @@
   "Notifications": {
     "notifications": "Habarnomalar",
     "no_notifications": "Sizda habarnomalar yo’q"
+  },
+  "Auth": {
+    "title": "2024-2025-o‘quv yili uchun ariza topshirish",
+    "description": "Ro’yhatdan o’tish yoki tizimga kirish uchun telefon raqamingizni kiriting.",
+    "phone_number": "Telefon raqami",
+    "submit": "Davom etish",
+    "login": "Raqamingizga kelgan tasdiqlash kodini kiriting",
+    "change_phone_number": "Telefon raqamini o’zgartirish",
+    "password": "Tasdiqlash kodi",
+    "password_placeholder": "Tasdiqlash kodi",
+    "resend_password": "Qayta yuborish",
+    "verify": "Pasport yoki ID raqamga tug’ilgan kuningizni kiriting",
+    "passport_or_id": "Pasport yoki ID raqami",
+    "date_of_birth": "Tug'ilgan sanasi",
+    "verify_title": "Ariza topshirish uchun o’z akkauntingizni yarating"
   }
-
-
 }

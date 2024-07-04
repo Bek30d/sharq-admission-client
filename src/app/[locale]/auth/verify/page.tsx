@@ -15,6 +15,7 @@ import {
 } from "@/lib/utils";
 import { useRouter } from "@/navigation";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof schema>;
 
@@ -27,6 +28,7 @@ const Verify = () => {
   const [displayValue, setDisplayValue] = useState<string>("");
   const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
   const { postPassport, isLoading } = useAuthStore();
+  const t = useTranslations("Auth");
 
   const router = useRouter();
 
@@ -58,8 +60,8 @@ const Verify = () => {
 
   return (
     <Wrapper
-      title="Ariza topshirish uchun o’z akkauntingizni yarating"
-      description="Pasport yoki ID raqamva tug’ilgan kuningizni kiriting"
+      title={t('verify_title')}
+      description={t('verify')}
     >
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Form {...form}>
@@ -69,7 +71,7 @@ const Verify = () => {
                 htmlFor="phone"
                 className="text-[#424A53] font-medium text-sm"
               >
-                Pasport yoki ID raqami
+                {t('passport_or_id')}
               </label>
               <Input
                 id="phone"
@@ -93,7 +95,7 @@ const Verify = () => {
                 htmlFor="password"
                 className="text-[#424A53] font-medium text-sm"
               >
-                Tug’ilgan kun
+                {t('date_of_birth')}
               </label>
               <Input
                 id="password"
@@ -116,7 +118,7 @@ const Verify = () => {
               className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
                 } w-full !py-[14px] h-auto`}
             >
-              Davom etish
+              {t('submit')}
             </Button>
           </div>
         </Form>

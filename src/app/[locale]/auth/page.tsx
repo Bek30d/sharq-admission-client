@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof schema>;
 const phoneRegex = new RegExp(/^\+998\d{9}$/);
@@ -21,6 +22,7 @@ const schema = z.object({
 const Auth = () => {
   const router = useRouter();
   const { isLoading, postPhone } = useAuthStore();
+  const t = useTranslations("Auth");
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -36,9 +38,8 @@ const Auth = () => {
 
   return (
     <Wrapper
-      title="2024-2025-o‘quv yili uchun ariza topshirish"
-      description="Ro’yhatdan o’tish yoki tizimga kirish uchun
-telefon raqamingizni kiriting."
+      title={t('title')}
+      description={t('description')}
     >
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Form {...form}>
@@ -48,7 +49,7 @@ telefon raqamingizni kiriting."
                 htmlFor="phone"
                 className="text-[#424A53] font-medium text-sm"
               >
-                Telefon raqam
+                {t('phone_number')}
               </label>
               <Input
                 id="phone"
@@ -65,7 +66,7 @@ telefon raqamingizni kiriting."
               className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
                 } w-full !py-[14px] h-auto`}
             >
-              Davom etish
+              {t('submit')}
             </Button>
           </div>
         </Form>

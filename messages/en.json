@@ -166,5 +166,20 @@
       "Notifications": {
         "notifications": "Notifications",
         "no_notifications": "You have no notifications"
-      }
+      },
+      "Auth": {
+      "title": "Application for the 2024-2025 academic year",
+      "description": "Enter your phone number to register or log in.",
+      "phone_number": "Phone number",
+      "submit": "Continue",
+      "login": "Enter the confirmation code sent to your number",
+      "change_phone_number": "Change phone number",
+      "password": "Confirmation code",
+      "password_placeholder": "Confirmation code",
+      "resend_password": "Resend",
+      "verify": "Enter your passport or ID number and date of birth",
+      "passport_or_id": "Passport or ID number",
+      "date_of_birth": "Date of birth",
+      "verify_title": "Create an account to apply for admission"
+    }
 }

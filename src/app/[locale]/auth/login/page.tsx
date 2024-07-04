@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof schema>;
 
@@ -24,6 +25,7 @@ const Login = () => {
   const router = useRouter();
   const circumference = 2 * Math.PI * 15;
   const offset = circumference - (time / initialTime) * circumference;
+  const t = useTranslations("Auth");
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -70,11 +72,11 @@ const Login = () => {
 
   return (
     <Wrapper
-      title="2024-2025-o‘quv yili uchun ariza topshirish"
+      title={t("title")}
       description={
         <span>
           <span className="text-[#0055FB]">{phone} </span>
-          raqamingizga kelgan tasdiqlash kodini kiriting
+          {t("login")}
         </span>
       }
     >
@@ -87,13 +89,13 @@ const Login = () => {
                 className="text-[#424A53] font-medium text-sm"
               >
                 <div className="flex justify-between items-center">
-                  <p>Telefon raqam</p>
+                  <p>{t("phone_number")}</p>
                   <Button
                     className="!text-[#0055FB] p-0"
                     variant={"link"}
                     onClick={() => router.back()}
                   >
-                    Telefon raqamni o’zgartirish
+                    {t('change_phone_number')}
                   </Button>
                 </div>
               </label>
@@ -111,13 +113,13 @@ const Login = () => {
                 htmlFor="password"
                 className="text-[#424A53] font-medium text-sm"
               >
-                Tasdiqlash kodi
+                {t("password")}
               </label>
               <div className="relative">
                 <Input
                   id="cardNumber"
                   className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781]"
-                  placeholder="Tasdiqlash kodi"
+                  placeholder={t("password_placeholder")}
                   {...form.register("password")}
                 />
                 {time ? (
@@ -153,13 +155,13 @@ const Login = () => {
               className="text-[#18324D] font-medium text-center disabled:text-[#6E7781] disabled:cursor-not-allowed"
               onClick={handleResend}
             >
-              Qayta yuborish
+              {t("resend_password")}
             </button>
             <Button
               className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
                 } w-full !py-[14px] h-auto`}
             >
-              Davom etish
+              {t("continue")}
             </Button>
           </div>
         </Form>
