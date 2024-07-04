@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: 'https://sharqapi.onedata.uz/api',
   headers: {
     Accept: 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
