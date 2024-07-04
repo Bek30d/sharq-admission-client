@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
+import toast from "react-hot-toast";
 
 type FormData = z.infer<typeof schema>;
 const phoneRegex = new RegExp(/^\+998\d{9}$/);
@@ -30,7 +31,7 @@ const Auth = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const response = await postPhone(data.phone);
-    response === 1 ? router.push("/auth/login") : alert("Xatolik yuz berdi");
+    response === 1 ? router.push("/auth/login") : toast.error("Xatolik yuz berdi");
   };
 
   return (
@@ -61,9 +62,8 @@ telefon raqamingizni kiriting."
               </span>
             </div>
             <Button
-              className={`${
-                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
-              } w-full !py-[14px] h-auto`}
+              className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                } w-full !py-[14px] h-auto`}
             >
               Davom etish
             </Button>

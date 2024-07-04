@@ -31,7 +31,7 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const response = await login(data.password);
-    response === 1 ? router.push("/auth/verify") : alert("Xatolik yuz berdi");
+    response === 1 ? router.push("/auth/verify") : toast.error("Xatolik yuz berdi");
   };
 
   const handleResend = async () => {

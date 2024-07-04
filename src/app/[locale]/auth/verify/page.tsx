@@ -52,7 +52,7 @@ const Verify = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const response = await postPassport(data.passport, data.birthDate);
-    response === 1 ? router.push("/personal-info") : alert("Xatolik yuz berdi");
+    response === 1 ? router.push("/personal-info") : toast.error("Xatolik yuz berdi");
   };
 
   return (
@@ -112,9 +112,8 @@ const Verify = () => {
               </span>
             </div>
             <Button
-              className={`${
-                !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
-              } w-full !py-[14px] h-auto`}
+              className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                } w-full !py-[14px] h-auto`}
             >
               Davom etish
             </Button>
