@@ -32,6 +32,7 @@ import withAuth from "@/components/with-auth/WithAuth";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { userStore } from "@/store/main.store";
 
 const schema = z.object({
   last_name: z.string({
@@ -108,6 +109,7 @@ const PersonalInfo = () => {
   } = formStore();
   const [image, setImage] = useState<any>("");
   const [imageId, setImageId] = useState<string>("");
+  const { getMyData } = userStore()
   const [personalInfo, setPersonalInfo] = useLocalStorage<PersonalInfo>(
     "userData",
     {
@@ -189,6 +191,7 @@ const PersonalInfo = () => {
   useEffect(() => {
     getRegions();
     getCountries();
+    getMyData();
   }, []);
 
   return (
@@ -450,10 +453,10 @@ const PersonalInfo = () => {
                           >
                             {form.getValues("country_id")
                               ? countries.find(
-                                  (country) =>
-                                    `${country.id}` ==
-                                    form.getValues("country_id")
-                                )?.name
+                                (country) =>
+                                  `${country.id}` ==
+                                  form.getValues("country_id")
+                              )?.name
                               : ""}
                           </SelectValue>
                         </SelectTrigger>
@@ -521,9 +524,8 @@ const PersonalInfo = () => {
               </div>
 
               <Button
-                className={`${
-                  !isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
-                } w-full !py-[14px] h-auto`}
+                className={`${!isLoading ? "!bg-[#18324D]" : "!bg-[#18324d83]"
+                  } w-full !py-[14px] h-auto`}
               >
                 {t("submit")}
               </Button>
