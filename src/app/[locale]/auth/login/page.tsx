@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof schema>;
@@ -49,6 +49,9 @@ const Login = () => {
 
   useEffect(() => {
     startTimer();
+    if (phone === '+998') {
+      router.push('/auth')
+    }
 
     // Cleanup the interval when the component unmounts
     return () => clearInterval(timerInterval);
@@ -80,6 +83,7 @@ const Login = () => {
         </span>
       }
     >
+      <Toaster />
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Form {...form}>
           <div className="flex flex-col md:space-y-10 space-y-6">

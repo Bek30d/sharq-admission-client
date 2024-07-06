@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import Wrapper from "./Wrapper";
 import { Form } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/navigation";
-import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import ReCAPTCHA from 'react-google-recaptcha'
+import toast, { Toaster } from "react-hot-toast";
 
 type FormData = z.infer<typeof schema>;
 const phoneRegex = new RegExp(/^\+998\d{9}$/);
@@ -22,6 +23,7 @@ const schema = z.object({
 const Auth = () => {
   const router = useRouter();
   const { isLoading, postPhone } = useAuthStore();
+  const recaptcha = useRef<any>(null)
   const t = useTranslations("Auth");
 
   const form = useForm<FormData>({
@@ -32,6 +34,11 @@ const Auth = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const captchaValue = recaptcha.current?.getValue()
+    if (!captchaValue) {
+      toast.error("Iltimos avval bot emasligingizni tasdiqlang");
+      return
+    }
     const response = await postPhone(data.phone);
     response === 1 ? router.push("/auth/login") : toast.error("Xatolik yuz berdi");
   };
@@ -41,6 +48,7 @@ const Auth = () => {
       title={t('title')}
       description={t('description')}
     >
+      <Toaster />
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Form {...form}>
           <div className="flex flex-col md:space-y-10 space-y-6">
@@ -68,6 +76,9 @@ const Auth = () => {
             >
               {t('submit')}
             </Button>
+            <div className="flex justify-center">
+              <ReCAPTCHA ref={recaptcha} sitekey={'6Ld7sQkqAAAAAFE3a9HyfY6GlCzQwiABspGD6Ybj'} />
+            </div>
           </div>
         </Form>
       </form>

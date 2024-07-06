@@ -6,6 +6,7 @@ import {setCookie} from "@/lib/cookies";
 interface AuthState {
     isLoading: boolean;
     phone: string;
+    isLoggedId: boolean;
     setPhone: (phone: string) => void;
     postPhone: (phone: string) => Promise<void | number>;
     login: (code: string) => Promise<void | number>;
@@ -15,6 +16,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set, get) => ({
     isLoading: false,
     phone: '+998',
+    isLoggedId: false,
     setPhone: (phone: string) => set({ phone: phone }),
     postPhone: async (phone: string) => {
         set({ isLoading: true })
@@ -34,7 +36,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         try {
             const res: any = await LOGIN(code, get().phone);
             if(res.success) {
-                set({isLoading: false})
+                set({isLoading: false, isLoggedId: true})
                 localStorage.setItem('access_token', res?.data?.token)
                 cookies.set(null, 'access_token', res?.data?.token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
                 setCookie('access_token', res?.data?.token)
