@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../Wrapper";
 import { Form } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -14,8 +14,8 @@ import {
   unformatPassportField,
 } from "@/lib/utils";
 import { useRouter } from "@/navigation";
-import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import toast, { Toaster } from "react-hot-toast";
 
 type FormData = z.infer<typeof schema>;
 
@@ -27,9 +27,8 @@ const schema = z.object({
 const Verify = () => {
   const [displayValue, setDisplayValue] = useState<string>("");
   const [customDisplayValue, setCustomDisplayValue] = useState<string>("");
-  const { postPassport, isLoading } = useAuthStore();
+  const { postPassport, isLoading, isLoggedId } = useAuthStore();
   const t = useTranslations("Auth");
-
   const router = useRouter();
 
   const formatDate = (value: string) => {
@@ -58,23 +57,31 @@ const Verify = () => {
     response === 1 ? router.push("/personal-info") : toast.error("Xatolik yuz berdi");
   };
 
+  useEffect(() => {
+    if (!isLoggedId) {
+      router.push("/auth");
+    }
+  }, []);
+
   return (
     <Wrapper
       title={t('verify_title')}
       description={t('verify')}
     >
+      <Toaster />
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Form {...form}>
           <div className="flex flex-col md:space-y-10 space-y-6">
             <div className="flex-1 w-full">
               <label
-                htmlFor="phone"
+                htmlFor="passport"
                 className="text-[#424A53] font-medium text-sm"
               >
                 {t('passport_or_id')}
               </label>
               <Input
-                id="phone"
+                id="passport"
+                name="passport_ID"
                 type="text"
                 className="border-[#D0D7DE] bg-white outline-none !py-4 !px-3 text-[#424A53] placeholder:text-[#6E7781] "
                 value={customDisplayValue}
