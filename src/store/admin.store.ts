@@ -1,4 +1,5 @@
-import { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS } from "@/api/admin";
+import { GET_MODERATORS, GET_APPLICATIONS, GET_APPLICATIONS_DETAILS, GET_REPORTS, POST_MODERATOR } from "@/api/admin";
+import { moderatorI } from "@/app/[locale]/admin-profile/moderators/page";
 import { ReportType } from "@/app/[locale]/admin-profile/reports/page";
 import { create } from "zustand";
 
@@ -23,10 +24,13 @@ interface useStoreState {
     isShowSideBar: boolean;
     details: any | null;
     reports: ReportType[];
+    moderators: moderatorI[];
     getApplications: (filter?: any) => void;
     setIsShowSideBar: (isOpen: boolean) => void;
     getApplicationsDetails: (id: number) => Promise<any | null>;
     getReports: (filter?: any) => void;
+    postModerator: (phone: string, password: string) => Promise<any>;
+    getModerators: () => Promise<any>;
 }
 
 export const useAdminStore = create<useStoreState>((set, get) => ({
@@ -35,6 +39,7 @@ export const useAdminStore = create<useStoreState>((set, get) => ({
     isShowSideBar: false,
     details: null,
     reports: [],
+    moderators: [],
     getApplications: async (filter?: any) => {
         set({ isLoading: true })
         const response: any = await GET_APPLICATIONS(filter)
@@ -65,5 +70,20 @@ export const useAdminStore = create<useStoreState>((set, get) => ({
         } else {
             set({ isLoading: false })
         }
+    },
+    postModerator: async (phone: string, password: string) => {
+        set({ isLoading: true })
+        const response: any = await POST_MODERATOR(phone, password)
+        if(response.success) {
+            get().getModerators()
+        }
+    },
+    getModerators: async () => {
+        set({ isLoading: true })
+        const response: any = await GET_MODERATORS()
+        if(response.success) {
+            set({ moderators: response.data })
+        }
+        set({ isLoading: false })
     }
 }))

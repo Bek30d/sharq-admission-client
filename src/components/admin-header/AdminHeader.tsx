@@ -36,10 +36,12 @@ const AdminHeader = () => {
       name: "Hisobotlar",
       icon: "reports",
     },
+    {
+      path: `/${locale}/admin-profile/moderators`,
+      name: "Moderatorlar",
+      icon: "user",
+    },
   ];
-
-  console.log('pathname', pathname);
-  console.log('locale', locale);
 
   return (
     <div className="bg-white p-3 rounded-lg mt-6 mb-3 flex justify-between items-center">
